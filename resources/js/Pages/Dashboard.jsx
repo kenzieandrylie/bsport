@@ -33,14 +33,17 @@ export default function Dashboard(props) {
                 <Hero
                 user={props.auth.user}
                 />
-                <div className='w-full p-7 font-bold text-2xl flex justify-between'>
-                    <span>My Group</span>
-                    <a href="#" className='inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent font-semibold text-xs text-white uppercase tracking-widest active:bg-sky-900 transition ease-in-out duration-150'>
-                        Join Group
-                    </a>
-                </div>
-                <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-7'>
-                    <GroupCard />
+
+                <div className='p-8'>
+                    <div className='w-full font-bold text-2xl flex justify-between'>
+                        <span>My Group</span>
+                        <a href="#" className='inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent font-semibold text-xs text-white uppercase tracking-widest active:bg-sky-900 transition ease-in-out duration-150'>
+                            Join Group
+                        </a>
+                    </div>
+                    <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-8'>
+                        <GroupCard />
+                    </div>
                 </div>
 
             </UserLayout>

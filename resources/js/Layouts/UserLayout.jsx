@@ -7,6 +7,7 @@ const UserLayout = ({children, auth}) => {
 
     return (
         <>
+        <div className="bg-gray-100">
             <div className="sticky top-0 z-50">
                 <Navbar user={auth.user}/>
             </div>
@@ -18,6 +19,7 @@ const UserLayout = ({children, auth}) => {
             <div>
                 <Footer />
             </div>
+        </div>
         </>
     )
 }

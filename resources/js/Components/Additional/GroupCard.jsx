@@ -2,7 +2,7 @@ const GroupCard = () => {
 
     return (
         <>
-           <div className="w-64 h-52 border border-gray-300">
+           <div className="w-64 h-52 border border-gray-300 bg-white">
                 <div className="flex justify-end p-3">
                     <div className="dropdown">
                         <svg tabIndex={0} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:w-7">
