@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('description');
-            $table->string('display_picture');
-            $table->string('status')->default('Active');
+            $table->string('display_picture')->nullable();
+            $table->unsignedBigInteger('status')->default(1);
 
             $table->timestamps();
         });

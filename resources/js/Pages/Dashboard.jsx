@@ -37,7 +37,7 @@ export default function Dashboard(props) {
                 <div className='p-8'>
                     <div className='w-full font-bold text-2xl flex justify-between'>
                         <span>My Group</span>
-                        <a href="#" className='inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent font-semibold text-xs text-white uppercase tracking-widest active:bg-sky-900 transition ease-in-out duration-150'>
+                        <a href="#" className='inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent font-semibold text-xs text-white uppercase tracking-widest hover:bg-sky-600 active:bg-sky-900 transition ease-in-out duration-150'>
                             Join Group
                         </a>
                     </div>
