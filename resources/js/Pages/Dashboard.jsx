@@ -5,25 +5,14 @@ import Navbar from '@/Components/Additional/Navbar';
 import Hero from '@/Components/Additional/Hero';
 import GroupCard from '@/Components/Additional/GroupCard';
 import UserLayout from '@/Layouts/UserLayout';
+import BtnLink from '@/Components/Additional/BtnLink';
+import Alert from '@/Components/Additional/Alert';
+
 
 export default function Dashboard(props) {
 
-    console.log(props);
-
-    // const [getFlag, setFlag] = useState(0);
-    // const [Labelgroup, setLabelgroup] = useState("");
-
-    // useEffect(() => {
-    //     if(getFlag === 0)
-    //     {
-    //         setLabelgroup("Public Group")
-    //     }
-    //     else if(getFlag === 1)
-    //     {
-    //         setLabelgroup("My Group")
-    //     }
-    // }, [getFlag])
-
+    console.log("data : " ,props.mygroups);
+    console.log("props : ",props);
 
     return (
         <>
@@ -37,12 +26,19 @@ export default function Dashboard(props) {
                 <div className='p-8'>
                     <div className='w-full font-bold text-2xl flex justify-between'>
                         <span>My Group</span>
-                        <a href="#" className='inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent font-semibold text-xs text-white uppercase tracking-widest hover:bg-sky-600 active:bg-sky-900 transition ease-in-out duration-150'>
-                            Join Group
-                        </a>
+                        <BtnLink href="/dashboard"><span>Join Group</span></BtnLink>
                     </div>
                     <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-8'>
-                        <GroupCard />
+                        {props.flash.message && <><Alert msg={props.flash.message}/></>}
+                        {props.mygroups.length > 0 ? props.mygroups.map((group) => {
+                           return(
+                            <>
+                                <GroupCard group={group}/>
+                            </>
+                           )
+                        })
+                        : <div className='flex justify-center w-full p-12'><p>You don't have any group yet! Create or join one!</p></div>
+                        }
                     </div>
                 </div>
 

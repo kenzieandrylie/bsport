@@ -1,4 +1,6 @@
-const GroupCard = () => {
+import { Head, Link } from '@inertiajs/inertia-react';
+
+const GroupCard = ({group}) => {
 
     return (
         <>
@@ -10,8 +12,8 @@ const GroupCard = () => {
                         </svg>
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
-                            <li><a href="" >View</a></li>
-                            <li><a href="" className="text-red-500">Leave</a></li>
+                            <li><a href="">View</a></li>
+                            <li className='text-red-500'><Link href={route('leave.group')} method="post" data={{id: group.id}}>Leave</Link></li>
                         </ul>
                     </div>
                 </div>
@@ -20,7 +22,7 @@ const GroupCard = () => {
                         <img src="https://i.pinimg.com/originals/50/46/0c/50460cdffd8bb7e3e387f3d456b6d633.jpg" alt="" className="rounded" style={{width:`80px`,height:`80px`,objectFit:`cover`}}/>
                     </div>
                     <div className="flex justify-center p-4 font-bold">
-                        Group Lari
+                        {group.name}
                     </div>
                 </div>
            </div>

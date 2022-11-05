@@ -10,7 +10,7 @@ class GroupActivity extends Model
     use HasFactory;
 
     public function group_member(){
-        return $this->belongsTo(GroupMember::class);
+        return $this->hasMany(GroupMember::class);
     }
 
     public function activity(){

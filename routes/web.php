@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,8 +29,8 @@ Route::get('/', function () {
     return Inertia::render('Auth/Login');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//dashboard
+Route::get('/dashboard', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/mygroup/leave', [GroupController::class, 'leave'])->middleware(['auth', 'verified'])->name('leave.group');
 
 require __DIR__.'/auth.php';
