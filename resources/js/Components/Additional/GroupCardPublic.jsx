@@ -25,7 +25,7 @@ const GroupCardPublic = ({group}) => {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <div className="btn btn-sm btn-outline" disabled={disable} onClick={() => handleJoin()}>
+                    <div className="btn btn-sm btn-outline" disabled={disable} onClick={handleJoin}>
                         <Link href={`/join-group/${group.id}`} method="post" as="button">{labeljoin}</Link>
                     </div>
                 </div>

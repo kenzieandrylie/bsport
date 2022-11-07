@@ -1,12 +1,24 @@
 import { Head, Link } from '@inertiajs/inertia-react';
+import React, { useEffect, useState, useRef } from 'react';
+import PopupLeave from './PopupLeave';
 
 const GroupCard = ({group}) => {
 
+//------- semua yang di comment adalah pop up untuk leave confirmation | HAPUS BILA TIDAK DIPERLUKAN---------
+    // const [isopen, setIsopen] = useState(false);
+    // const [datapopup, setDatapopup] = useState({});
+
+    // const handlePopup = () => {
+    //     setIsopen(true);
+    //     setDatapopup(group);
+    // }
+
     return (
         <>
+        {/* <PopupLeave open={isopen} group={datapopup} onClose={() => setIsopen(false)}/> */}
            <div className="w-64 h-52 border border-gray-300 bg-white">
                 <div className="flex justify-end p-3">
-                    <div className="dropdown">
+                    <div className="dropdown dropdown-hover">
                         <svg tabIndex={0} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:w-7">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                         </svg>
@@ -14,6 +26,7 @@ const GroupCard = ({group}) => {
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                             <li><a href="">View</a></li>
                             <li className='text-red-500'><Link href={`/mygroup/leave/${group.id}`} method="delete" as="button">Leave</Link></li>
+                            {/* <li className='text-red-500'><button onClick={() => handlePopup()}>Leave</button></li> */}
                         </ul>
                     </div>
                 </div>
