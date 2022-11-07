@@ -5,7 +5,7 @@ const Navbar = ({user}) => {
         <div className="navbar bg-base-100 p-3">
 
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">BSport</a>
+                <a className="btn btn-ghost normal-case text-xl" href="/dashboard">BSport</a>
             </div>
 
             <div className="flex-none gap-2">

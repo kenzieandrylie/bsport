@@ -29,6 +29,10 @@ class GroupMemberSeeder extends Seeder
             'group_id' => "3",
             'user_id' => "2"
         ]);
+        DB::table('group_members')->insert([
+            'group_id' => "4",
+            'user_id' => "2"
+        ]);
         // user yang udah join misalkan
         DB::table('group_members')->insert([
             'group_id' => "1",

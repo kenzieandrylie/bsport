@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('description');
-            $table->string('display_picture')->nullable();
+            $table->string('display_picture')->default('https://i.pinimg.com/originals/50/46/0c/50460cdffd8bb7e3e387f3d456b6d633.jpg')->nullable();
             $table->unsignedBigInteger('status')->default(1);
 
             $table->timestamps();

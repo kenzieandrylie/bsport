@@ -13,13 +13,13 @@ const GroupCard = ({group}) => {
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                             <li><a href="">View</a></li>
-                            <li className='text-red-500'><Link href={route('leave.group')} method="post" data={{id: group.id}}>Leave</Link></li>
+                            <li className='text-red-500'><Link href={`/mygroup/leave/${group.id}`} method="delete" as="button">Leave</Link></li>
                         </ul>
                     </div>
                 </div>
                 <div className="block">
                     <div className="flex justify-center">
-                        <img src="https://i.pinimg.com/originals/50/46/0c/50460cdffd8bb7e3e387f3d456b6d633.jpg" alt="" className="rounded" style={{width:`80px`,height:`80px`,objectFit:`cover`}}/>
+                        <img src={group.display_picture} alt="" className="rounded" style={{width:`80px`,height:`80px`,objectFit:`cover`}}/>
                     </div>
                     <div className="flex justify-center p-4 font-bold">
                         {group.name}

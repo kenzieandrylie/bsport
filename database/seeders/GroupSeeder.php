@@ -32,5 +32,10 @@ class GroupSeeder extends Seeder
             'name' => 'Berkibarlah Bendera',
             'description' => 'Grup olahraga umum nasionalisme'
         ]);
+        DB::table('groups')->insert([
+            'creator_id' => "2",
+            'name' => 'Lambang suci',
+            'description' => 'Grup olahraga umum orang suci'
+        ]);
     }
 }
