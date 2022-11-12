@@ -1,5 +1,6 @@
 import Footer from "@/Components/Additional/Footer";
 import Navbar from "@/Components/Additional/Navbar";
+import ModalFeedback from '@/Components/Additional/Modal/ModalFeedback';
 
 
 const UserLayout = ({children, auth}) => {
@@ -18,6 +19,10 @@ const UserLayout = ({children, auth}) => {
 
             <div>
                 <Footer />
+            </div>
+
+            <div className="fixed bottom-0 left-0 p-2">
+                <ModalFeedback />
             </div>
         </div>
         </>
