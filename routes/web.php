@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMemberController;
 use Illuminate\Foundation\Application;
@@ -41,5 +42,8 @@ Route::delete('/mygroup/leave/{id}', [GroupMemberController::class, 'leave'])->m
 //discover
 Route::get('/discover', [GroupController::class, 'index_discover'])->middleware(['auth', 'verified'])->name('discover');
 Route::post('/join-group/{id}',[GroupMemberController::class,'join'])->middleware(['auth', 'verified'])->name('join.group');
+
+//feedback
+Route::post('/feedback', [FeedbackController::class, 'createFeedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 
 require __DIR__.'/auth.php';
