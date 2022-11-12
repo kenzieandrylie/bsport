@@ -13,6 +13,10 @@ class GroupActivity extends Model
         return $this->hasMany(GroupMember::class);
     }
 
+    public function like(){
+        return $this->hasMany(Like::class);
+    }
+
     public function activity(){
         return $this->belongsTo(Activity::class);
     }
