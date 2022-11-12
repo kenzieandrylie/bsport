@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faXmark } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState, useRef } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import InputError from '@/Components/InputError';
@@ -35,7 +35,7 @@ const FeedbackModal = () => {
   return (
     <>
         <button
-            className="bg-pink-500 text-white active:bg-pink-600 p-1 text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-pink-500 hover:bg-pink-600 text-white active:bg-pink-600 p-1 text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => setShowModal(true)}
         >
@@ -101,7 +101,7 @@ const FeedbackModal = () => {
                 {/*footer*/}
                 <div className="flex items-center justify-start p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="bg-sky-500 text-white active:bg-sky-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-sky-500 hover:bg-sky-600 text-white active:bg-sky-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => handleSubmit()}
                   >
@@ -111,7 +111,7 @@ const FeedbackModal = () => {
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
     </>
