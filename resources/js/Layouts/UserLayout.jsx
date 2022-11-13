@@ -3,14 +3,14 @@ import Navbar from "@/Components/Additional/Navbar";
 import ModalFeedback from '@/Components/Additional/Modal/ModalFeedback';
 
 
-const UserLayout = ({children, auth}) => {
+const UserLayout = ({children, auth, users}) => {
 
 
     return (
         <>
         <div className="bg-gray-100">
             <div className="sticky top-0 z-50">
-                <Navbar user={auth.user}/>
+                <Navbar user={auth.user} users={users}/>
             </div>
 
             <div>

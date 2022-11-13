@@ -4,14 +4,14 @@ import PopupLeave from './PopupLeave';
 
 const GroupCard = ({group}) => {
 
-//------- semua yang di comment adalah pop up untuk leave confirmation | HAPUS BILA TIDAK DIPERLUKAN---------
-    // const [isopen, setIsopen] = useState(false);
-    // const [datapopup, setDatapopup] = useState({});
+// ------- semua yang di comment adalah pop up untuk leave confirmation | HAPUS BILA TIDAK DIPERLUKAN---------
+//     const [isopen, setIsopen] = useState(false);
+//     const [datapopup, setDatapopup] = useState({});
 
-    // const handlePopup = () => {
-    //     setIsopen(true);
-    //     setDatapopup(group);
-    // }
+//     const handlePopup = () => {
+//         setIsopen(true);
+//         setDatapopup(group);
+//     }
 
     return (
         <>

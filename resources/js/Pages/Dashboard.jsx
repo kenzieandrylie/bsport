@@ -17,6 +17,7 @@ export default function Dashboard(props) {
         <>
             <UserLayout
             auth={props.auth}
+            users={props.users}
             >
                 <Hero
                 user={props.auth.user}

@@ -1,6 +1,7 @@
 import { Link } from "@inertiajs/inertia-react";
+import SearchBar from "./SearchBar";
 
-const Navbar = ({user}) => {
+const Navbar = ({user, users}) => {
     return(
         <div className="navbar bg-base-100 p-3">
 
@@ -10,7 +11,7 @@ const Navbar = ({user}) => {
 
             <div className="flex-none gap-2">
                 <div className="form-control">
-                    <input type="text" placeholder="Search" className="input input-bordered" />
+                    <SearchBar users={users} />
                 </div>
 
                 <button className="btn btn-ghost btn-circle">
