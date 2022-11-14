@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\GroupMember;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -18,8 +19,11 @@ class GroupController extends Controller
                     ->where('group_members.user_id',auth()->user()->id)
                     ->get();
 
+        $alluser = User::all();
+
         return Inertia::render('Dashboard', [
-            'mygroups' => $mygroups
+            'mygroups' => $mygroups,
+            'users' => $alluser
         ]);
     }
 
@@ -27,6 +31,8 @@ class GroupController extends Controller
     public function index_discover(){
 
         $auth_id = auth()->user()->id;
+
+        $alluser = User::all();
 
         $publicgroups = DB::select(
                             "
@@ -39,7 +45,8 @@ class GroupController extends Controller
                         );
 
         return Inertia::render('Discover', [
-            'publicgroups' => $publicgroups
+            'publicgroups' => $publicgroups,
+            'users' => $alluser
         ]);
     }
 
