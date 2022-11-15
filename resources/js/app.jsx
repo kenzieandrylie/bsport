@@ -15,7 +15,10 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <React.StrictMode><App {...props} />
+            </React.StrictMode>
+            );
     },
 });
 
