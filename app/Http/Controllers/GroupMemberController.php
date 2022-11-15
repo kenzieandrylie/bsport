@@ -20,7 +20,7 @@ class GroupMemberController extends Controller
     //Discover
     public function join(Request $request){
         $newMember = new GroupMember();
-        $newMember->group_id = $request->id;
+        $newMember->group_id = $request->groupId;
         $newMember->user_id = auth()->user()->id;
         $newMember->save();
 
