@@ -1,21 +1,30 @@
-import { Head, Link } from '@inertiajs/inertia-react';
+import { Head, Link ,useForm} from '@inertiajs/inertia-react';
 import React, { useEffect, useState, useRef } from 'react';
 import PopupLeave from './PopupLeave';
 
-const GroupCard = ({group}) => {
+const GroupCard = ({group,Author}) => {
 
 // ------- semua yang di comment adalah pop up untuk leave confirmation | HAPUS BILA TIDAK DIPERLUKAN---------
-//     const [isopen, setIsopen] = useState(false);
-//     const [datapopup, setDatapopup] = useState({});
+    const [isopen, setIsopen] = useState(false);
+    const [datapopup, setDatapopup] = useState({});
+    const [popuptype ,setPopupType]= useState('');
+    const handlePopup = (type) => {
+        setIsopen(true);
+        setDatapopup(group);
+        setPopupType(type);
+    }
 
-//     const handlePopup = () => {
-//         setIsopen(true);
-//         setDatapopup(group);
-//     }
+    const handleDeleteGroup=()=>{
+        handlePopup('deletegroup');
+
+    }
+    const handleLeave=()=>{
+        handlePopup('leave');
+    }
 
     return (
         <>
-        {/* <PopupLeave open={isopen} group={datapopup} onClose={() => setIsopen(false)}/> */}
+        <PopupLeave open={isopen} type={popuptype} group={datapopup} onClose={() => setIsopen(false)}/>
            <div className="w-64 h-52 border border-gray-300 bg-white">
                 <div className="flex justify-end p-3">
                     <div className="dropdown dropdown-hover">
@@ -25,7 +34,8 @@ const GroupCard = ({group}) => {
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                             <li><a href="">View</a></li>
-                            <li className='text-red-500'><Link href={`/mygroup/leave/${group.id}`} method="delete" as="button">Leave</Link></li>
+                           {Author==group.creator_id ? <li className='text-red-500'><p method="delete" as="button" onClick={handleDeleteGroup}>Delete Group</p></li>:
+                           <li className='text-red-500'><p method="delete" as="button" onClick={handleLeave}>Leave</p></li>}
                             {/* <li className='text-red-500'><button onClick={() => handlePopup()}>Leave</button></li> */}
                         </ul>
                     </div>

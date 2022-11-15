@@ -33,7 +33,7 @@ export default function Dashboard(props) {
                         {props.mygroups.length > 0 ? props.mygroups.map((group,i) => {
                            return(
                             <div key={i}>
-                                <GroupCard group={group}/>
+                                <GroupCard group={group} Author={props.auth.user.id}/>
                             </div>
                            )
                         })
