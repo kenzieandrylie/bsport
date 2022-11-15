@@ -37,8 +37,8 @@ Route::get('/back', function(){
 
 //dashboard
 Route::get('/dashboard', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::delete('/mygroup/leave/{id}', [GroupMemberController::class, 'leave'])->middleware(['auth', 'verified'])->name('leave.group');
-
+Route::delete('/mygroup/leave', [GroupMemberController::class, 'leave'])->middleware(['auth', 'verified'])->name('leave.group');
+Route::delete('/mygroup/deletegroup',[GroupMemberController::class,'deletegroup'])->middleware(['auth', 'verified'])->name('delete.group');
 //discover
 Route::get('/discover', [GroupController::class, 'index_discover'])->middleware(['auth', 'verified'])->name('discover');
 Route::post('/join-group',[GroupMemberController::class,'join'])->middleware(['auth', 'verified'])->name('join.group');

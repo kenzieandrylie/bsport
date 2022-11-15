@@ -24,6 +24,7 @@ class GroupController extends Controller
         return Inertia::render('Dashboard', [
             'mygroups' => $mygroups,
             'users' => $alluser
+
         ]);
     }
 

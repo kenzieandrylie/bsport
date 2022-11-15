@@ -17,6 +17,19 @@ class GroupMemberController extends Controller
 
     }
 
+    public function deletegroup(Request $request){
+
+        $group = Group::where('id','=',$request->id)->first();
+    
+
+        $group->status = 0;
+        $group->save();
+        GroupMember::where('group_id','=',$request->id)->delete();
+        return redirect()->back()->with('message','Anda berhasil menghapus grup "'.$group->name.'"!');
+
+    }
+
+
     //Discover
     public function join(Request $request){
         $newMember = new GroupMember();
