@@ -42,7 +42,9 @@ Route::delete('/mygroup/deletegroup',[GroupMemberController::class,'deletegroup'
 //discover
 Route::get('/discover', [GroupController::class, 'index_discover'])->middleware(['auth', 'verified'])->name('discover');
 Route::post('/join-group',[GroupMemberController::class,'join'])->middleware(['auth', 'verified'])->name('join.group');
-
+//creategroup
+Route::get('/creategroup',[GroupController::class, 'index_create_group'])->middleware(['auth','verified'])->name('index.create.group');
+Route::post('/creategroup',[GroupController::class, 'create_group'])->middleware(['auth','verified'])->name('create.group');
 //feedback
 Route::post('/feedback', [FeedbackController::class, 'createFeedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 
