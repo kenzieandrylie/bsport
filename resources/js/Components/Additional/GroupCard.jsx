@@ -34,9 +34,13 @@ const GroupCard = ({group,Author}) => {
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                             <li><a href="">View</a></li>
-                           {Author==group.creator_id ? <li className='text-red-500'><p method="delete" as="button" onClick={handleDeleteGroup}>Delete Group</p></li>:
+                           {Author==group.creator_id ?
+                           <>
+                           <li className='text-blue-800'><Link href={`/edit-group/${group.group_id}`} >Edit</Link></li>
+                           <li className='text-red-500'><p method="delete" as="button" onClick={handleDeleteGroup}>Delete Group</p></li>
+                           </>
+                           :
                            <li className='text-red-500'><p method="delete" as="button" onClick={handleLeave}>Leave</p></li>}
-                            {/* <li className='text-red-500'><button onClick={() => handlePopup()}>Leave</button></li> */}
                         </ul>
                     </div>
                 </div>

@@ -102,4 +102,17 @@ class GroupController extends Controller
         ->with('message','Group '.$request->name. ' berhasil dibuat!');
     }
 
+    //Edit Group
+    public function index_edit_group(Request $request){
+
+        $group = Group::find($request->id);
+
+        $alluser = User::all();
+
+        return Inertia::render('EditGroup', [
+            'group' => $group,
+            'users' => $alluser
+        ]);
+    }
+
 }
