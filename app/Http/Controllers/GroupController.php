@@ -7,7 +7,6 @@ use App\Models\GroupMember;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class GroupController extends Controller
@@ -48,69 +47,6 @@ class GroupController extends Controller
 
         return Inertia::render('Discover', [
             'publicgroups' => $publicgroups,
-            'users' => $alluser
-        ]);
-    }
-
-    //Create Group
-    public function index_create_group(){
-        $auth_id = auth()->user()->id;
-
-        $alluser = User::all();
-
-        $publicgroups = DB::select(
-                            "
-                                select g.*
-                                from groups g
-                                join group_members gm on gm.group_id = g.id
-                                where g.id not in
-                                (select g.id from groups g join group_members gm on gm.group_id = g.id where gm.user_id = $auth_id)
-                            "
-                        );
-        return Inertia::render('CreateGroup',[
-            'publicgroups' => $publicgroups,
-            'users' => $alluser
-        ]);
-    }
-    public function create_group(Request $request){
-        $rules = [
-            'name'=>'required|min:8|unique:App\Models\Group,name',
-            'description'=>'required',
-            'display_picture'=>'required|mimes:jpg,bmp,png|max:2048',
-
-        ];
-        $validator =Validator::make($request->all(), $rules);
-        if($validator->fails()){
-
-            return redirect('/creategroup')->withErrors($validator)->withInput();
-        }
-
-        Group::create([
-                            'name'=>$request->name,
-                            'description'=>$request->description,
-                            'display_picture'=>$request->display_picture,
-                            'creator_id'=>auth()->user()->id,
-                            'status'=>1
-        ]);
-        $newGroup = Group::where('name','=',$request->name)->first();
-        GroupMember::create([
-            'group_id'=>$newGroup->id,
-            'user_id'=>auth()->user()->id
-        ]);
-
-        return redirect()->intended('/dashboard')
-        ->with('message','Group '.$request->name. ' berhasil dibuat!');
-    }
-
-    //Edit Group
-    public function index_edit_group(Request $request){
-
-        $group = Group::find($request->id);
-
-        $alluser = User::all();
-
-        return Inertia::render('EditGroup', [
-            'group' => $group,
             'users' => $alluser
         ]);
     }

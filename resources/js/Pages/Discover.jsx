@@ -4,7 +4,6 @@ import UserLayout from "@/Layouts/UserLayout";
 import BtnLink from '@/Components/Additional/BtnLink';
 import GroupCardPublic from '@/Components/Additional/GroupCardPublic';
 import BtnBack from '@/Components/Additional/BtnBack';
-// import route from 'vendor/tightenco/ziggy/src/js';
 
 const Discover = (props) => {
 
@@ -16,7 +15,7 @@ const Discover = (props) => {
                 <div className="p-8">
                     <div className='w-full font-bold text-2xl flex justify-between'>
                         <span>Public Group</span>
-                        <Link href={route('index.create.group')}><BtnLink>Create Group</BtnLink></Link>
+                        <BtnLink href="#"><span>Create Group</span></BtnLink>
                     </div>
                     <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-8'>
                         {props.publicgroups.length > 0 ? props.publicgroups.map((group) => {
