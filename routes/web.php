@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMemberController;
 use Illuminate\Foundation\Application;
@@ -46,6 +47,8 @@ Route::post('/join-group',[GroupMemberController::class,'join'])->middleware(['a
 Route::get('/creategroup',[GroupController::class, 'index_create_group'])->middleware(['auth','verified'])->name('index.create.group');
 Route::post('/creategroup',[GroupController::class, 'create_group'])->middleware(['auth','verified'])->name('create.group');
 //feedback
-Route::post('/feedback', [FeedbackController::class, 'createFeedback'])->middleware(['auth', 'verified'])->name('create.feedback');
+Route::post('/feedback', [FeedbackController::class, 'create_feedback'])->middleware(['auth', 'verified'])->name('create.feedback');
+//profile
+Route::get('/profile',[FriendshipController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
 
 require __DIR__.'/auth.php';

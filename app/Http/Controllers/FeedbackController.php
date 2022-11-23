@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class FeedbackController extends Controller
 {
     //
-    public function createFeedback(Request $request){
+    public function create_feedback(Request $request){
 
         $request->validate([
             'subject' => 'required',
