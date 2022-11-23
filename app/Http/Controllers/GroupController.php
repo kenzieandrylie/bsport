@@ -85,14 +85,6 @@ class GroupController extends Controller
             return redirect('/creategroup')->withErrors($validator)->withInput();
         }
 
-
-        $alluser = User::all();
-
-        $mygroups = DB::table('groups')
-                    ->join('group_members','group_members.group_id','=','groups.id')
-                    ->where('group_members.user_id',auth()->user()->id)
-                    ->get();
-
         Group::create([
                             'name'=>$request->name,
                             'description'=>$request->description,
@@ -105,11 +97,22 @@ class GroupController extends Controller
             'group_id'=>$newGroup->id,
             'user_id'=>auth()->user()->id
         ]);
-        
+
         return redirect()->intended('/dashboard')
-        ->with( 'mygroups' ,$mygroups)
-        ->with( 'users' , $alluser)
-        ->with('message','Group '.$request->name. 'berhasil dibuat.');
+        ->with('message','Group '.$request->name. ' berhasil dibuat!');
+    }
+
+    //Edit Group
+    public function index_edit_group(Request $request){
+
+        $group = Group::find($request->id);
+
+        $alluser = User::all();
+
+        return Inertia::render('EditGroup', [
+            'group' => $group,
+            'users' => $alluser
+        ]);
     }
 
 }
