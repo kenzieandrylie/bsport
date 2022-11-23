@@ -26,7 +26,7 @@ export default function Dashboard(props) {
                 <div className='p-8'>
                     <div className='w-full font-bold text-2xl flex justify-between'>
                         <span>My Group</span>
-                        <BtnLink><Link href={route('discover')}>Join Group</Link></BtnLink>
+                        <Link href={route('discover')}><BtnLink>Join Group</BtnLink></Link>
                     </div>
                     <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-8'>
                         {props.flash.message && <><Alert msg={props.flash.message}/></>}
