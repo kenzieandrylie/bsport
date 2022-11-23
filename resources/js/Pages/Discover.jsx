@@ -15,7 +15,7 @@ const Discover = (props) => {
                 <div className="p-8">
                     <div className='w-full font-bold text-2xl flex justify-between'>
                         <span>Public Group</span>
-                        <BtnLink href="#"><span>Create Group</span></BtnLink>
+                        <BtnLink><Link href={route('index.create.group')}>Create Group</Link></BtnLink>
                     </div>
                     <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-8'>
                         {props.publicgroups.length > 0 ? props.publicgroups.map((group) => {
