@@ -39,19 +39,19 @@ const PostActivity = () => {
                                 </div>
                                 <div className="flex justify-around items-center p-3 w-full">
                                     <div className="flex flex-col gap-2">
-                                        <FontAwesomeIcon icon={faShoePrints} size="md"/>
+                                        <FontAwesomeIcon icon={faShoePrints} size="sm"/>
                                         <span>0 Steps</span>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <FontAwesomeIcon icon={faRoad} size="md"/>
+                                        <FontAwesomeIcon icon={faRoad} size="sm"/>
                                         <span>0 Km</span>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <FontAwesomeIcon icon={faFireFlameCurved} size="md"/>
+                                        <FontAwesomeIcon icon={faFireFlameCurved} size="sm"/>
                                         <span>0 KCal</span>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <FontAwesomeIcon icon={faStopwatch} size="md"/>
+                                        <FontAwesomeIcon icon={faStopwatch} size="sm"/>
                                         <span>0 Mins</span>
                                     </div>
                                 </div>
@@ -69,8 +69,8 @@ const PostActivity = () => {
                         <div className="px-3 pb-2">
 
                         <div className="pt-2 flex items-center">
-                            <FontAwesomeIcon icon={faHeart} size="md"/>
-                            <span className="text-sm text-gray-400 font-medium">12 likes</span>
+                            <FontAwesomeIcon icon={faHeart} size="sm"/>
+                            <span className="text-sm text-gray-400 font-medium ml-2">12 likes</span>
                         </div>
                     </div>
 

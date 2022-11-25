@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             GroupSeeder::class,
-            GroupMemberSeeder::class
+            GroupMemberSeeder::class,
+            FriendshipSeeder::class
         ]);
     }
 }

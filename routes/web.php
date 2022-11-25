@@ -49,6 +49,6 @@ Route::post('/creategroup',[GroupController::class, 'create_group'])->middleware
 //feedback
 Route::post('/feedback', [FeedbackController::class, 'create_feedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 //profile
-Route::get('/profile',[FriendshipController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
+Route::get('/profile/{username}',[FriendshipController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
 
 require __DIR__.'/auth.php';

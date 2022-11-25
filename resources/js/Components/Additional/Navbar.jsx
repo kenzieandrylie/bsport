@@ -29,13 +29,8 @@ const Navbar = ({user, users}) => {
                     </label>
                     <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                         <li>
-                            <Link href='#' as="button">
+                            <Link href={`/profile/${user.username}`}>
                                 View Profile
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href='#' as="button">
-                                Edit Profile
                             </Link>
                         </li>
                         <li>

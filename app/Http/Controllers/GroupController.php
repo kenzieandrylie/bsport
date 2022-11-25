@@ -38,7 +38,7 @@ class GroupController extends Controller
 
         $publicgroups = DB::select(
                             "
-                                select g.*
+                                select distinct g.*
                                 from groups g
                                 join group_members gm on gm.group_id = g.id
                                 where g.id not in
@@ -60,7 +60,7 @@ class GroupController extends Controller
 
         $publicgroups = DB::select(
                             "
-                                select g.*
+                                select distinct g.*
                                 from groups g
                                 join group_members gm on gm.group_id = g.id
                                 where g.id not in

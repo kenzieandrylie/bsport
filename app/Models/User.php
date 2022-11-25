@@ -42,7 +42,7 @@ class User extends Authenticatable
         'email',
         'password',
         'last_name',
-        'kode'
+        'username'
     ];
 
     /**
