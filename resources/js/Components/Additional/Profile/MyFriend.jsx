@@ -10,11 +10,11 @@ const MyFriend = ({users}) => {
                 </div>
                 <div className="overflow-y-auto h-96">
                     {users.length > 0 ?
-                        users.map((user) => {
+                        users.map((user,i) => {
                             return(
-                                <>
+                                <div key={i}>
                                     <UserList user={user} />
-                                </>
+                                </div>
                             )
                         })
                     :

@@ -20,10 +20,12 @@ class FriendshipController extends Controller
                     ->first(); //return object
 
         $follower = DB::table('friendships')
+                    ->join('users', 'users.id', '=', 'friendships.follower_id')
                     ->where('following_id','=',$user->id)
                     ->get();
 
         $following = DB::table('friendships')
+                    ->join('users', 'users.id', '=', 'friendships.following_id')
                     ->where('follower_id','=',$user->id)
                     ->get();
 

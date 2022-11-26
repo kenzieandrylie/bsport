@@ -1,5 +1,6 @@
 import { Inertia,useForm } from '@inertiajs/inertia-react';
 import React, { useEffect, useState, useRef } from 'react';
+import PopupUser from '../Modal/PopupUser';
 
 const ProfileHeader = ({user, auth, follower, following, friend}) => {
 
@@ -9,6 +10,9 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
 
     console.log('Profile Header: ', user, auth);
 
+    const [datapop, setDatapop] = useState([]);
+    const [isopen, setIsopen] = useState(false);
+    const [labelpop, setLabelpop] = useState('');
     const [type, setType] = useState('');
 
     const handleFollow = () => {
@@ -21,6 +25,12 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
         setType('unfollow');
     }
 
+    const clearViewState = () => {
+        setDatapop([]);
+        setLabelpop('');
+        setIsopen(false);
+    }
+
     useEffect(() => {
         if(type === 'follow'){
             post(route('follow.user'), {preserveScroll: true});
@@ -30,8 +40,20 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
         }
     },[data])
 
+    useEffect(() => {
+        if(labelpop === 'follower'){
+            setDatapop(follower);
+            setIsopen(true);
+        }
+        else if(labelpop === 'following'){
+            setDatapop(following);
+            setIsopen(true);
+        }
+    },[labelpop])
+
     return (
         <>
+        <PopupUser open={isopen} users={datapop} label={labelpop} onClose={clearViewState}/>
             <div className="flex flex-col bg-white border rounded-xl">
 
                 <div className="flex justify-center w-full shadow-sm">
@@ -59,16 +81,16 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
                 </div>
 
                 <div className="flex flex-row justify-center">
-                    <div className="flex basis-full p-3 mb-3">
-                        <div className="flex flex-col items-center basis-1/3">
+                    <div className="flex basis-full p-3 mb-3 justify-around">
+                        <div className="flex flex-col items-center">
                             <span className="font-bold text-lg">0</span>
                             <span>Activity</span>
                         </div>
-                        <div className="flex flex-col items-center basis-1/3">
+                        <div className="flex flex-col items-center cursor-pointer" onClick={() => {setLabelpop("follower")}}>
                             <span className="font-bold text-lg">{follower.length}</span>
                             <span>Followers</span>
                         </div>
-                        <div className="flex flex-col items-center basis-1/3">
+                        <div className="flex flex-col items-center cursor-pointer" onClick={() => {setLabelpop("following")}}>
                             <span className="font-bold text-lg">{following.length}</span>
                             <span>Following</span>
                         </div>
