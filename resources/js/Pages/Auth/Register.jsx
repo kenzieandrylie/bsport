@@ -10,7 +10,7 @@ export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
-        kode: '',
+        username: '',
         password: '',
         password_confirmation: '',
         last_name: ''
@@ -72,20 +72,20 @@ export default function Register() {
                 </div>
 
                 <div className='mt-4'>
-                    <InputLabel forInput="kode" value="Lecturer / Student ID" />
+                    <InputLabel forInput="username" value="Lecturer / Student ID" />
 
                     <TextInput
                         type="text"
-                        name="kode"
-                        value={data.kode}
+                        name="username"
+                        value={data.username}
                         className="mt-1 block w-full"
-                        autoComplete="kode"
+                        autoComplete="username"
                         isFocused={true}
                         handleChange={onHandleChange}
                         required
                     />
 
-                    <InputError message={errors.kode} className="mt-2" />
+                    <InputError message={errors.username} className="mt-2" />
                 </div>
 
                 <div className="mt-4">

@@ -20,28 +20,28 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'bluedrinkers',
             'last_name' => 'Aja',
-            'kode' => '2301911060',
+            'username' => 'bluedrinkers',
             'email' => 'bluedrinkers@gmail.com',
             'password' => Hash::make('lyzander1')
         ]);
         DB::table('users')->insert([
             'name' => 'Peki',
             'last_name' => 'Anto',
-            'kode' => 'D5558',
+            'username' => 'pekianto',
             'email' => 'peki@gmail.com',
             'password' => Hash::make('lyzander1')
         ]);
         DB::table('users')->insert([
             'name' => 'Kenzie',
             'last_name' => 'Andrylie',
-            'kode' => 'D5578',
+            'username' => 'kenzieandrylie',
             'email' => 'kenzie@gmail.com',
             'password' => Hash::make('lyzander1')
         ]);
         DB::table('users')->insert([
             'name' => 'Davin',
             'last_name' => 'Haryadi',
-            'kode' => 'D4444',
+            'username' => 'davinharyadi',
             'email' => 'davin@gmail.com',
             'password' => Hash::make('lyzander1')
         ]);
