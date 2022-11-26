@@ -28,5 +28,17 @@ class FriendshipSeeder extends Seeder
             'following_id' => "1",
             'follower_id' => "2"
         ]);
+        DB::table('friendships')->insert([
+            'following_id' => "1",
+            'follower_id' => "3"
+        ]);
+        DB::table('friendships')->insert([
+            'following_id' => "4",
+            'follower_id' => "1"
+        ]);
+        DB::table('friendships')->insert([
+            'following_id' => "3",
+            'follower_id' => "2"
+        ]);
     }
 }

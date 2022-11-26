@@ -21,10 +21,10 @@ const Profile = (props) => {
                         <TotalActivity />
                     </div>
                     <div className="col-span-full lg:col-span-2 order-first lg:order-none">
-                        <ProfileHeader user={props.user} auth={props.auth.user} follower={props.follower} following={props.following}/>
+                        <ProfileHeader user={props.user} auth={props.auth.user} follower={props.follower} following={props.following} friend={props.friend}/>
                     </div>
                     <div className="col-span-full lg:col-span-1 row-span-1 lg:row-span-2 lg:mt-4 order-4 lg:order-none align-items-center lg:sticky top-24">
-                        <MyFriend users={props.users}/>
+                        <MyFriend users={props.friend}/>
                     </div>
                     <div className="col-span-full lg:col-span-1 order-3 lg:order-none static lg:sticky top-24">
                         <NumberActivity />

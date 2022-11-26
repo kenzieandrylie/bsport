@@ -1,9 +1,34 @@
+import { Inertia,useForm } from '@inertiajs/inertia-react';
 import React, { useEffect, useState, useRef } from 'react';
 
-const ProfileHeader = ({user, auth, follower, following}) => {
+const ProfileHeader = ({user, auth, follower, following, friend}) => {
+
+    const {data,setData,post, processing, errors, reset,delete:destroy} = useForm({
+        id:''
+    });
 
     console.log('Profile Header: ', user, auth);
-    console.log('follower ',follower);
+
+    const [type, setType] = useState('');
+
+    const handleFollow = () => {
+        setData('id',user.id);
+        setType('follow');
+    }
+
+    const handleUnfollow = () => {
+        setData('id',user.id);
+        setType('unfollow');
+    }
+
+    useEffect(() => {
+        if(type === 'follow'){
+            post(route('follow.user'), {preserveScroll: true});
+        }
+        else if(type === 'unfollow'){
+            destroy(route('unfollow.user'), {preserveScroll: true});
+        }
+    },[data])
 
     return (
         <>
@@ -25,9 +50,9 @@ const ProfileHeader = ({user, auth, follower, following}) => {
                                 <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4">Edit Profile</button>
                             :
                                 follower.find(e => e.follower_id === auth.id) ?
-                                    <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4">Following</button>
+                                    <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4" onClick={handleUnfollow}>Following</button>
                                 :
-                                    <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 lg:w-3/4">Follow</button>
+                                    <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 lg:w-3/4" onClick={handleFollow}>Follow</button>
                             }
                         </div>
                     </div>
