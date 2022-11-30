@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -28,8 +29,28 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'username' => ['required','string','max:20',Rule::unique('users')->ignore(auth()->user()->id, 'id')],
-            'email' => ['required','string','max:255','email',Rule::unique('users')->ignore(auth()->user()->id, 'id')]
+            'email' => ['required','string','max:255','email',Rule::unique('users')->ignore(auth()->user()->id, 'id')],
+            'profile_picture' => ['nullable']
         ]);
+
+        if($request->file('profile_picture')) {
+
+            $request->validate([
+                'profile_picture' => ['mimes:jpg,bmp,png','max:2048']
+            ]);
+
+            $imageName = time().'.'.$request->file('profile_picture')->getClientOriginalExtension();
+
+            if(auth()->user()->profile_picture){
+                Storage::delete('public/'. auth()->user()->profile_picture);
+            }
+
+            Storage::putFileAs('public/image-profile',$request->file('profile_picture'),$imageName);
+
+            User::whereId(auth()->user()->id)->update([
+                'profile_picture' => 'image-profile/'.$imageName
+            ]);
+        }
 
         User::whereId(auth()->user()->id)->update([
             'name' => $request->name,

@@ -59,7 +59,7 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
                 <div className="flex justify-center w-full shadow-sm">
                     <div className="flex flex-col items-center sm:flex-row p-2 basis-full">
                         <div className="-mt-28 basis-1/4 flex justify-center">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" className="h-44 w-44 rounded-full border-4 border-white"/>
+                            <img src={user.profile_picture ? `../storage/${user.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-44 w-44 rounded-full border-4 border-white"/>
                         </div>
                         <div className="flex-col basis-1/2">
                             <div className="flex flex-col mt-4 sm:mt-0 text-center sm:text-left">

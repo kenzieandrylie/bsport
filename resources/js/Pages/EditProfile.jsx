@@ -17,8 +17,11 @@ const EditProfile = (props) => {
         username: user.username,
         password: '',
         password_confirmation: '',
-        current_password: ''
+        current_password: '',
+        profile_picture: user.profile_picture
     })
+
+    console.log('Edit profile : ', props, data);
 
     const [type, setType] = useState('editprofile');
     const [info, setInfo] = useState('');
@@ -30,12 +33,12 @@ const EditProfile = (props) => {
 
     const handleProfile = (e) => {
         const imageFiles = e.target.files;
-        console.log(imageFiles);
-        if(imageFiles.length >0 ){
+        //console.log(imageFiles[0]);
+        if(imageFiles.length > 0 ){
             const image = URL.createObjectURL(imageFiles[0]);
             setPreview(image);
-            console.log(image);
         }
+        setData('profile_picture',imageFiles[0]);
     }
 
     const updatePass = (e) => {
@@ -58,6 +61,10 @@ const EditProfile = (props) => {
 
         setInfo('profile');
     };
+
+    useEffect(() => {
+        data.profile_picture && setPreview(`../storage/${user.profile_picture}`)
+    },[])
 
     useEffect(() => {
         setInfo();
@@ -90,7 +97,12 @@ const EditProfile = (props) => {
                         {type === "editprofile" ?
                         <>
                             <form onSubmit={updateProf}>
-                                <div className="hero rounded-lg" style={{ backgroundImage: `url("https://cutewallpaper.org/21/chill-anime-background/Load-104-More-Imagesgrid-View-Anime-Background-Wallpaper-.jpg")`, height: `20vh` }}></div>
+                                <div className="hero rounded-lg" style={{ backgroundImage: `url("https://cutewallpaper.org/21/chill-anime-background/Load-104-More-Imagesgrid-View-Anime-Background-Wallpaper-.jpg")`, height: `20vh` }}>
+                                    <div className="flex w-full h-full items-end justify-end text-gray-500">
+                                        <label htmlFor="c-input" className="p-1 rounded-md cursor-pointer hover:bg-slate-200 mr-2 bg-white mb-2 flex items-center border "><FontAwesomeIcon icon={faCamera} size="sm"/> <span className="text-sm ml-2">edit cover</span> </label>
+                                    </div>
+                                    <input type="file" id="c-input" accept="image/*" className="invisible" />
+                                </div>
                                 <div className="flex justify-center -mt-16">
                                     <div className="h-1/4 w-1/4 relative">
                                         <img src={preview} alt="" className="rounded-full border-4 border-white w-40 h-40 object-cover"/>
