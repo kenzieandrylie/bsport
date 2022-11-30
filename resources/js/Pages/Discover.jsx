@@ -18,11 +18,11 @@ const Discover = (props) => {
                         <Link href={route('index.create.group')}><BtnLink>Create Group</BtnLink></Link>
                     </div>
                     <div className='flex justify-start items-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch gap-5 p-8'>
-                        {props.publicgroups.length > 0 ? props.publicgroups.map((group) => {
+                        {props.publicgroups.length > 0 ? props.publicgroups.map((group,i) => {
                            return(
-                            <>
+                            <div key={i}>
                                 <GroupCardPublic group={group}/>
-                            </>
+                            </div>
                            )
                         })
                         : <div className='flex justify-center w-full p-12'><p>There is no public group yet, let's make one!</p></div>

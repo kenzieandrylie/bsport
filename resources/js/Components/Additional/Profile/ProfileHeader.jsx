@@ -1,4 +1,4 @@
-import { Inertia,useForm } from '@inertiajs/inertia-react';
+import { Inertia,useForm,Link } from '@inertiajs/inertia-react';
 import React, { useEffect, useState, useRef } from 'react';
 import PopupUser from '../Modal/PopupUser';
 
@@ -69,7 +69,11 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
                         </div>
                         <div className="flex items-center basis-1/4 justify-center">
                             {user.id === auth.id ?
-                                <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4">Edit Profile</button>
+                                <div className="basis-3/4">
+                                    <Link href={route('index.edit.profile')}>
+                                        <div type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-full">Edit Profile</div>
+                                    </Link>
+                                </div>
                             :
                                 follower.find(e => e.follower_id === auth.id) ?
                                     <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4" onClick={handleUnfollow}>Following</button>

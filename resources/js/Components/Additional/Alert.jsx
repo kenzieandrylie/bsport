@@ -6,6 +6,10 @@ const alert = ({msg}) => {
 
     const [showAlert, setShowAlert] = useState(true);
 
+    useEffect(() => {
+        setShowAlert(true);
+    },[msg])
+
     return (
         <>
             {showAlert ? (

@@ -20,7 +20,7 @@ const SearchBar = ({users}) => {
                     <div className="absolute bg-white w-full rounded shadow-md">
                         {query.length > 0 ?
                         users
-                        .filter((user) => user.name.toLowerCase().includes(query.toLowerCase()) ||  user.last_name.toLowerCase().includes(query.toLowerCase()))
+                        .filter((user) => user.username.toLowerCase().includes(query.toLowerCase()))
                         .map((user,i) => {
                             return(
                                 <>
