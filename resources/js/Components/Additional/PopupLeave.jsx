@@ -21,10 +21,10 @@ const PopupLeave = ({open,onClose,group,type}) => {
 
         if(data.id!=''){
             if(type =='leave'){
-                destroy(route('leave.group'))
+                destroy(route('leave.group'), {preserveScroll: true})
             }else if(type =='deletegroup'){
 
-                destroy(route('delete.group'))
+                destroy(route('delete.group'), {preserveScroll: true})
             }
         }
     },[data]);

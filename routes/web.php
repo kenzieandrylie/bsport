@@ -4,6 +4,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMemberController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -49,8 +50,11 @@ Route::post('/creategroup',[GroupController::class, 'create_group'])->middleware
 //feedback
 Route::post('/feedback', [FeedbackController::class, 'create_feedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 //profile
-Route::get('/profile/{username}',[FriendshipController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
+Route::get('/profile/{username}',[ProfileController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
 Route::post('/follow', [FriendshipController::class, 'follow'])->middleware(['auth', 'verified'])->name('follow.user');
 Route::delete('/unfollow', [FriendshipController::class, 'unfollow'])->middleware(['auth', 'verified'])->name('unfollow.user');
+Route::get('/editprofile',[ProfileController::class, 'index_edit_profile'])->middleware(['auth', 'verified'])->name('index.edit.profile');
+Route::post('/editpassword', [ProfileController::class, 'edit_password'])->middleware(['auth', 'verified'])->name('edit.password');
+Route::post('/editprofile', [ProfileController::class, 'edit_profile'])->middleware(['auth', 'verified'])->name('edit.profile');
 
 require __DIR__.'/auth.php';
