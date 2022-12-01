@@ -18,7 +18,8 @@ const EditProfile = (props) => {
         password: '',
         password_confirmation: '',
         current_password: '',
-        profile_picture: user.profile_picture
+        profile_picture: user.profile_picture,
+        cover_picture: user.cover_picture
     })
 
     console.log('Edit profile : ', props, data);
@@ -26,6 +27,7 @@ const EditProfile = (props) => {
     const [type, setType] = useState('editprofile');
     const [info, setInfo] = useState('');
     const [preview, setPreview] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+    const [cover, setCover] = useState('https://cutewallpaper.org/21/chill-anime-background/Load-104-More-Imagesgrid-View-Anime-Background-Wallpaper-.jpg')
 
     const handleChange = (e) => {
         setData(e.target.name, e.target.value);
@@ -39,6 +41,16 @@ const EditProfile = (props) => {
             setPreview(image);
         }
         setData('profile_picture',imageFiles[0]);
+    }
+
+    const handleCover = (e) => {
+        const imageFiles = e.target.files;
+        //console.log(imageFiles[0]);
+        if(imageFiles.length > 0 ){
+            const image = URL.createObjectURL(imageFiles[0]);
+            setCover(image);
+        }
+        setData('cover_picture',imageFiles[0]);
     }
 
     const updatePass = (e) => {
@@ -63,7 +75,8 @@ const EditProfile = (props) => {
     };
 
     useEffect(() => {
-        data.profile_picture && setPreview(`../storage/${user.profile_picture}`)
+        data.profile_picture && setPreview(`../storage/${user.profile_picture}`);
+        data.cover_picture && setCover(`../storage/${user.cover_picture}`);
     },[])
 
     useEffect(() => {
@@ -97,18 +110,22 @@ const EditProfile = (props) => {
                         {type === "editprofile" ?
                         <>
                             <form onSubmit={updateProf}>
-                                <div className="hero rounded-lg" style={{ backgroundImage: `url("https://cutewallpaper.org/21/chill-anime-background/Load-104-More-Imagesgrid-View-Anime-Background-Wallpaper-.jpg")`, height: `20vh` }}>
+                                <div className={`hero rounded-lg ${errors.cover_picture && "border-red-400 border-4"}`} style={{ backgroundImage: `url("${cover}")`, height: `20vh` }}>
                                     <div className="flex w-full h-full items-end justify-end text-gray-500">
                                         <label htmlFor="c-input" className="p-1 rounded-md cursor-pointer hover:bg-slate-200 mr-2 bg-white mb-2 flex items-center border "><FontAwesomeIcon icon={faCamera} size="sm"/> <span className="text-sm ml-2">edit cover</span> </label>
                                     </div>
-                                    <input type="file" id="c-input" accept="image/*" className="invisible" />
+                                    <input type="file" id="c-input" accept="image/*" className="invisible" onChange={handleCover}/>
                                 </div>
                                 <div className="flex justify-center -mt-16">
-                                    <div className="h-1/4 w-1/4 relative">
-                                        <img src={preview} alt="" className="rounded-full border-4 border-white w-40 h-40 object-cover"/>
+                                    <div className="h-1/4 w-40 lg:w-1/4 relative">
+                                        <img src={preview} alt="" className={`rounded-full border-4 border-white ${errors.profile_picture && "border-red-400"} w-40 h-40 object-cover`}/>
                                         <label htmlFor="dp-input" className="absolute bottom-10 right-0 border bg-white p-1 rounded-full cursor-pointer hover:bg-slate-200"><FontAwesomeIcon icon={faCamera} size="xl"/></label>
                                         <input type="file" id="dp-input" accept="image/*" className="invisible" onChange={handleProfile}/>
                                     </div>
+                                </div>
+                                <div className="grid-cols-12 mb-6">
+                                    <div className="col-start-5 col-span-8">{errors.cover_picture && <InputError message={errors.cover_picture}/>}</div>
+                                    <div className="col-start-5 col-span-8">{errors.profile_picture && <InputError message={errors.profile_picture}/>}</div>
                                 </div>
                                 <div className="grid grid-cols-12 mb-6">
                                     <label htmlFor="firstname" className="col-span-4 pt-3 pb-2 text-sm text-gray-700 font-bold">First Name<span className='text-red-600 font-bold'>*</span></label>
