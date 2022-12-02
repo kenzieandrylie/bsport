@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\GroupMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GroupMemberController extends Controller
 {
@@ -20,8 +21,8 @@ class GroupMemberController extends Controller
     public function deletegroup(Request $request){
 
         $group = Group::where('id','=',$request->id)->first();
-    
 
+        Storage::delete('public/'. $group->display_picture);
         $group->status = 0;
         $group->save();
         GroupMember::where('group_id','=',$request->id)->delete();

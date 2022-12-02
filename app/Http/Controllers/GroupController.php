@@ -7,6 +7,7 @@ use App\Models\GroupMember;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -77,7 +78,6 @@ class GroupController extends Controller
             'name'=>'required|min:8|unique:App\Models\Group,name',
             'description'=>'required',
             'display_picture'=>'required|mimes:jpg,bmp,png|max:2048',
-
         ];
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
@@ -85,6 +85,13 @@ class GroupController extends Controller
             return redirect('/creategroup')->withErrors($validator)->withInput();
         }
 
+        // KENZIE TAMBAH <- HAPUS COMMENT KALO DAH DI CEK
+        if($request->file('display_picture')) {
+
+            $imageName = time().'.'.$request->file('display_picture')->getClientOriginalExtension();
+
+            Storage::putFileAs('public/image-group',$request->file('display_picture'),$imageName);
+        }
 
         $alluser = User::all();
 
@@ -96,7 +103,7 @@ class GroupController extends Controller
         Group::create([
                             'name'=>$request->name,
                             'description'=>$request->description,
-                            'display_picture'=>$request->display_picture,
+                            'display_picture'=> 'image-group/'.$imageName,
                             'creator_id'=>auth()->user()->id,
                             'status'=>1
         ]);

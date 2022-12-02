@@ -18,7 +18,7 @@ const GroupCardPublic = ({group}) => {
         e.preventDefault();
         setLabeljoin("Joined");
         setData(()=>{return {groupId:String(groupIdRef.current.value)}});
-        
+
     }
     useEffect(()=>{
         if(labeljoin=="Joined" && disable==true){
@@ -34,7 +34,7 @@ const GroupCardPublic = ({group}) => {
            <div className="w-64 h-52 border border-gray-300 bg-white">
                 <div className="block p-3">
                     <div className="flex justify-center">
-                        <img src={group.display_picture} alt="" className="rounded" style={{width:`80px`,height:`80px`,objectFit:`cover`}}/>
+                        <img src={group.display_picture ? `../storage/${group.display_picture}` : "https://i.pinimg.com/originals/50/46/0c/50460cdffd8bb7e3e387f3d456b6d633.jpg"} alt="" className="rounded" style={{width:`80px`,height:`80px`,objectFit:`cover`}}/>
                     </div>
                     <div className="flex justify-center p-4 font-bold">
                         {group.name}

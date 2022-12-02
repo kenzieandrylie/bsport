@@ -118,7 +118,7 @@ const EditProfile = (props) => {
                                 </div>
                                 <div className="flex justify-center -mt-16">
                                     <div className="h-1/4 w-40 lg:w-1/4 relative">
-                                        <img src={preview} alt="" className={`rounded-full border-4 border-white ${errors.profile_picture && "border-red-400"} w-40 h-40 object-cover`}/>
+                                        <img src={preview} alt="" className={`rounded-full border-4 ${errors.profile_picture ? "border-red-400" : "border-white"} w-40 h-40 object-cover`}/>
                                         <label htmlFor="dp-input" className="absolute bottom-10 right-0 border bg-white p-1 rounded-full cursor-pointer hover:bg-slate-200"><FontAwesomeIcon icon={faCamera} size="xl"/></label>
                                         <input type="file" id="dp-input" accept="image/*" className="invisible" onChange={handleProfile}/>
                                     </div>
