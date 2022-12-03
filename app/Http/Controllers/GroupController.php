@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class GroupController extends Controller
@@ -117,6 +118,62 @@ class GroupController extends Controller
         ->with( 'mygroups' ,$mygroups)
         ->with( 'users' , $alluser)
         ->with('message','Group '.$request->name. 'berhasil dibuat.');
+    }
+
+    // Edit Group
+    public function index_edit_group(Request $request){
+
+        $group = Group::find($request->id);
+
+        if(auth()->user()->id != $group->creator_id) {
+            abort(404);
+        }
+        else {
+            $alluser = User::all();
+
+            return Inertia::render('EditGroup',[
+                'users' => $alluser,
+                'group' => $group
+            ]);
+        }
+    }
+
+    public function edit_group(Request $request){
+
+        $request->validate([
+            'name'=>['required','min:8',Rule::unique('groups')->ignore($request->id, 'id')],
+            'description'=>'required',
+            'display_picture'=>'nullable'
+        ]);
+
+        $group = Group::find($request->id);
+
+        if($request->file('display_picture')) {
+
+            $request->validate([
+                'display_picture' => ['mimes:jpg,bmp,png','max:1024']
+            ]);
+
+            $imageName = time().'.'.$request->file('display_picture')->getClientOriginalExtension();
+
+            if($group->display_picture){
+                Storage::delete('public/'. $group->display_picture);
+            }
+
+            Storage::putFileAs('public/image-group',$request->file('display_picture'),$imageName);
+
+            Group::whereId($group->id)->update([
+                'display_picture' => 'image-group/'.$imageName
+            ]);
+        }
+
+        Group::whereId($group->id)->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return redirect()->intended('/dashboard')
+        ->with('message','Grup "'.$request->name. '" berhasil diupdate.');
     }
 
 }

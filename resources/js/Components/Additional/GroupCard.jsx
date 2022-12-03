@@ -1,10 +1,10 @@
+import { Inertia } from '@inertiajs/inertia';
 import { Head, Link ,useForm} from '@inertiajs/inertia-react';
 import React, { useEffect, useState, useRef } from 'react';
 import PopupLeave from './PopupLeave';
 
 const GroupCard = ({group,Author}) => {
 
-// ------- semua yang di comment adalah pop up untuk leave confirmation | HAPUS BILA TIDAK DIPERLUKAN---------
     const [isopen, setIsopen] = useState(false);
     const [datapopup, setDatapopup] = useState({});
     const [popuptype ,setPopupType]= useState('');
@@ -22,6 +22,10 @@ const GroupCard = ({group,Author}) => {
         handlePopup('leave');
     }
 
+    const handleEdit=()=>{
+        Inertia.get('/editgroup',{id : group.group_id});
+    }
+
     return (
         <>
         <PopupLeave open={isopen} type={popuptype} group={datapopup} onClose={() => setIsopen(false)}/>
@@ -34,9 +38,13 @@ const GroupCard = ({group,Author}) => {
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                             <li><a href="">View</a></li>
-                           {Author==group.creator_id ? <li className='text-red-500'><p method="delete" as="button" onClick={handleDeleteGroup}>Delete Group</p></li>:
+                           {Author==group.creator_id ?
+                           <>
+                           <li className='text-sky-500'><p method="get" as="button" onClick={handleEdit}>Edit Group</p></li>
+                           <li className='text-red-500'><p method="delete" as="button" onClick={handleDeleteGroup}>Delete Group</p></li>
+                           </>
+                           :
                            <li className='text-red-500'><p method="delete" as="button" onClick={handleLeave}>Leave</p></li>}
-                            {/* <li className='text-red-500'><button onClick={() => handlePopup()}>Leave</button></li> */}
                         </ul>
                     </div>
                 </div>

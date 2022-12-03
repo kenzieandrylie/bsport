@@ -22,13 +22,12 @@ const GroupCardPublic = ({group}) => {
     }
     useEffect(()=>{
         if(labeljoin=="Joined" && disable==true){
-            post(route('join.group'));
+            post(route('join.group'), {preserveScroll: true});
         }
 
     },[data]);
-    // useEffect(()=>{
-    //     post(route('join.group'));
-    // },[data]);
+
+
     return (
         <>
            <div className="w-64 h-52 border border-gray-300 bg-white">
