@@ -67,9 +67,9 @@ const CreateGroup = ({errors,auth,users}) => {
             <div className="gap-6">
               <div className="col-span-3 ">
                 <div className=" grid grid-cols-12 flex align-items-center rounded-md">
-                <label htmlFor="groupName" className="text-sm font-bold text-gray-700 md:col-span-4 px-3 py-2">Group Name<span className='text-red-600 font-bold'>*</span></label>
+                <label htmlFor="groupName" className="text-sm font-bold text-gray-700 col-span-4 px-3 py-2">Group Name<span className='text-red-600 font-bold'>*</span></label>
 
-                  <input type="text" name="groupName" id="name" className={ errors.name? ' md:col-span-8 w-full rounded focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm  border-red-500':' md:col-span-8 w-full rounded focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border-gray-300 ' } placeholder="John Doe" onChange={handleChange}/>
+                  <input type="text" name="groupName" id="name" className={ errors.name? ' col-span-8 w-full rounded focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm  border-red-500':' col-span-8 w-full rounded focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border-gray-300 ' } placeholder="John Doe" onChange={handleChange}/>
                 </div>
                 <div className='grid grid-cols-12'>
                   <p className='col-span-4'></p>
@@ -89,8 +89,8 @@ const CreateGroup = ({errors,auth,users}) => {
                   </div>
             <hr />
             <div className='grid grid-cols-12 align-items-center'>
-              <label className=" text-sm font-bold text-gray-700 md:col-span-4 px-3 py-2">Group Photo <span className='text-red-600 font-bold'>*</span></label>
-              <div className="mt-1 flex items-center md:col-span-8">
+              <label className=" text-sm font-bold text-gray-700 col-span-4 px-3 py-2">Group Photo <span className='text-red-600 font-bold'>*</span></label>
+              <div className="mt-1 flex items-center col-span-8">
                 <span className={`inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100 `+isPlaceholderImage}>
                   <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />

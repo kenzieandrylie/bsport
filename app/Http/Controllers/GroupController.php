@@ -7,7 +7,9 @@ use App\Models\GroupMember;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class GroupController extends Controller
@@ -77,7 +79,6 @@ class GroupController extends Controller
             'name'=>'required|min:8|unique:App\Models\Group,name',
             'description'=>'required',
             'display_picture'=>'required|mimes:jpg,bmp,png|max:2048',
-
         ];
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
@@ -85,6 +86,13 @@ class GroupController extends Controller
             return redirect('/creategroup')->withErrors($validator)->withInput();
         }
 
+        // KENZIE TAMBAH <- HAPUS COMMENT KALO DAH DI CEK
+        if($request->file('display_picture')) {
+
+            $imageName = time().'.'.$request->file('display_picture')->getClientOriginalExtension();
+
+            Storage::putFileAs('public/image-group',$request->file('display_picture'),$imageName);
+        }
 
         $alluser = User::all();
 
@@ -96,7 +104,7 @@ class GroupController extends Controller
         Group::create([
                             'name'=>$request->name,
                             'description'=>$request->description,
-                            'display_picture'=>$request->display_picture,
+                            'display_picture'=> 'image-group/'.$imageName,
                             'creator_id'=>auth()->user()->id,
                             'status'=>1
         ]);
@@ -110,6 +118,62 @@ class GroupController extends Controller
         ->with( 'mygroups' ,$mygroups)
         ->with( 'users' , $alluser)
         ->with('message','Group '.$request->name. 'berhasil dibuat.');
+    }
+
+    // Edit Group
+    public function index_edit_group(Request $request){
+
+        $group = Group::find($request->id);
+
+        if(auth()->user()->id != $group->creator_id) {
+            abort(404);
+        }
+        else {
+            $alluser = User::all();
+
+            return Inertia::render('EditGroup',[
+                'users' => $alluser,
+                'group' => $group
+            ]);
+        }
+    }
+
+    public function edit_group(Request $request){
+
+        $request->validate([
+            'name'=>['required','min:8',Rule::unique('groups')->ignore($request->id, 'id')],
+            'description'=>'required',
+            'display_picture'=>'nullable'
+        ]);
+
+        $group = Group::find($request->id);
+
+        if($request->file('display_picture')) {
+
+            $request->validate([
+                'display_picture' => ['mimes:jpg,bmp,png','max:1024']
+            ]);
+
+            $imageName = time().'.'.$request->file('display_picture')->getClientOriginalExtension();
+
+            if($group->display_picture){
+                Storage::delete('public/'. $group->display_picture);
+            }
+
+            Storage::putFileAs('public/image-group',$request->file('display_picture'),$imageName);
+
+            Group::whereId($group->id)->update([
+                'display_picture' => 'image-group/'.$imageName
+            ]);
+        }
+
+        Group::whereId($group->id)->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return redirect()->intended('/dashboard')
+        ->with('message','Grup "'.$request->name. '" berhasil diupdate.');
     }
 
 }
