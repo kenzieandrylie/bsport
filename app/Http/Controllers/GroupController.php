@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\GroupMember;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +25,17 @@ class GroupController extends Controller
 
         $alluser = User::all();
 
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
         return Inertia::render('Dashboard', [
             'mygroups' => $mygroups,
-            'users' => $alluser
-
+            'users' => $alluser,
+            'notifications' => $notification
         ]);
     }
 
@@ -48,9 +56,17 @@ class GroupController extends Controller
                             "
                         );
 
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
         return Inertia::render('Discover', [
             'publicgroups' => $publicgroups,
-            'users' => $alluser
+            'users' => $alluser,
+            'notifications' => $notification
         ]);
     }
 
@@ -69,9 +85,18 @@ class GroupController extends Controller
                                 (select g.id from groups g join group_members gm on gm.group_id = g.id where gm.user_id = $auth_id)
                             "
                         );
+
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
         return Inertia::render('CreateGroup',[
             'publicgroups' => $publicgroups,
-            'users' => $alluser
+            'users' => $alluser,
+            'notifications' => $notification
         ]);
     }
     public function create_group(Request $request){
@@ -125,6 +150,13 @@ class GroupController extends Controller
 
         $group = Group::find($request->id);
 
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
         if(auth()->user()->id != $group->creator_id) {
             abort(404);
         }
@@ -133,7 +165,8 @@ class GroupController extends Controller
 
             return Inertia::render('EditGroup',[
                 'users' => $alluser,
-                'group' => $group
+                'group' => $group,
+                'notifications' => $notification
             ]);
         }
     }

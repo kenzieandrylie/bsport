@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +59,13 @@ class ProfileController extends Controller
                     "
                 );
 
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
         $alluser = User::all();
 
         return Inertia::render('Profile',[
@@ -65,7 +73,8 @@ class ProfileController extends Controller
             'user' => $user,
             'follower' => $follower,
             'following' => $following,
-            'friend' => $friend
+            'friend' => $friend,
+            'notifications' => $notification
         ]);
     }
 
@@ -74,8 +83,16 @@ class ProfileController extends Controller
 
         $alluser = User::all();
 
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
         return Inertia::render('EditProfile',[
-            'users' => $alluser
+            'users' => $alluser,
+            'notifications' => $notification
         ]);
     }
 

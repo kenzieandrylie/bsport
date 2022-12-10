@@ -12,7 +12,7 @@ const Profile = (props) => {
 
     return (
         <>
-            <UserLayout auth={props.auth} users={props.users}>
+            <UserLayout auth={props.auth} users={props.users} notifications={props.notifications}>
 
                 <div className="hero" style={{ backgroundImage: `url(${props.user.cover_picture ? `../storage/${props.user.cover_picture}` : "https://cutewallpaper.org/21/chill-anime-background/Load-104-More-Imagesgrid-View-Anime-Background-Wallpaper-.jpg"})`, height: `50vh` }}></div>
 

@@ -47,7 +47,7 @@ const EditGroup = (props) => {
 
     return (
         <>
-            <UserLayout auth={props.auth} users={props.users}>
+            <UserLayout auth={props.auth} users={props.users} notifications={props.notifications}>
             <div className='p-8'>
                 <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="mt-5 md:col-span-3 md:mt-0 ">
