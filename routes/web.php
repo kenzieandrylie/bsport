@@ -30,8 +30,8 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function () {
-    return Inertia::render('Auth/Login');
-});
+    return Inertia::render('Landing');
+})->middleware('guest');
 
 Route::get('/back', function(){
     return redirect()->back();

@@ -85,7 +85,7 @@ const EditProfile = (props) => {
 
     return (
         <>
-            <UserLayout auth={props.auth} users={props.users}>
+            <UserLayout auth={props.auth} users={props.users} notifications={props.notifications}>
 
                 <div className="grid grid-cols-4 gap-4 m-8">
 

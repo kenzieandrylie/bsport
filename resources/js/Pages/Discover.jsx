@@ -11,7 +11,7 @@ const Discover = (props) => {
 
     return (
         <>
-            <UserLayout auth={props.auth} users={props.users}>
+            <UserLayout auth={props.auth} users={props.users} notifications={props.notifications}>
                 <div className="p-8">
                     <div className='w-full font-bold text-2xl flex justify-between'>
                         <span>Public Group</span>
