@@ -72,7 +72,7 @@ export default function Register() {
                 </div>
 
                 <div className='mt-4'>
-                    <InputLabel forInput="username" value="Lecturer / Student ID" />
+                    <InputLabel forInput="username" value="Username" />
 
                     <TextInput
                         type="text"
