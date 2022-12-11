@@ -5,7 +5,7 @@ import Hero from '@/Components/Additional/Hero';
 import GroupCard from '@/Components/Additional/GroupCard';
 import UserLayout from '@/Layouts/UserLayout';
 import { Inertia } from '@inertiajs/inertia';
-const CreateGroup = ({errors,auth,users}) => {
+const CreateGroup = ({errors,auth,users,notifications}) => {
     console.log(users);
     const [isError,setIsErrors] = useState([]);
     const [data,setData]= useState([
@@ -57,6 +57,7 @@ const CreateGroup = ({errors,auth,users}) => {
         <UserLayout
          auth={auth}
          users={users}
+         notifications={notifications}
          >
            <div className='p-8'>
   <div className="md:grid md:grid-cols-3 md:gap-6">

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class GroupController extends Controller
 {
@@ -111,7 +112,6 @@ class GroupController extends Controller
             return redirect('/creategroup')->withErrors($validator)->withInput();
         }
 
-        // KENZIE TAMBAH <- HAPUS COMMENT KALO DAH DI CEK
         if($request->file('display_picture')) {
 
             $imageName = time().'.'.$request->file('display_picture')->getClientOriginalExtension();
@@ -131,7 +131,8 @@ class GroupController extends Controller
                             'description'=>$request->description,
                             'display_picture'=> 'image-group/'.$imageName,
                             'creator_id'=>auth()->user()->id,
-                            'status'=>1
+                            'status'=>1,
+                            'pin' => Str::random(10)
         ]);
         $newGroup = Group::where('name','=',$request->name)->first();
         GroupMember::create([
@@ -148,20 +149,20 @@ class GroupController extends Controller
     // Edit Group
     public function index_edit_group(Request $request){
 
-        $group = Group::find($request->id);
+        $group = Group::where('pin','=',$request->pin)->first();
 
-        $time_from = Carbon::now()->subDays(1);
-        $notification = DB::table('users')
-                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
-                        ->where('following_id','=',auth()->user()->id)
-                        ->where('friendships.created_at','>=',$time_from)
-                        ->get();
-
-        if(auth()->user()->id != $group->creator_id) {
+        if( !$group || auth()->user()->id != $group->creator_id) {
             abort(404);
         }
         else {
             $alluser = User::all();
+
+            $time_from = Carbon::now()->subDays(1);
+            $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
 
             return Inertia::render('EditGroup',[
                 'users' => $alluser,

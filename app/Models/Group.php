@@ -22,6 +22,7 @@ class Group extends Model
         'description',
         'display_picture',
         'status',
-        'creator_id'
+        'creator_id',
+        'pin'
     ];
 }

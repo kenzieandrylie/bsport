@@ -23,7 +23,7 @@ const GroupCard = ({group,Author}) => {
     }
 
     const handleEdit=()=>{
-        Inertia.get('/editgroup',{id : group.group_id});
+        Inertia.get(`/editgroup/${group.pin}`);
     }
 
     return (
