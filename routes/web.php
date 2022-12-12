@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\FriendshipController;
+use App\Http\Controllers\GroupActivityController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMemberController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,8 @@ Route::get('/creategroup',[GroupController::class, 'index_create_group'])->middl
 Route::post('/creategroup',[GroupController::class, 'create_group'])->middleware(['auth','verified'])->name('create.group');
 Route::get('/editgroup/{pin}',[GroupController::class, 'index_edit_group'])->middleware(['auth','verified'])->name('index.edit.group');
 Route::post('/editgroup',[GroupController::class, 'edit_group'])->middleware(['auth','verified'])->name('edit.group');
+//group detail
+Route::get('/groups/{pin}',[GroupActivityController::class, 'index_group_detail'])->middleware(['auth','verified'])->name('group.detail');
 //feedback
 Route::post('/feedback', [FeedbackController::class, 'create_feedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 //profile

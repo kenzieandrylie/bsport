@@ -29,6 +29,7 @@ class GroupActivity extends Model
         'time',
         'calories',
         'activity_date',
-        'acitivity_picture'
+        'acitivity_picture',
+        'caption'
     ];
 }
