@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('display_picture')->nullable();
             $table->unsignedBigInteger('status')->default(1);
+            $table->string('pin');
 
             $table->timestamps();
         });

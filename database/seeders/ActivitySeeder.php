@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ActivitySeeder extends Seeder
 {
@@ -15,5 +16,14 @@ class ActivitySeeder extends Seeder
     public function run()
     {
         //
+        DB::table('activities')->insert([
+            'name' => 'Running'
+        ]);
+        DB::table('activities')->insert([
+            'name' => 'Cycling'
+        ]);
+        DB::table('activities')->insert([
+            'name' => 'Workout'
+        ]);
     }
 }

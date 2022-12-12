@@ -23,7 +23,11 @@ const GroupCard = ({group,Author}) => {
     }
 
     const handleEdit=()=>{
-        Inertia.get('/editgroup',{id : group.group_id});
+        Inertia.get(`/editgroup/${group.pin}`);
+    }
+
+    const handleView=()=>{
+        Inertia.get(`/groups/${group.pin}`);
     }
 
     return (
@@ -37,7 +41,7 @@ const GroupCard = ({group,Author}) => {
                         </svg>
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
-                            <li><a href="">View</a></li>
+                            <li><p method="get" as="button" onClick={handleView}>View</p></li>
                            {Author==group.creator_id ?
                            <>
                            <li className='text-sky-500'><p method="get" as="button" onClick={handleEdit}>Edit Group</p></li>

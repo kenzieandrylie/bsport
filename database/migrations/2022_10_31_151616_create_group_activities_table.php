@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('calories');
             $table->date('activity_date');
             $table->string('activity_picture');
+            $table->string('caption');
             $table->timestamps();
         });
     }

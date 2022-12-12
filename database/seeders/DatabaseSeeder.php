@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GroupSeeder::class,
             GroupMemberSeeder::class,
-            FriendshipSeeder::class
+            FriendshipSeeder::class,
+            ActivitySeeder::class
         ]);
     }
 }
