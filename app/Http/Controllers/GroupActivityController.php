@@ -31,6 +31,22 @@ class GroupActivityController extends Controller
 
         $activities = Activity::all();
 
+        $posts = DB::table('users')
+                ->join('group_members','group_members.user_id','=','users.id')
+                ->join('group_activities','group_members.id','=','group_activities.group_member_id')
+                ->join('groups','group_members.group_id','=','groups.id')
+                ->where('group_members.group_id','=',$group->id)
+                ->selectRaw('group_activities.*,users.username,users.profile_picture,groups.name as group_name,users.id as user_id')
+                ->orderByDesc('group_activities.created_at')
+                ->get();
+
+        $sum = DB::table('group_members')
+        ->join('group_activities','group_members.id','=','group_activities.group_member_id')
+        ->where('group_members.group_id','=',$group->id)
+        ->where('group_members.user_id','=',auth()->user()->id)
+        ->selectRaw('sum(step) as sumstep, sum(calories) as sumcalories, sum(time) as sumtime, sum(distance) as sumdistance')
+        ->first();
+
         $time_from = Carbon::now()->subDays(1);
         $notification = DB::table('users')
                         ->join('friendships', 'users.id', '=', 'friendships.follower_id')
@@ -49,7 +65,9 @@ class GroupActivityController extends Controller
             'activities' => $activities,
             'group' => $group,
             'members' => $member,
-            'mymemberid' => $mymemberid
+            'mymemberid' => $mymemberid,
+            'posts' => $posts,
+            'sum' => $sum
         ]);
     }
 }

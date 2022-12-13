@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\GroupActivity;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +27,8 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             GroupMemberSeeder::class,
             FriendshipSeeder::class,
-            ActivitySeeder::class
+            ActivitySeeder::class,
+            GroupActivitySeeder::class
         ]);
     }
 }
