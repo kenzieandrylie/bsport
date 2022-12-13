@@ -19,7 +19,7 @@ const GroupDetail = (props) => {
             >
                 <div className="grid grid-cols-4 gap-4 mx-4 mt-4 mb-4">
                     <div className="col-span-full lg:col-span-1">
-                        <MyStat auth={props.auth.user}/>
+                        <MyStat auth={props.auth.user} sum={props.sum} posts={props.posts}/>
                     </div>
                     <div className="col-span-full lg:col-span-2">
                         <CreatePost auth={props.auth.user} types={props.activities} flash={props.flash.message} mymemberid={props.mymemberid}/>
@@ -36,7 +36,16 @@ const GroupDetail = (props) => {
                         <Standing />
                     </div>
                     <div className="col-span-full lg:col-span-2 lg:col-start-2 lg:row-span-2">
-                        <PostActivity />
+                    {
+                        props.posts.length > 0 ?
+                        props.posts.map((post,i) => {
+                           return (
+                            <div key={i}>
+                                <PostActivity post={post}/>
+                            </div>
+                           )
+                        }
+                        ) : <div className="ml-4"><span>There's no post yet!</span></div> }
                     </div>
                 </div>
 

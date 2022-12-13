@@ -18,7 +18,7 @@ const Profile = (props) => {
 
                 <div className="grid grid-cols-4 gap-4 mr-4 ml-4">
                     <div className="col-span-full lg:col-span-1 lg:mt-4 order-2 lg:order-none">
-                        <TotalActivity />
+                        <TotalActivity posts={props.posts}/>
                     </div>
                     <div className="col-span-full lg:col-span-2 order-first lg:order-none">
                         <ProfileHeader user={props.user} auth={props.auth.user} follower={props.follower} following={props.following} friend={props.friend}/>
@@ -27,10 +27,19 @@ const Profile = (props) => {
                         <MyFriend users={props.friend}/>
                     </div>
                     <div className="col-span-full lg:col-span-1 order-3 lg:order-none static lg:sticky top-24">
-                        <NumberActivity />
+                        <NumberActivity sum={props.sum}/>
                     </div>
                     <div className="col-span-full lg:col-span-2 row-span-2 lg:order-last lg:col-start-2 order-5 lg:-mt-12" >
-                        <PostActivity />
+                        {
+                        props.posts.length > 0 ?
+                        props.posts.map((post,i) => {
+                           return (
+                            <div key={i}>
+                                <PostActivity post={post}/>
+                            </div>
+                           )
+                        }
+                        ) : <div className="ml-4"><span>There's no post yet!</span></div> }
                     </div>
                 </div>
 

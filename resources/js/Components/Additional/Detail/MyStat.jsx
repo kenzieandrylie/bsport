@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/inertia-react";
 import { faShoePrints, faRoad, faFireFlameCurved, faStopwatch, faPersonRunning, faDumbbell, faBicycle  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MyStat = ({auth}) => {
+const MyStat = ({auth, sum, posts}) => {
     return (
         <>
             <div className="bg-white rounded-lg p-3 border">
@@ -28,15 +28,15 @@ const MyStat = ({auth}) => {
                         <div className="flex flex-col justify-center items-center">
                             <div className="grid grid-cols-2">
                                 <FontAwesomeIcon icon={faPersonRunning} size="lg" className="text-sky-500"/>
-                                <span>0 Times</span>
+                                <span>{posts.filter((post) => post.activity_id === 1 && post.user_id === auth.id).length} Times</span>
                             </div>
                             <div className="grid grid-cols-2">
                                 <FontAwesomeIcon icon={faDumbbell} size="lg" className="text-sky-500"/>
-                                <span>0 Times</span>
+                                <span>{posts.filter((post) => post.activity_id === 3 && post.user_id === auth.id).length} Times</span>
                             </div>
                             <div className="grid grid-cols-2">
                                 <FontAwesomeIcon icon={faBicycle} size="lg" className="text-sky-500"/>
-                                <span>0 Times</span>
+                                <span>{posts.filter((post) => post.activity_id === 2 && post.user_id === auth.id).length} Times</span>
                             </div>
                         </div>
                     </div>
@@ -44,19 +44,19 @@ const MyStat = ({auth}) => {
                     <div className="flex w-full justify-around text-sm">
                         <div className="flex flex-col gap-2">
                             <FontAwesomeIcon icon={faShoePrints} size="lg" className="text-sky-500"/>
-                            <span>0 Steps</span>
+                            <span>{sum.sumstep} Steps</span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <FontAwesomeIcon icon={faRoad} size="lg" className="text-sky-500"/>
-                            <span>0 Km</span>
+                            <span>{sum.sumdistance} Km</span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <FontAwesomeIcon icon={faFireFlameCurved} size="lg" className="text-sky-500"/>
-                            <span>0 KCal</span>
+                            <span>{sum.sumcalories} KCal</span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <FontAwesomeIcon icon={faStopwatch} size="lg" className="text-sky-500"/>
-                            <span>0 Mins</span>
+                            <span>{sum.sumtime} Mins</span>
                         </div>
                     </div>
                 </div>

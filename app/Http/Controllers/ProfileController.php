@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GroupActivity;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -59,6 +60,21 @@ class ProfileController extends Controller
                     "
                 );
 
+        $posts = DB::table('users')
+                ->join('group_members','group_members.user_id','=','users.id')
+                ->join('group_activities','group_members.id','=','group_activities.group_member_id')
+                ->join('groups','group_members.group_id','=','groups.id')
+                ->where('group_members.user_id','=',$user->id)
+                ->selectRaw('group_activities.*,users.username,users.profile_picture,groups.name as group_name')
+                ->orderByDesc('group_activities.created_at')
+                ->get();
+
+        $sum = DB::table('group_members')
+                ->join('group_activities','group_members.id','=','group_activities.group_member_id')
+                ->where('group_members.user_id','=',$user->id)
+                ->selectRaw('sum(step) as sumstep, sum(calories) as sumcalories, sum(time) as sumtime, sum(distance) as sumdistance')
+                ->first();
+
         $time_from = Carbon::now()->subDays(1);
         $notification = DB::table('users')
                         ->join('friendships', 'users.id', '=', 'friendships.follower_id')
@@ -74,7 +90,9 @@ class ProfileController extends Controller
             'follower' => $follower,
             'following' => $following,
             'friend' => $friend,
-            'notifications' => $notification
+            'notifications' => $notification,
+            'posts' => $posts,
+            'sum' => $sum
         ]);
     }
 

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreign('group_member_id')->references('id')->on('group_members')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('activity_id');
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('distance');
-            $table->unsignedBigInteger('step');
-            $table->unsignedBigInteger('time');
+            $table->unsignedBigInteger('distance')->default(0);
+            $table->unsignedBigInteger('step')->default(0);
+            $table->unsignedBigInteger('time')->default(0);
             $table->unsignedBigInteger('calories');
             $table->date('activity_date');
             $table->string('activity_picture');
