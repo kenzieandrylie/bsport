@@ -1,6 +1,6 @@
 import InputError from "@/Components/InputError";
 import UserLayout from "@/Layouts/UserLayout";
-import { useForm, usePage } from "@inertiajs/inertia-react";
+import { Head, useForm, usePage } from "@inertiajs/inertia-react";
 import { React,useState,useEffect } from "react";
 
 const EditGroup = (props) => {
@@ -48,6 +48,8 @@ const EditGroup = (props) => {
     return (
         <>
             <UserLayout auth={props.auth} users={props.users} notifications={props.notifications}>
+            <Head title="Edit Group" />
+
             <div className='p-8'>
                 <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="mt-5 md:col-span-3 md:mt-0 ">

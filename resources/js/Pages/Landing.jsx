@@ -1,10 +1,11 @@
 import BtnLink from "@/Components/Additional/BtnLink";
 import Footer from "@/Components/Additional/Footer";
-import { Link } from "@inertiajs/inertia-react";
+import { Head, Link } from "@inertiajs/inertia-react";
 
 const Landing = () => {
     return(
         <>
+            <Head title="Landing" />
             <div style={{ backgroundImage: `url("https://visualeyesiowa.com/wp-content/uploads/2015/08/GettyImages-670906214.jpg")`}}>
                 <div className="navbar p-3">
                     <div className="flex-1">

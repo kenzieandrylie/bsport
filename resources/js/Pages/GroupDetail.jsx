@@ -5,6 +5,7 @@ import MyStat from "@/Components/Additional/Detail/MyStat";
 import Standing from "@/Components/Additional/Detail/Standing";
 import PostActivity from "@/Components/Additional/Profile/PostActivity";
 import UserLayout from "@/Layouts/UserLayout";
+import { Head } from "@inertiajs/inertia-react";
 
 const GroupDetail = (props) => {
 
@@ -12,6 +13,7 @@ const GroupDetail = (props) => {
 
     return (
         <>
+            <Head title={`Group | ${props.group.name}`} />
             <UserLayout
                 auth={props.auth}
                 users={props.users}

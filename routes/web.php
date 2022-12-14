@@ -52,6 +52,7 @@ Route::get('/editgroup/{pin}',[GroupController::class, 'index_edit_group'])->mid
 Route::post('/editgroup',[GroupController::class, 'edit_group'])->middleware(['auth','verified'])->name('edit.group');
 //group detail
 Route::get('/groups/{pin}',[GroupActivityController::class, 'index_group_detail'])->middleware(['auth','verified'])->name('group.detail');
+Route::post('/createpost',[GroupActivityController::class, 'create_post'])->middleware(['auth','verified'])->name('create.post');
 //feedback
 Route::post('/feedback', [FeedbackController::class, 'create_feedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 //profile

@@ -32,6 +32,20 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
         setData('activity_picture',imageFiles[0]);
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        post(route('create.post'), {
+            preserveScroll: true,
+            onSuccess: reset(),
+            onSuccess: (() => {setCheck(false)})
+        });
+    }
+
+    useEffect(() => {
+        reset('distance','step','time','calories');
+    },[data.activity_id])
+
     return (
         <>
             <div className="bg-white rounded-lg p-3 border flex flex-col gap-4">
@@ -39,7 +53,7 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
                     <span className="font-bold text-lg">Post Activity</span>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-6 grid-rows-4 gap-2">
                         <div className="col-span-3 row-span-2">
                             <div>
@@ -108,7 +122,7 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
                             </div>
                             <div className="flex justify-between">
                                 <div className="relative">
-                                    <label htmlFor="ap-input" className="border bg-white p-1 rounded-md cursor-pointer hover:bg-slate-200"><FontAwesomeIcon icon={faImage} size="lg"/></label>
+                                    <label htmlFor="ap-input" className={`border bg-white ${errors.activity_picture ? "border-red-500 border-b-2" : "border-slate-300"} p-1 rounded-md cursor-pointer hover:bg-slate-200`}><FontAwesomeIcon icon={faImage} size="lg"/></label>
                                     <input type="file" id="ap-input" accept="image/*" className="invisible" onChange={handlePicture}/>
                                     {check ?
                                         <div className="absolute left-6 bottom-0 text-green-500"><FontAwesomeIcon icon={faCircleCheck} /></div>
@@ -133,13 +147,14 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
                     <InputError message={errors.time} />
                     <InputError message={errors.calories} />
                     <InputError message={errors.captions} />
+                    <InputError message={errors.activity_date} />
                     <InputError message={errors.activity_picture} />
                 </div>
             : null}
 
             {flash &&
-                <div className="bg-white rounded-md p-2 border mt-2">
-                    <span className="text-lg"> Post Added.</span>
+                <div className="bg-white rounded-md p-2 border border-green-500 mt-2">
+                    <span className="text-md text-green-500"> Post Added.</span>
                 </div>}
         </>
     )
