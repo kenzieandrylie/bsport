@@ -20,6 +20,7 @@ export default function Dashboard(props) {
             users={props.users}
             notifications={props.notifications}
             >
+                <Head title="BSport" />
                 <Hero
                 user={props.auth.user}
                 />

@@ -59,6 +59,7 @@ const CreateGroup = ({errors,auth,users,notifications}) => {
          users={users}
          notifications={notifications}
          >
+        <Head title="Create Group" />
            <div className='p-8'>
   <div className="md:grid md:grid-cols-3 md:gap-6">
     <div className="mt-5 md:col-span-3 md:mt-0 ">

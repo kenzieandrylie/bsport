@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError";
 import UserLayout from "@/Layouts/UserLayout";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useForm, usePage } from "@inertiajs/inertia-react";
+import { Head, useForm, usePage } from "@inertiajs/inertia-react";
 import { React,useState,useEffect } from "react";
 
 const EditProfile = (props) => {
@@ -86,6 +86,7 @@ const EditProfile = (props) => {
     return (
         <>
             <UserLayout auth={props.auth} users={props.users} notifications={props.notifications}>
+            <Head title="Edit profile" />
 
                 <div className="grid grid-cols-4 gap-4 m-8">
 
