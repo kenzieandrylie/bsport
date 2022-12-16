@@ -23,6 +23,8 @@ class ProfileController extends Controller
                     ->where('username','=',$request->username)
                     ->first(); //return object
 
+        if(!$user) {abort(404);}
+
         $follower = DB::table('friendships')
                     ->join('users', 'users.id', '=', 'friendships.follower_id')
                     ->where('following_id','=',$user->id)

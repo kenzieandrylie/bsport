@@ -62,5 +62,7 @@ Route::delete('/unfollow', [FriendshipController::class, 'unfollow'])->middlewar
 Route::get('/editprofile',[ProfileController::class, 'index_edit_profile'])->middleware(['auth', 'verified'])->name('index.edit.profile');
 Route::post('/editpassword', [ProfileController::class, 'edit_password'])->middleware(['auth', 'verified'])->name('edit.password');
 Route::post('/editprofile', [ProfileController::class, 'edit_profile'])->middleware(['auth', 'verified'])->name('edit.profile');
+//leaderboard
+Route::get('/groups/{pin}/leaderboard',[GroupActivityController::class,'index_leaderboard'])->middleware(['auth','verified'])->name('group.leaderboard');
 
 require __DIR__.'/auth.php';
