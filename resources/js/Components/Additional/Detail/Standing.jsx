@@ -53,7 +53,7 @@ const Standing = ({group,topthree}) => {
                 </div>
 
                 <div className="text-center mt-4 text-sky-500 hover:text-sky-600">
-                    <Link href={`/groups/${group.pin}/leaderboard`}>
+                    <Link href={`/leaderboards/${group.pin}`}>
                         <span>See more</span>
                     </Link>
                 </div>

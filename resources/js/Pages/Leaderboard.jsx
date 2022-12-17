@@ -1,12 +1,27 @@
 import UserLayout from "@/Layouts/UserLayout";
-import { Head, Link } from "@inertiajs/inertia-react";
+import { Head, Link, useForm } from "@inertiajs/inertia-react";
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Inertia } from "@inertiajs/inertia";
 
 const Leaderboard = (props) => {
 
-    console.log("Leaderboard Page : ", props.values[0])
+    console.log("Leaderboard Page : ", props.auth)
+
+    const { data, setData, get, processing, errors, reset } = useForm({
+        sortby: props.p_sort,
+        filterby: props.p_filter
+    })
+
+    const handleChange = (e) => {
+        setData(e.target.name, e.target.value);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        get(`/leaderboards/${props.group.pin}`);
+    }
 
     return (
         <>
@@ -15,7 +30,7 @@ const Leaderboard = (props) => {
             users={props.users}
             notifications={props.notifications}>
 
-            <Head title="Leaderboard" />
+            <Head title={`Leaderboard | ${props.group.name}`} />
 
                 <div className="p-8">
                     <div className="bg-white w-full h-full border rounded-lg">
@@ -25,40 +40,47 @@ const Leaderboard = (props) => {
                                     Leaderboard of <Link href={`/groups/${props.group.pin}`}><span className="text-sky-500 hover:text-sky-600">{props.group.name}</span></Link>
                                     </span>
                             </div>
-                            <div className="flex basis-1/4 justify-around">
-                                <div>
-                                    <label className="label">
-                                        <span className="label-text-alt">Filter by</span>
-                                    </label>
-                                    <select className="select select-ghost w-full max-w-xs" defaultValue={0}>
-                                        <option value={0}>All Month</option>
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option>May</option>
-                                        <option>June</option>
-                                        <option>July</option>
-                                        <option>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="label">
-                                        <span className="label-text-alt">Sort by</span>
-                                    </label>
-                                    <select className="select select-ghost w-full max-w-xs" defaultValue={'calories'}>
-                                        <option value={'calories'}>Calories</option>
-                                        <option value={'step'} >Step</option>
-                                        <option value={'distance'}>Distance</option>
-                                        <option value={'time'}>Time</option>
-                                    </select>
-                                </div>
-
+                            <div className="basis-1/3">
+                                <form onSubmit={handleSubmit}>
+                                    <div className="flex justify-around items-center">
+                                        <div>
+                                            <label className="label">
+                                                <span className="label-text-alt">Filter by</span>
+                                            </label>
+                                            <select className="select select-ghost w-full max-w-xs" defaultValue={data.filterby} name="filterby" onChange={handleChange}>
+                                                <option value={0}>All Month</option>
+                                                <option value={1}>January</option>
+                                                <option value={2}>February</option>
+                                                <option value={3}>March</option>
+                                                <option value={4}>April</option>
+                                                <option value={5}>May</option>
+                                                <option value={6}>June</option>
+                                                <option value={7}>July</option>
+                                                <option value={8}>August</option>
+                                                <option value={9}>September</option>
+                                                <option value={10}>October</option>
+                                                <option value={11}>November</option>
+                                                <option value={12}>December</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="label">
+                                                <span className="label-text-alt">Sort by</span>
+                                            </label>
+                                            <select className="select select-ghost w-full max-w-xs" defaultValue={data.sortby} name="sortby" onChange={handleChange}>
+                                                <option value={'calories'}>Calories</option>
+                                                <option value={'step'} >Step</option>
+                                                <option value={'distance'}>Distance</option>
+                                                <option value={'duration'}>Time</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Apply</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
+
                         </div>
 
                         <div className="flex flex-col">
@@ -131,62 +153,6 @@ const Leaderboard = (props) => {
                                                     )
                                                 })}
 
-                                                {/* <tr>
-                                                    <td className="p-6">
-                                                        <div className='text-slate-300'>
-                                                            <FontAwesomeIcon icon={faMedal} size="2x"/>
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-md p-6">
-                                                        <div className="flex items-center gap-4">
-                                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" className="h-12 w-12 rounded-full"/>
-                                                            <div className="flex flex-col">
-                                                                <span className="font-bold">Pekianto</span>
-                                                                <span className="text-sm text-slate-500">pekianto</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-md p-6">80</td>
-                                                    <td className="text-md p-6">80</td>
-                                                    <td className="text-md p-6">0</td>
-                                                    <td className="text-md p-6">120</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="p-6">
-                                                        <div className='text-amber-600'>
-                                                            <FontAwesomeIcon icon={faMedal} size="2x"/>
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-md p-6">
-                                                        <div className="flex items-center gap-4">
-                                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" className="h-12 w-12 rounded-full"/>
-                                                            <div className="flex flex-col">
-                                                                <span className="font-bold">Davin Haryadi</span>
-                                                                <span className="text-sm text-slate-500">davinharyadi</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-md p-6">50</td>
-                                                    <td className="text-md p-6">50</td>
-                                                    <td className="text-md p-6">0</td>
-                                                    <td className="text-md p-6">70</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="p-6"><span className="ml-3 font-bold">4</span></td>
-                                                    <td className="text-md p-6">
-                                                        <div className="flex items-center gap-4">
-                                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" className="h-12 w-12 rounded-full"/>
-                                                            <div className="flex flex-col">
-                                                                <span className="font-bold">Bluedrinkers Aja</span>
-                                                                <span className="text-sm text-slate-500">bluedrinkers</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-md p-6">30</td>
-                                                    <td className="text-md p-6">30</td>
-                                                    <td className="text-md p-6">0</td>
-                                                    <td className="text-md p-6">20</td>
-                                                </tr> */}
                                             </tbody>
                                         </table>
                                     </div>

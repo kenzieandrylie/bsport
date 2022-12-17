@@ -159,14 +159,36 @@ class GroupActivityController extends Controller
     public function index_leaderboard(Request $request){
 
         $group = Group::where('pin','=',$request->pin)->first();
-
         if(!$group){
             abort(404);
         }
 
+        if(!$request->sortby){
+            $p_sort = 'calories';
+        }
+        else{
+            $p_sort = $request->sortby;
+        }
+
+        if(!$request->filterby || $request->filterby == 0){
+            $p_filter = 0;
+
+            $subq = DB::table('group_activities')
+                ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan');
+        }
+        else{
+            $p_filter = $request->filterby;
+
+            $subq = DB::table('group_activities')
+                ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan')
+                ->whereMonth('activity_date','like',$p_filter);
+        }
+
         $table_value = DB::table('group_members')
                         ->join('users','users.id','=','group_members.user_id')
-                        ->leftjoin('group_activities','group_activities.group_member_id','=','group_members.id')
+                        ->leftJoinSub($subq,'group_activities_filtered', function ($join) {
+                            $join->on('group_members.id','=','group_activities_filtered.group_member_id');
+                        })
                         ->where('group_members.group_id','=',$group->id)
                         ->selectRaw('users.name,
                                     users.last_name,
@@ -177,7 +199,7 @@ class GroupActivityController extends Controller
                                     ifnull(sum(time),0) as duration,
                                     ifnull(sum(distance),0) as distance')
                         ->groupBy('users.name','users.last_name','users.username','users.profile_picture')
-                        ->orderByDesc('calories')
+                        ->orderByDesc($p_sort)
                         ->get();
 
         $alluser = User::all();
@@ -192,7 +214,9 @@ class GroupActivityController extends Controller
             'users' => $alluser,
             'notifications' => $notification,
             'group' => $group,
-            'values' => $table_value
+            'values' => $table_value,
+            'p_sort' => $p_sort,
+            'p_filter' => $p_filter
         ]);
     }
 }
