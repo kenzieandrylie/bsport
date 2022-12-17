@@ -1,7 +1,34 @@
 import { faBicycle,faPersonRunning, faDumbbell,faShoePrints, faRoad, faFireFlameCurved, faStopwatch, faHeart  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Inertia,useForm} from '@inertiajs/inertia-react';
+import { useEffect, useState } from 'react';
 
-const PostActivity = ({post}) => {
+const PostActivity = ({post,likes,auth}) => {
+
+    const [type, setType] = useState('');
+
+    const {data,setData,post:store, processing, errors, reset,delete:destroy} = useForm({
+        post_id:''
+    });
+
+    const handleLike = () => {
+        setData('post_id',post.id);
+        setType('like');
+    }
+
+    const handleUnlike = () => {
+        setData('post_id',post.id);
+        setType('unlike');
+    }
+
+    useEffect(() => {
+        if(type === 'like'){
+            store(route('like'), {preserveScroll: true});
+        }
+        else if(type === 'unlike'){
+            destroy(route('unlike'), {preserveScroll: true});
+        }
+    },[data])
 
     return (
         <>
@@ -75,8 +102,18 @@ const PostActivity = ({post}) => {
 
                         <div className="flex justify-between items-center w-full">
                             <div className="pt-2 flex items-center">
-                                <FontAwesomeIcon icon={faHeart} size="sm"/>
-                                <span className="text-sm text-gray-400 font-medium ml-2">12 likes</span>
+                                {
+                                    likes.find(e => e.user_id === auth.user.id) ?
+                                    <>
+                                    <span className="cursor-pointer text-red-500"><FontAwesomeIcon icon={faHeart} size="sm" onClick={handleUnlike}/></span>
+                                    </>
+                                    :
+                                    <>
+                                    <span className="cursor-pointer text-slate-300 hover:text-red-300 transition duration-150 ease-out"><FontAwesomeIcon icon={faHeart} size="sm" onClick={handleLike}/></span>
+                                    </>
+                                }
+
+                                <span className="text-sm text-gray-400 font-medium ml-2">{likes.length} likes</span>
                             </div>
                             <div>
                                 <span className="text-xs text-gray-400">Activity Date: {post.activity_date}</span>

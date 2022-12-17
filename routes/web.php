@@ -5,6 +5,7 @@ use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\GroupActivityController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMemberController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -64,5 +65,8 @@ Route::post('/editpassword', [ProfileController::class, 'edit_password'])->middl
 Route::post('/editprofile', [ProfileController::class, 'edit_profile'])->middleware(['auth', 'verified'])->name('edit.profile');
 //leaderboard
 Route::get('/leaderboards/{pin}',[GroupActivityController::class,'index_leaderboard'])->middleware(['auth','verified'])->name('group.leaderboard');
+//like
+Route::post('/like',[LikeController::class,'like'])->middleware(['auth', 'verified'])->name('like');
+Route::delete('/unlike', [LikeController::class,'unlike'])->middleware(['auth', 'verified'])->name('unlike');
 
 require __DIR__.'/auth.php';

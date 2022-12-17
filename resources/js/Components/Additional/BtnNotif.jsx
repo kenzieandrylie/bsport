@@ -47,7 +47,7 @@ const BtnNotif = ({notifications}) => {
                                                 <div className="w-full">
                                                     <ul role="list" className="p-2 divide-y divide-slate-200">
                                                         <li className="flex py-4 first:pt-0 last:pb-0 items-center mt-2">
-                                                            <img src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full"/>
+                                                            <img src={notif.profile_picture ? `../storage/${notif.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full"/>
                                                             <div className="ml-3 overflow-hidden flex flex-col text-sm">
                                                                 <span>
                                                                     <span className="font-bold">{notif.username}</span> started following you.

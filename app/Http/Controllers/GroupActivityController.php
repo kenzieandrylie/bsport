@@ -46,6 +46,13 @@ class GroupActivityController extends Controller
                 ->orderByDesc('group_activities.created_at')
                 ->get();
 
+        $likes = DB::table('likes')
+                ->join('group_activities','group_activities.id','=','likes.group_activity_id')
+                ->join('group_members','group_members.id','group_activities.group_member_id')
+                ->where('group_members.group_id','=',$group->id)
+                ->selectRaw('likes.id, likes.user_id, likes.group_activity_id')
+                ->get();
+
         $mysum = DB::table('group_members')
         ->join('group_activities','group_members.id','=','group_activities.group_member_id')
         ->where('group_members.group_id','=',$group->id)
@@ -89,7 +96,8 @@ class GroupActivityController extends Controller
             'mymemberid' => $mymemberid,
             'posts' => $posts,
             'sum' => $mysum,
-            'topthree' => $standing
+            'topthree' => $standing,
+            'likes' => $likes
         ]);
     }
 
