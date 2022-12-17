@@ -2,7 +2,7 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from '@inertiajs/inertia-react';
 
-const Standing = () => {
+const Standing = ({group,topthree}) => {
     return (
         <>
             <div className="bg-white rounded-lg p-3 border flex flex-col gap-2">
@@ -18,7 +18,7 @@ const Standing = () => {
                         </div>
                         <div className="flex flex-col items-center justify-center">
                             <div className="text-center">
-                                <span>bluedrinkers</span>
+                                <span>{topthree.length > 1 ? topthree[1].username : null}</span>
                             </div>
                             <div className="w-16 h-24 bg-lime-400 rounded-md">
                             </div>
@@ -31,7 +31,7 @@ const Standing = () => {
                         </div>
                         <div className="flex flex-col items-center justify-center">
                             <div className="text-center">
-                                <span>kenzieandrylie</span>
+                                <span>{topthree.length > 0 ? topthree[0].username : null}</span>
                             </div>
                             <div className="w-16 h-32 bg-lime-400 rounded-md">
                             </div>
@@ -44,7 +44,7 @@ const Standing = () => {
                         </div>
                         <div className="flex flex-col items-center justify-center">
                             <div className="text-center">
-                                <span>pekianto</span>
+                                <span>{topthree.length > 2 ? topthree[2].username : null}</span>
                             </div>
                             <div className="w-16 h-16 bg-lime-400 rounded-md">
                             </div>
@@ -53,7 +53,7 @@ const Standing = () => {
                 </div>
 
                 <div className="text-center mt-4 text-sky-500 hover:text-sky-600">
-                    <Link href="#">
+                    <Link href={`/leaderboards/${group.pin}`}>
                         <span>See more</span>
                     </Link>
                 </div>

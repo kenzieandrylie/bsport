@@ -35,7 +35,7 @@ const GroupDetail = (props) => {
                         </div>
                     </div>
                     <div className="col-span-full lg:col-span-1 lg:sticky lg:top-24">
-                        <Standing />
+                        <Standing group={props.group} topthree={props.topthree}/>
                     </div>
                     <div className="col-span-full lg:col-span-2 lg:col-start-2 lg:row-span-2">
                     {
