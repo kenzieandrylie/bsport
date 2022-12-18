@@ -49,8 +49,9 @@ class GroupActivityController extends Controller
         $likes = DB::table('likes')
                 ->join('group_activities','group_activities.id','=','likes.group_activity_id')
                 ->join('group_members','group_members.id','group_activities.group_member_id')
+                ->join('users','users.id','likes.user_id')
                 ->where('group_members.group_id','=',$group->id)
-                ->selectRaw('likes.id, likes.user_id, likes.group_activity_id')
+                ->selectRaw('likes.id, likes.user_id, likes.group_activity_id,users.*')
                 ->get();
 
         $mysum = DB::table('group_members')

@@ -2,10 +2,14 @@ import { faBicycle,faPersonRunning, faDumbbell,faShoePrints, faRoad, faFireFlame
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Inertia,useForm} from '@inertiajs/inertia-react';
 import { useEffect, useState } from 'react';
+import PopupUser from '../Modal/PopupUser';
 
 const PostActivity = ({post,likes,auth}) => {
 
     const [type, setType] = useState('');
+    const [labelpop, setLabelpop] = useState('');
+    const [datapop, setDatapop] = useState([]);
+    const [isopen, setIsopen] = useState(false);
 
     const {data,setData,post:store, processing, errors, reset,delete:destroy} = useForm({
         post_id:''
@@ -21,6 +25,16 @@ const PostActivity = ({post,likes,auth}) => {
         setType('unlike');
     }
 
+    const handlePop = () => {
+        setLabelpop('Likes');
+        setDatapop(likes);
+        setIsopen(true);
+    }
+
+    const clearViewState = () => {
+        setIsopen(false);
+    }
+
     useEffect(() => {
         if(type === 'like'){
             store(route('like'), {preserveScroll: true});
@@ -32,6 +46,7 @@ const PostActivity = ({post,likes,auth}) => {
 
     return (
         <>
+        <PopupUser open={isopen} users={datapop} label={labelpop} onClose={clearViewState}/>
             <div className=" rounded-xl overflow-hidden border w-full bg-white mx-3 mx-0 lg:mx-0 p-4 mb-4">
 
                 <div className="rounded-xl">
@@ -113,7 +128,7 @@ const PostActivity = ({post,likes,auth}) => {
                                     </>
                                 }
 
-                                <span className="text-sm text-gray-400 font-medium ml-2">{likes.length} likes</span>
+                                <span className="text-sm text-gray-400 font-medium ml-2 cursor-pointer hover:text-gray-500" onClick={handlePop}>{likes.length} likes</span>
                             </div>
                             <div>
                                 <span className="text-xs text-gray-400">Activity Date: {post.activity_date}</span>
