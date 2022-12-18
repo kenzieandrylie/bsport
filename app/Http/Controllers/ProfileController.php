@@ -71,6 +71,14 @@ class ProfileController extends Controller
                 ->orderByDesc('group_activities.created_at')
                 ->get();
 
+        $likes = DB::table('likes')
+        ->join('group_activities','group_activities.id','=','likes.group_activity_id')
+        ->join('group_members','group_members.id','group_activities.group_member_id')
+        ->join('users','users.id','likes.user_id')
+        ->where('group_members.user_id','=',$user->id)
+        ->selectRaw('likes.id, likes.user_id, likes.group_activity_id, users.*')
+        ->get();
+
         $sum = DB::table('group_members')
                 ->join('group_activities','group_members.id','=','group_activities.group_member_id')
                 ->where('group_members.user_id','=',$user->id)
@@ -94,7 +102,8 @@ class ProfileController extends Controller
             'friend' => $friend,
             'notifications' => $notification,
             'posts' => $posts,
-            'sum' => $sum
+            'sum' => $sum,
+            'likes' => $likes
         ]);
     }
 

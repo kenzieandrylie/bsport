@@ -18,7 +18,6 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
         caption: ''
     })
 
-    console.log(data);
 
     const handleChange = (e) => {
         setData(e.target.name, e.target.value);
