@@ -42,7 +42,11 @@ class User extends Authenticatable
         'email',
         'password',
         'last_name',
-        'username'
+        'username',
+        'profile_picture',
+        'cover_picture',
+        'is_admin',
+        'is_banned'
     ];
 
     /**

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->string('cover_picture')->nullable();
+            $table->boolean('is_banned')->default(0);
+            $table->boolean('is_admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
