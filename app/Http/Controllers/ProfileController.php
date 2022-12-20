@@ -199,4 +199,34 @@ class ProfileController extends Controller
 
         return redirect()->back()->with("message","Password Updated!");
     }
+
+    //ADMIN
+    //ban user
+    public function ban_user(Request $request){
+        User::find($request->id)->update([
+            'is_banned' => true
+        ]);
+        return redirect()->back();
+    }
+    //unban
+    public function unban_user(Request $request){
+        User::find($request->id)->update([
+            'is_banned' => false
+        ]);
+        return redirect()->back();
+    }
+    //role
+    public function change_role(Request $request){
+        if($request->role == 'admin'){
+            User::find($request->id)->update([
+                'is_admin' => true
+            ]);
+        }
+        else if($request->role == 'user'){
+            User::find($request->id)->update([
+                'is_admin' => false
+            ]);
+        }
+        return redirect()->back();
+    }
 }

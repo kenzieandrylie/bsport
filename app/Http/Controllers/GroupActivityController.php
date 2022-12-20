@@ -199,7 +199,8 @@ class GroupActivityController extends Controller
                             $join->on('group_members.id','=','group_activities_filtered.group_member_id');
                         })
                         ->where('group_members.group_id','=',$group->id)
-                        ->selectRaw('users.name,
+                        ->selectRaw('users.id as user_id,
+                                    users.name,
                                     users.last_name,
                                     users.username,
                                     users.profile_picture,
@@ -207,7 +208,7 @@ class GroupActivityController extends Controller
                                     ifnull(sum(calories),0) as calories,
                                     ifnull(sum(time),0) as duration,
                                     ifnull(sum(distance),0) as distance')
-                        ->groupBy('users.name','users.last_name','users.username','users.profile_picture')
+                        ->groupBy('users.id','users.name','users.last_name','users.username','users.profile_picture')
                         ->orderByDesc($p_sort)
                         ->get();
 

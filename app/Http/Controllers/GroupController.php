@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use App\Models\Group;
 use App\Models\GroupMember;
 use App\Models\User;
@@ -33,10 +34,17 @@ class GroupController extends Controller
                         ->where('friendships.created_at','>=',$time_from)
                         ->get();
 
+        //ADMIN
+        $allfeedback = DB::table('feedback')
+        ->join('users','users.id','=','feedback.user_id')
+        ->selectRaw('feedback.subject, feedback.detail, users.username')
+        ->get();
+
         return Inertia::render('Dashboard', [
             'mygroups' => $mygroups,
             'users' => $alluser,
-            'notifications' => $notification
+            'notifications' => $notification,
+            'feedback' => $allfeedback
         ]);
     }
 

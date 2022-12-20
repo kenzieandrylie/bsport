@@ -6,7 +6,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const Leaderboard = (props) => {
 
-    console.log("Leaderboard Page : ", props.auth)
+    console.log("Leaderboard Page : ", props)
 
     const { data, setData, get, processing, errors, reset } = useForm({
         sortby: props.p_sort,
@@ -115,7 +115,7 @@ const Leaderboard = (props) => {
                                                 {props.values.map((value,i) => {
                                                     return(
                                                         <>
-                                                            <tr key={i+1}>
+                                                            <tr key={i+1} className={`${value.user_id === props.auth.user.id ? "bg-sky-100" : "bg-white"}`}>
                                                                 <td className="p-6">
                                                                     <div className={`${
                                                                             i === 0 ? "text-yellow-400"
