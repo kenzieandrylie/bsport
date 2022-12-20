@@ -86,18 +86,18 @@ const ManageUser = ({users,auth}) => {
                                     .map((user,i) => {
                                         return(
                                             <>
-                                                <tr key={i+1}>
-                                                    <td className={`text-md p-6 ${user.id === auth.id && "text-sky-500 font-bold"}`}>{i+1}</td>
+                                                <tr key={i+1} className={`${user.id === auth.id ? "bg-sky-100" : "bg-white"}`}>
+                                                    <td className="text-md p-6">{i+1}</td>
                                                     <td className="text-md p-6">
                                                         <div className="flex items-center gap-4">
                                                             <img src={user.profile_picture ? `../storage/${user.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-12 w-12 rounded-full"/>
                                                             <div className="flex items-center gap-1">
-                                                                <span className={`text-md ${user.id === auth.id && "text-sky-500 font-bold"}`}>{user.username}</span>
+                                                                <span>{user.username}</span>
                                                                 {user.is_banned ? <span className="text-sm text-red-500">#banned</span> : null}
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className={`text-md p-6 ${user.id === auth.id && "text-sky-500 font-bold"}`}>{user.email}</td>
+                                                    <td className="text-md p-6">{user.email}</td>
                                                     <td className="text-md p-6">
                                                         {
                                                         user.is_admin ?
@@ -109,9 +109,9 @@ const ManageUser = ({users,auth}) => {
                                                     <td className="text-md p-6">
                                                         {
                                                         user.is_banned ?
-                                                        <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4" onClick={() => {handleUnban(user.id)}}>Unban</button>
+                                                        <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4 bg-white" onClick={() => {handleUnban(user.id)}}>Unban</button>
                                                         :
-                                                        <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4" onClick={() => {handleBan(user.id)}}>Ban</button>
+                                                        <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4 bg-white" onClick={() => {handleBan(user.id)}}>Ban</button>
                                                         }
                                                     </td>
                                                 </tr>

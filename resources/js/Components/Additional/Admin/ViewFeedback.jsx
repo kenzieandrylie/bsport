@@ -28,11 +28,11 @@ const ViewFeedback = ({feedbacks, auth}) => {
                                     .map((feedback,i) => {
                                         return(
                                             <>
-                                                <tr key={i+1}>
-                                                    <td className={`text-md p-6 ${feedback.username === auth.username && "text-sky-500"}`}>{i+1}</td>
-                                                    <td className={`text-md p-6 ${feedback.username === auth.username && "text-sky-500"}`}>{feedback.subject}</td>
-                                                    <td className={`text-md p-6 ${feedback.username === auth.username && "text-sky-500"}`}>{feedback.detail}</td>
-                                                    <td className={`text-md p-6 font-bold ${feedback.username === auth.username && "text-sky-500"}`}>{feedback.username}</td>
+                                                <tr key={i+1} className={`${feedback.username === auth.username ? "bg-sky-100" : "bg-white"}`}>
+                                                    <td className="text-md p-6">{i+1}</td>
+                                                    <td className="text-md p-6">{feedback.subject}</td>
+                                                    <td className="text-md p-6">{feedback.detail}</td>
+                                                    <td className="text-md p-6 font-bold">{feedback.username}</td>
                                                 </tr>
                                             </>
                                         )
