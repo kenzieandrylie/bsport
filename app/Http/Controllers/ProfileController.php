@@ -67,7 +67,7 @@ class ProfileController extends Controller
                 ->join('group_activities','group_members.id','=','group_activities.group_member_id')
                 ->join('groups','group_members.group_id','=','groups.id')
                 ->where('group_members.user_id','=',$user->id)
-                ->selectRaw('group_activities.*,users.username,users.profile_picture,groups.name as group_name')
+                ->selectRaw('group_activities.*,users.username,users.profile_picture,groups.name as group_name,users.id as user_id')
                 ->orderByDesc('group_activities.created_at')
                 ->get();
 
@@ -200,7 +200,7 @@ class ProfileController extends Controller
         return redirect()->back()->with("message","Password Updated!");
     }
 
-    //ADMIN
+    //ADMIN -----
     //ban user
     public function ban_user(Request $request){
         User::find($request->id)->update([
