@@ -57,15 +57,6 @@ const PostActivity = ({post,likes,auth, types}) => {
         setDatapost(post);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        post(route('edit.post'), {
-            preserveScroll: true,
-            onSuccess: reset(),
-            onSuccess: (() => {setCheck(false)})
-        });
-    }
 
     return (
         <>

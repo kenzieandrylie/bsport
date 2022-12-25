@@ -40,6 +40,16 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
         setData('activity_picture',imageFiles[0]);
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        post(route('edit.post'), {
+            preserveScroll: true,
+            onSuccess: reset(),
+            onSuccess: (() => {setCheck(false)})
+        });
+    }
+
     useEffect(() => {
         setData({
             id: post.id,
@@ -94,7 +104,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                 </div>
 
                                 <div className="p-3">
-                                    <form className="flex flex-col gap-2">
+                                    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
                                         <div className="flex justify-between items-center gap-2 mt-2">
                                             {activitytypes.map((type, i) => {
                                                 return (
@@ -166,17 +176,17 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                                 null
                                             }
                                         </div>
+                                        <div className="flex justify-center gap-4">
+                                            <a className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 cursor-pointer" onClick={onClose}>
+                                                Cancel
+                                            </a>
+                                            <button type="submit" className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer">
+                                                Save
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
 
-                                <div className="flex justify-center gap-4">
-                                    <a className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 cursor-pointer" onClick={onClose}>
-                                        Cancel
-                                    </a>
-                                    <a  className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer">
-                                        Save
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
