@@ -257,7 +257,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                    'activity_picture' => 'mimes:jpg,bmp,png|max:1024'
                 ]);
                 $data->time= 0;
                 $data->distance = $request->distance;
@@ -269,7 +269,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                    'activity_picture' => 'mimes:jpg,bmp,png|max:1024'
                 ]);
                 $data->step = 0;
                 $data->time = 0;
@@ -281,7 +281,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                    'activity_picture' => 'mimes:jpg,bmp,png|max:1024'
                 ]);
                 $data->step =0;
                 $data->distance = 0;
