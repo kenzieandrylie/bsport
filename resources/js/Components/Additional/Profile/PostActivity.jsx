@@ -2,14 +2,24 @@ import { faBicycle,faPersonRunning, faDumbbell,faShoePrints, faRoad, faFireFlame
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Inertia,useForm} from '@inertiajs/inertia-react';
 import { useEffect, useState } from 'react';
+// import PopupInfo from '../Modal/PopupInfo';
+import PopupPost from '../Modal/PopupPost';
 import PopupUser from '../Modal/PopupUser';
 
 const PostActivity = ({post,likes,auth}) => {
+
+    console.log('postactivity : ', post);
 
     const [type, setType] = useState('');
     const [labelpop, setLabelpop] = useState('');
     const [datapop, setDatapop] = useState([]);
     const [isopen, setIsopen] = useState(false);
+
+    const [typepost, setTypepost] = useState('');
+    const [isopenpost, setIsopenpost] = useState(false);
+    const [datapost, setDatapost] = useState([]);
+
+    // const [isopeninfo, setIsopeninfo] = useState(false);
 
     const {data,setData,post:store, processing, errors, reset,delete:destroy} = useForm({
         post_id:''
@@ -44,25 +54,41 @@ const PostActivity = ({post,likes,auth}) => {
         }
     },[data])
 
+    const handlePoppost = () => {
+        setIsopenpost(true);
+        setTypepost('delete');
+        setDatapost(post.id);
+    }
+
+    const handlePoppostSucceed = () => {
+        // setIsopeninfo(true);
+        setIsopenpost(false);
+    }
+
     return (
         <>
+        {/* <PopupInfo open={isopeninfo} onClose={() => setIsopeninfo(false)}/> */}
+        <PopupPost open={isopenpost} post={datapost} type={typepost} onClose={() => setIsopenpost(false)} onSuceed={handlePoppostSucceed}/>
         <PopupUser open={isopen} users={datapop} label={labelpop} onClose={clearViewState}/>
             <div className=" rounded-xl overflow-hidden border w-full bg-white mx-3 mx-0 lg:mx-0 p-4 mb-4">
 
                 <div className="rounded-xl">
 
-                    {/* <div className="flex justify-end">
-                        <div className="dropdown dropdown-end dropdown-hover">
-                            <svg tabIndex={0} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                            </svg>
+                    {
+                    post.user_id === auth.user.id &&
+                        <div className="flex justify-end">
+                            <div className="dropdown dropdown-end dropdown-hover">
+                                <svg tabIndex={0} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                </svg>
 
-                            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40 z-50 absolute">
-                                <li><a href="">Edit</a></li>
-                                <li className="text-red-500"><a href="">Delete</a></li>
-                            </ul>
+                                <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40 z-50 absolute">
+                                    <li><span>Edit</span></li>
+                                    <li className="text-red-500"><span onClick={handlePoppost}>Delete</span></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div> */}
+                    }
 
                     <div className="w-full">
 

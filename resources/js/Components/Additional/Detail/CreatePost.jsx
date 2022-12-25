@@ -36,7 +36,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
         
         post(route('create.post'), {
             preserveScroll: true,
-            onSuccess: reset(),
+            onSuccess: reset({}, ['activity_id']),
             onSuccess: (() => {setCheck(false)})
         });
     }
@@ -173,7 +173,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
 
             {flash &&
                 <div className="bg-white rounded-md p-2 border border-green-500 mt-2">
-                    <span className="text-md text-green-500"> Post Added.</span>
+                    <span className="text-md text-green-500"> {flash}</span>
                 </div>}
         </>
     )

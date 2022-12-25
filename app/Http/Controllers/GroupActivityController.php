@@ -170,7 +170,13 @@ class GroupActivityController extends Controller
 
         $groupactivity->save();
 
-        return redirect()->back()->with("message","post success");
+        return redirect()->back()->with("message","Post Added.");
+    }
+
+    public function delete_post(Request $request){
+        GroupActivity::where('id','=',$request->id)->delete();
+
+        return redirect()->back()->with("message","Post Deleted.");
     }
 
     public function index_leaderboard(Request $request){
