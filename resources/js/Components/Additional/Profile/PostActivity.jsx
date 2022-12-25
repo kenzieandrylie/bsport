@@ -103,22 +103,29 @@ const PostActivity = ({post,likes,auth, types}) => {
                                         <span className="font-bold mr-2"> {post.group_name}</span>  at: <span className="font-bold">{post.created_at}</span></span>
                                 </div>
                                 <div className="flex justify-around items-center p-3 w-full">
+                                    {post.activity_id === 1 &&
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faShoePrints} size="sm"/>
                                         <span>{post.step} Steps</span>
                                     </div>
+                                    }
+                                    {post.activity_id !== 3 &&
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faRoad} size="sm"/>
                                         <span>{post.distance} Km</span>
                                     </div>
+                                    }
+
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faFireFlameCurved} size="sm"/>
                                         <span>{post.calories} KCal</span>
                                     </div>
+                                    {post.activity_id === 3  &&
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faStopwatch} size="sm"/>
                                         <span>{post.time} Mins</span>
                                     </div>
+                                    }
                                 </div>
                             </div>
                         </div>

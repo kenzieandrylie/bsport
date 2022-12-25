@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Group;
 use App\Models\GroupActivity;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -96,7 +97,13 @@ class ProfileController extends Controller
         $alluser = User::all();
 
         $activities = Activity::all();
-
+        $groups = DB::table('groups')
+                    ->join('group_members','groups.id','=','group_members.group_id')
+                    ->where('user_id','=',auth()->user()->id)
+                    ->selectRaw('groups.id as id,groups.name as name')
+                    ->get();
+                    ;
+                    
         return Inertia::render('Profile',[
             'users' => $alluser,
             'user' => $user,
@@ -107,7 +114,8 @@ class ProfileController extends Controller
             'posts' => $posts,
             'sum' => $sum,
             'likes' => $likes,
-            'activities' => $activities,
+            'activities'=>$activities,
+            'groups'=>$groups
         ]);
     }
 

@@ -104,6 +104,14 @@ class GroupActivityController extends Controller
 
     public function create_post(Request $request){
 
+        if($request->group_member_id==null && $request->group_id!=null){
+
+            $data = DB::table('group_members')->where('group_id','=',$request->group_id)
+            ->where('user_id','=',auth()->user()->id)->first();
+
+            $request->group_member_id =$data->id;
+        }
+
         $request->validate([
             'group_member_id' => 'required|integer',
             'activity_id' => 'required|integer'
@@ -234,5 +242,70 @@ class GroupActivityController extends Controller
             'p_sort' => $p_sort,
             'p_filter' => $p_filter
         ]);
+    }
+
+    public function edit_post(Request $request){
+
+
+
+            $data = GroupActivity::where('id','=',$request->id)->delete();
+            if($request->activity_id == 1){
+
+                $request->validate([
+                    'step' => 'required|integer',
+                    'distance' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                ]);
+                $data->time= 0;
+                $data->distance = $request->distance;
+                $data->step = $request->step;
+            }
+            else if($request->activity_id == 2){
+                $request->validate([
+                    'distance' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                ]);
+                $data->step = 0;
+                $data->time = 0;
+                $data->distance = $request->distance;
+            }
+            else if($request->activity_id == 3){
+                $request->validate([
+                    'time' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                ]);
+                $data->step =0;
+                $data->distance = 0;
+                $data->time = $request->time;
+            }
+            if($request->file('activity_picture')){
+                $imageName = time().'.'.$request->file('activity_picture')->getClientOriginalExtension();
+
+                Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
+            }
+
+
+            $data->activity_id = $request->activity_id;
+            $data->activity_picture = 'image-postactivity/'.$imageName;
+            $data->activity_date = $request->activity_date;
+            $data->calories = $request->calories;
+            $data->caption = $request->caption;
+
+            $data->save();
+
+            return redirect()->back()->with("message","Post Edited.");
+
+
+
+
     }
 }

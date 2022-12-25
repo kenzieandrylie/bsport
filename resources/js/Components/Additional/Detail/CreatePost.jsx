@@ -4,20 +4,20 @@ import { React,useState,useEffect } from "react";
 import { useForm, usePage } from "@inertiajs/inertia-react";
 import InputError from "@/Components/InputError";
 
-const CreatePost = ({auth, types, flash, mymemberid}) => {
+const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        group_member_id: mymemberid,
-        activity_id: 1,
-        distance: '',
-        step: '',
-        time: '',
-        calories: '',
-        activity_date : '',
-        activity_picture : '',
-        caption: ''
-    })
-
+        const { data, setData, post, processing, errors, reset } = useForm({
+            group_member_id: mymemberid,
+            activity_id: 1,
+            distance: '',
+            step: '',
+            time: '',
+            calories: '',
+            activity_date : '',
+            activity_picture : '',
+            caption: '',
+            group_id:''
+        })
 
     const handleChange = (e) => {
         setData(e.target.name, e.target.value);
@@ -33,7 +33,7 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        
         post(route('create.post'), {
             preserveScroll: true,
             onSuccess: reset(),
@@ -42,8 +42,12 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
     }
 
     useEffect(() => {
-        reset('distance','step','time','calories');
+        reset('distance','step','time','calories','activity_date');
     },[data.activity_id])
+
+    // useEffect(()=>{
+    //     console.log(data.group_id);
+    // });
 
     return (
         <>
@@ -112,10 +116,25 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-1 row-span-2 flex justify-center items-center">
+                        <div className="col-span-1 row-span-4 flex justify-center items-center">
                             <img src={auth.profile_picture ? `../storage/${auth.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="rounded-full h-20 w-20"/>
                         </div>
-                        <div className="col-span-5 row-span-2 flex flex-col justify-around">
+                        <div className="col-span-5 row-span-4 justify-around">
+                            {mymemberid==null &&
+                                <div className="w-full">
+                                    <label className="col-span-5" htmlFor="selectGroup">Choose Group</label>
+                                <select className = {`select select-ghost w-full max-w-xs ${errors.group_member_id ? "border-red-500" : "border-slate-300"}` } name="group_id" id="" onChange={handleChange}>
+
+                                    <option value="" selected={!data.group_id && true}>Select Group</option>
+                                        {groupName.length>0 && groupName.map((data,i)=>{
+                                                return (
+                                                <option value={data.id}>{data.name}</option>
+                                                )
+                                        })}
+
+                                    </select>
+                                </div>
+                            }
                             <div className="w-full">
                                 <input type="text" name="caption" className={`w-full rounded border-0 border-b-2 ${errors.caption ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-sm`} placeholder="What do you want to say about your activity?" value={data.caption} onChange={handleChange}/>
                             </div>
@@ -148,6 +167,7 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
                     <InputError message={errors.captions} />
                     <InputError message={errors.activity_date} />
                     <InputError message={errors.activity_picture} />
+                    <InputError message={errors.group_member_id}/>
                 </div>
             : null}
 
