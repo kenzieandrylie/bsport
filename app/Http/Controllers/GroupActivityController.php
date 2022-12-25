@@ -104,6 +104,14 @@ class GroupActivityController extends Controller
 
     public function create_post(Request $request){
 
+        if($request->group_member_id==null && $request->group_id!=null){
+
+            $data = DB::table('group_members')->where('group_id','=',$request->group_id)
+            ->where('user_id','=',auth()->user()->id)->first();
+            dd($data);
+            $request->group_member_id =$data->id;
+        }
+     
         $request->validate([
             'group_member_id' => 'required|integer',
             'activity_id' => 'required|integer'
