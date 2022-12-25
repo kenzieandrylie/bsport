@@ -291,6 +291,7 @@ class GroupActivityController extends Controller
                 $imageName = time().'.'.$request->file('activity_picture')->getClientOriginalExtension();
 
                 Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
+                Storage::delete($data->activity_picture);
             }
 
 
