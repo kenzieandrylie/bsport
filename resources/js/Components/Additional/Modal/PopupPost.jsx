@@ -10,7 +10,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
 
     const [check, setCheck] = useState(false);
 
-    const {data,setData, processing, errors, reset,delete:destroy} = useForm({
+    const {data,setData,post:store, processing, errors, reset,delete:destroy} = useForm({
         id: '',
         group_member_id: '',
         activity_id: '',
@@ -43,7 +43,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('edit.post'), {
+        store(route('edit.post'), {
             preserveScroll: true,
             onSuccess: reset(),
             onSuccess: (() => {setCheck(false)})
