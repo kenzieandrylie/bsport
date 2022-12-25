@@ -264,7 +264,7 @@ class GroupActivityController extends Controller
                     'activity_date' => 'required|date|before:tomorrow',
 
                 ]);
-                $data->time= null;
+                $data->time= 0;
                 $data->distance = $request->distance;
                 $data->step = $request->step;
             }
@@ -276,8 +276,8 @@ class GroupActivityController extends Controller
                     'activity_date' => 'required|date|before:tomorrow',
 
                 ]);
-                $data->step = null;
-                $data->time = null;
+                $data->step = 0;
+                $data->time = 0;
                 $data->distance = $request->distance;
             }
             else if($request->activity_id == 3){
@@ -289,8 +289,8 @@ class GroupActivityController extends Controller
 
                 ]);
 
-                $data->step = null;
-                $data->distance = null;
+                $data->step = 0;
+                $data->distance = 0;
                 $data->time = $request->time;
             }
             if($request->file('activity_picture')){
@@ -302,11 +302,10 @@ class GroupActivityController extends Controller
                 if($data->activity_picture !=null){
                     Storage::delete($data->activity_picture);
                 }
+                $data->activity_picture = 'image-postactivity/'.$imageName;
             }
 
-
             $data->activity_id = $request->activity_id;
-            $data->activity_picture = 'image-postactivity/'.$imageName;
             $data->activity_date = $request->activity_date;
             $data->calories = $request->calories;
             $data->caption = $request->caption;

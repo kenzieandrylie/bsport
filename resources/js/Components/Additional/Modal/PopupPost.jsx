@@ -40,13 +40,18 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
         setData('activity_picture',imageFiles[0]);
     }
 
+    const onSuceedEdit = () => {
+        reset();
+        setCheck(false);
+        onClose();
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         store(route('edit.post'), {
             preserveScroll: true,
-            onSuccess: reset(),
-            onSuccess: (() => {setCheck(false)})
+            onSuccess: () => onSuceedEdit()
         });
     }
 
