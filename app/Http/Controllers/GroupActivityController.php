@@ -257,7 +257,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'nullable|mimes:jpg,bmp,png|max:1024'
+
                 ]);
                 $data->time= 0;
                 $data->distance = $request->distance;
@@ -269,7 +269,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'nullable|mimes:jpg,bmp,png|max:1024'
+
                 ]);
                 $data->step = 0;
                 $data->time = 0;
@@ -281,15 +281,17 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'nullable|mimes:jpg,bmp,png|max:1024'
+
                 ]);
                 $data->step =0;
                 $data->distance = 0;
                 $data->time = $request->time;
             }
             if($request->file('activity_picture')){
+                $request->validate([
+                    'activity_picture'=>'mimes:jpg,bmp,png|max:1024'
+                ]);
                 $imageName = time().'.'.$request->file('activity_picture')->getClientOriginalExtension();
-
                 Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
                 if($data->activity_picture !=null){
                     Storage::delete($data->activity_picture);
