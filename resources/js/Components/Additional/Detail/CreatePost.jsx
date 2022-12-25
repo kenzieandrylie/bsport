@@ -36,7 +36,7 @@ const CreatePost = ({auth, types, flash, mymemberid}) => {
 
         post(route('create.post'), {
             preserveScroll: true,
-            onSuccess: reset({}, ['activity_id']),
+            onSuccess: reset(),
             onSuccess: (() => {setCheck(false)})
         });
     }

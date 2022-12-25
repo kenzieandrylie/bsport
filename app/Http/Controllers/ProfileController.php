@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\GroupActivity;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -94,6 +95,8 @@ class ProfileController extends Controller
 
         $alluser = User::all();
 
+        $activities = Activity::all();
+
         return Inertia::render('Profile',[
             'users' => $alluser,
             'user' => $user,
@@ -103,7 +106,8 @@ class ProfileController extends Controller
             'notifications' => $notification,
             'posts' => $posts,
             'sum' => $sum,
-            'likes' => $likes
+            'likes' => $likes,
+            'activities' => $activities,
         ]);
     }
 
