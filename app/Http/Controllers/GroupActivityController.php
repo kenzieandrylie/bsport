@@ -110,12 +110,17 @@ class GroupActivityController extends Controller
             ->where('user_id','=',auth()->user()->id)->first();
 
             $request->group_member_id =$data->id;
+            $request->validate([
+                'activity_id' => 'required|integer'
+            ]);
+        }else{
+            $request->validate([
+                'group_member_id' => 'required|integer',
+                'activity_id' => 'required|integer'
+            ]);
         }
 
-        $request->validate([
-            'group_member_id' => 'required|integer',
-            'activity_id' => 'required|integer'
-        ]);
+
 
         $groupactivity = new GroupActivity();
 
@@ -259,7 +264,7 @@ class GroupActivityController extends Controller
                     'activity_date' => 'required|date|before:tomorrow',
 
                 ]);
-                $data->time= 0;
+                $data->time= null;
                 $data->distance = $request->distance;
                 $data->step = $request->step;
             }
@@ -271,8 +276,8 @@ class GroupActivityController extends Controller
                     'activity_date' => 'required|date|before:tomorrow',
 
                 ]);
-                $data->step = 0;
-                $data->time = 0;
+                $data->step = null;
+                $data->time = null;
                 $data->distance = $request->distance;
             }
             else if($request->activity_id == 3){
@@ -283,8 +288,9 @@ class GroupActivityController extends Controller
                     'activity_date' => 'required|date|before:tomorrow',
 
                 ]);
-                $data->step =0;
-                $data->distance = 0;
+
+                $data->step =null;
+                $data->distance = null;
                 $data->time = $request->time;
             }
             if($request->file('activity_picture')){
