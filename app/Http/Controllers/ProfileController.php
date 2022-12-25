@@ -95,6 +95,7 @@ class ProfileController extends Controller
                         ->get();
 
         $alluser = User::all();
+
         $activities = Activity::all();
         $groups = DB::table('groups')
                     ->join('group_members','groups.id','=','group_members.group_id')
@@ -102,6 +103,7 @@ class ProfileController extends Controller
                     ->selectRaw('groups.id as id,groups.name as name')
                     ->get();
                     ;
+                    
         return Inertia::render('Profile',[
             'users' => $alluser,
             'user' => $user,
