@@ -6,7 +6,7 @@ import GroupCard from '@/Components/Additional/GroupCard';
 import UserLayout from '@/Layouts/UserLayout';
 import { Inertia } from '@inertiajs/inertia';
 const CreateGroup = ({errors,auth,users,notifications}) => {
-    console.log(users);
+    //console.log(users);
     const [isError,setIsErrors] = useState([]);
     const [data,setData]= useState([
        { name:'',
@@ -49,7 +49,7 @@ const CreateGroup = ({errors,auth,users,notifications}) => {
 
     const handleSubmit=(e)=>{
         e.preventDefault();
-        console.log(data);
+        //console.log(data);
         Inertia.post('/creategroup',data);
     }
     return (
