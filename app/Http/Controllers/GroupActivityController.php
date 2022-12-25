@@ -253,7 +253,7 @@ class GroupActivityController extends Controller
 
 
 
-            $data = GroupActivity::where('id','=',$request->id)->delete();
+            $data = GroupActivity::where('id','=',$request->id)->first();
             if($request->activity_id == 1){
 
                 $request->validate([
@@ -289,7 +289,7 @@ class GroupActivityController extends Controller
 
                 ]);
 
-                $data->step =null;
+                $data->step = null;
                 $data->distance = null;
                 $data->time = $request->time;
             }
