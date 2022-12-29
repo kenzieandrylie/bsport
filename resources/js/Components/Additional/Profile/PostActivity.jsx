@@ -2,10 +2,11 @@ import { faBicycle,faPersonRunning, faDumbbell,faShoePrints, faRoad, faFireFlame
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Inertia,useForm} from '@inertiajs/inertia-react';
 import { useEffect, useState } from 'react';
+import PopupComment from '../Modal/PopupComment';
 import PopupPost from '../Modal/PopupPost';
 import PopupUser from '../Modal/PopupUser';
 
-const PostActivity = ({post,likes,auth, types}) => {
+const PostActivity = ({post,likes,auth, types, comments}) => {
 
     console.log('postactivity : ', post);
 
@@ -17,6 +18,10 @@ const PostActivity = ({post,likes,auth, types}) => {
     const [typepost, setTypepost] = useState('');
     const [isopenpost, setIsopenpost] = useState(false);
     const [datapost, setDatapost] = useState([]);
+
+    const [isopencomment, setIsopencomment] = useState(false);
+    const [datacomment, setDatacomment] = useState([]);
+    const [idpostcomment, setIdpostcomment] = useState('');
 
     const {data,setData,post:store, processing, errors, reset,delete:destroy} = useForm({
         post_id:''
@@ -57,9 +62,20 @@ const PostActivity = ({post,likes,auth, types}) => {
         setDatapost(post);
     }
 
+    const handlePopcomment = () => {
+        setIdpostcomment(post.id);
+        setDatacomment(comments);
+        setIsopencomment(true);
+    }
+
+    useEffect(() => {
+        // Ketika props `comments` bertambah, kita setdatacomment dengan data `comments` yang baru, sehingga langsung muncul di pop up.
+        setDatacomment(comments);
+    }, [comments]);
 
     return (
         <>
+        <PopupComment open={isopencomment} onClose={() => setIsopencomment(false)} idpost={idpostcomment} comments={datacomment}/>
         <PopupPost open={isopenpost} post={datapost} type={typepost} onClose={() => setIsopenpost(false)} activitytypes={types}/>
         <PopupUser open={isopen} users={datapop} label={labelpop} onClose={clearViewState}/>
             <div className=" rounded-xl overflow-hidden border w-full bg-white mx-3 mx-0 lg:mx-0 p-4 mb-4">
@@ -157,6 +173,9 @@ const PostActivity = ({post,likes,auth, types}) => {
                             </div>
                             <div>
                                 <span className="text-xs text-gray-400">Activity Date: {post.activity_date}</span>
+                            </div>
+                            <div>
+                                <span className="text-sm text-gray-400 font-bold cursor-pointer hover:text-gray-500" onClick={handlePopcomment}>({comments.length}) Comments</span>
                             </div>
                         </div>
                     </div>

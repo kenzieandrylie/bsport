@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\GroupActivityController;
@@ -70,6 +71,8 @@ Route::get('/leaderboards/{pin}',[GroupActivityController::class,'index_leaderbo
 //like
 Route::post('/like',[LikeController::class,'like'])->middleware(['auth', 'verified'])->name('like');
 Route::delete('/unlike', [LikeController::class,'unlike'])->middleware(['auth', 'verified'])->name('unlike');
+//comment
+Route::post('/comment',[CommentController::class,'create_comment'])->middleware(['auth', 'verified'])->name('add.comment');
 //Admin
 Route::post('/ban',[ProfileController::class,'ban_user'])->middleware(['auth', 'verified'])->name('ban.user');
 Route::post('/unban',[ProfileController::class,'unban_user'])->middleware(['auth', 'verified'])->name('unban.user');
