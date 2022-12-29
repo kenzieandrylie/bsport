@@ -6,18 +6,18 @@ import InputError from "@/Components/InputError";
 
 const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
 
-        const { data, setData, post, processing, errors, reset } = useForm({
-            group_member_id: mymemberid,
-            activity_id: 1,
-            distance: '',
-            step: '',
-            time: '',
-            calories: '',
-            activity_date : '',
-            activity_picture : '',
-            caption: '',
-            group_id:''
-        })
+    const { data, setData, post, processing, errors, reset } = useForm({
+        group_member_id: mymemberid,
+        activity_id: 1,
+        distance: '',
+        step: '',
+        time: '',
+        calories: '',
+        activity_date : '',
+        activity_picture : '',
+        caption: '',
+        group_id:''
+    })
 
     const handleChange = (e) => {
         setData(e.target.name, e.target.value);
@@ -120,7 +120,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                             <img src={auth.profile_picture ? `../storage/${auth.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="rounded-full h-20 w-20"/>
                         </div>
                         <div className="col-span-5 row-span-4 flex flex-col gap-3">
-                            {mymemberid==null &&
+                            {mymemberid===null &&
                                 <div className="w-full flex gap-4 items-center">
                                     <label className="col-span-5 text-sm text-gray-500" htmlFor="selectGroup">Choose Group</label>
                                     <select className = {`select select-ghost select-sm w-full max-w-xs text-xs ${errors.group_member_id ? "border-red-500" : "border-slate-300"}` } name="group_id" id="" onChange={handleChange}>

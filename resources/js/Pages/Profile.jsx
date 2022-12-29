@@ -31,9 +31,12 @@ const Profile = (props) => {
                     <div className="col-span-full lg:col-span-1 order-3 lg:order-none static lg:sticky top-24">
                         <NumberActivity sum={props.sum}/>
                     </div>
-                    <div className="col-span-full lg:col-span-2 order-first lg:order-none lg:mb-4">
-                        <CreatePost auth={props.auth.user} types={props.activities} flash={props.flash.message} mymemberid={null} groupName={props.groups}/>
-                    </div>
+                    {
+                        props.user.id === props.auth.user.id &&
+                        <div className="col-span-full lg:col-span-2 order-first lg:order-none lg:mb-4">
+                            <CreatePost auth={props.auth.user} types={props.activities} flash={props.flash.message} mymemberid={null} groupName={props.groups}/>
+                        </div>
+                    }
                     <div className="col-span-full lg:col-span-2 row-span-2 lg:order-last lg:col-start-2 order-5 " >
                         {
                         props.posts.length > 0 ?
