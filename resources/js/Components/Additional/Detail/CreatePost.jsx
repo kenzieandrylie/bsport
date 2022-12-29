@@ -33,7 +33,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         post(route('create.post'), {
             preserveScroll: true,
             onSuccess: reset(),
@@ -119,13 +119,13 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                         <div className="col-span-1 row-span-4 flex justify-center items-center">
                             <img src={auth.profile_picture ? `../storage/${auth.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="rounded-full h-20 w-20"/>
                         </div>
-                        <div className="col-span-5 row-span-4 justify-around">
+                        <div className="col-span-5 row-span-4 flex flex-col gap-3">
                             {mymemberid==null &&
-                                <div className="w-full">
-                                    <label className="col-span-5" htmlFor="selectGroup">Choose Group</label>
-                                <select className = {`select select-ghost w-full max-w-xs ${errors.group_member_id ? "border-red-500" : "border-slate-300"}` } name="group_id" id="" onChange={handleChange}>
+                                <div className="w-full flex gap-4 items-center">
+                                    <label className="col-span-5 text-sm text-gray-500" htmlFor="selectGroup">Choose Group</label>
+                                    <select className = {`select select-ghost select-sm w-full max-w-xs text-xs ${errors.group_member_id ? "border-red-500" : "border-slate-300"}` } name="group_id" id="" onChange={handleChange}>
 
-                                    <option value="" selected={!data.group_id && true}>Select Group</option>
+                                    <option value="" selected={!data.group_id && true}> <span className="text-gray-500">Select Group</span> </option>
                                         {groupName.length>0 && groupName.map((data,i)=>{
                                                 return (
                                                 <option value={data.id}>{data.name}</option>

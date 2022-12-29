@@ -54,6 +54,15 @@ class GroupActivityController extends Controller
                 ->selectRaw('likes.id, likes.user_id, likes.group_activity_id,users.*')
                 ->get();
 
+        $comments = DB::table('comments')
+        ->join('group_activities','group_activities.id','=','comments.group_activity_id')
+        ->join('group_members','group_members.id','group_activities.group_member_id')
+        ->join('users','users.id','comments.user_id')
+        ->where('group_members.group_id','=',$group->id)
+        ->selectRaw('comments.id, comments.user_id, comments.group_activity_id, comments.body, comments.created_at, users.username, users.profile_picture')
+        ->orderBy('comments.created_at')
+        ->get();
+
         $mysum = DB::table('group_members')
         ->join('group_activities','group_members.id','=','group_activities.group_member_id')
         ->where('group_members.group_id','=',$group->id)
@@ -98,7 +107,8 @@ class GroupActivityController extends Controller
             'posts' => $posts,
             'sum' => $mysum,
             'topthree' => $standing,
-            'likes' => $likes
+            'likes' => $likes,
+            'comments' => $comments
         ]);
     }
 

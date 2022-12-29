@@ -81,6 +81,15 @@ class ProfileController extends Controller
         ->selectRaw('likes.id, likes.user_id, likes.group_activity_id, users.*')
         ->get();
 
+        $comments = DB::table('comments')
+        ->join('group_activities','group_activities.id','=','comments.group_activity_id')
+        ->join('group_members','group_members.id','group_activities.group_member_id')
+        ->join('users','users.id','comments.user_id')
+        ->where('group_members.user_id','=',$user->id)
+        ->selectRaw('comments.id, comments.user_id, comments.group_activity_id, comments.body, comments.created_at, users.username, users.profile_picture')
+        ->orderBy('comments.created_at')
+        ->get();
+
         $sum = DB::table('group_members')
                 ->join('group_activities','group_members.id','=','group_activities.group_member_id')
                 ->where('group_members.user_id','=',$user->id)
@@ -103,7 +112,7 @@ class ProfileController extends Controller
                     ->selectRaw('groups.id as id,groups.name as name')
                     ->get();
                     ;
-                    
+
         return Inertia::render('Profile',[
             'users' => $alluser,
             'user' => $user,
@@ -115,7 +124,8 @@ class ProfileController extends Controller
             'sum' => $sum,
             'likes' => $likes,
             'activities'=>$activities,
-            'groups'=>$groups
+            'groups'=>$groups,
+            'comments' => $comments
         ]);
     }
 

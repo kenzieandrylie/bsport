@@ -43,7 +43,13 @@ const GroupDetail = (props) => {
                         props.posts.map((post,i) => {
                            return (
                             <div key={i}>
-                                <PostActivity post={post} likes={props.likes.filter((like) => like.group_activity_id === post.id)} auth={props.auth} types={props.activities}/>
+                                <PostActivity
+                                    post={post}
+                                    likes={props.likes.filter((like) => like.group_activity_id === post.id)}
+                                    auth={props.auth}
+                                    types={props.activities}
+                                    comments={props.comments.filter((comment) => comment.group_activity_id === post.id)}
+                                />
                             </div>
                            )
                         }
