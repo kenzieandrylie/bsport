@@ -148,7 +148,7 @@ class GroupController extends Controller
             'user_id'=>auth()->user()->id
         ]);
 
-        return redirect()->intended('/dashboard')
+        return redirect()->intended('/homepage')
         ->with( 'mygroups' ,$mygroups)
         ->with( 'users' , $alluser)
         ->with('message','Group '.$request->name. 'berhasil dibuat.');
@@ -214,7 +214,7 @@ class GroupController extends Controller
             'description' => $request->description
         ]);
 
-        return redirect()->intended('/dashboard')
+        return redirect()->intended('/homepage')
         ->with('message','Grup "'.$request->name. '" berhasil diupdate.');
     }
 

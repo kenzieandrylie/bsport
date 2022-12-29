@@ -38,6 +38,6 @@ class GroupMemberController extends Controller
         $newMember->user_id = auth()->user()->id;
         $newMember->save();
 
-        return redirect()->intended('/dashboard')->with('message','Anda berhasil bergabung grup "' . $newMember->group->name . '" !');
+        return redirect()->intended('/homepage')->with('message','Anda berhasil bergabung grup "' . $newMember->group->name . '" !');
     }
 }
