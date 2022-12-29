@@ -73,6 +73,10 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
         setDatacomment(comments);
     }, [comments]);
 
+    let date = new Date(Date.parse(post.created_at));
+    date.setHours(date.getHours() + 7);
+    const formatted_post_created_at = date.toLocaleString();
+
     return (
         <>
         <PopupComment open={isopencomment} onClose={() => setIsopencomment(false)} idpost={idpostcomment} comments={datacomment}/>
@@ -116,7 +120,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
 
                                     </div>
                                     <span className="text-xs text-gray-400">Published in:
-                                        <span className="font-bold mr-2"> {post.group_name}</span>  at: <span className="font-bold">{post.created_at}</span></span>
+                                        <span className="font-bold mr-2"> {post.group_name}</span>  at: <span className="font-bold">{formatted_post_created_at}</span></span>
                                 </div>
                                 <div className="flex justify-around items-center p-3 w-full">
                                     {post.activity_id === 1 &&
