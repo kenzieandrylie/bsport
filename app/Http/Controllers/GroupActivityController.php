@@ -85,12 +85,77 @@ class GroupActivityController extends Controller
                     ->take(3)
                     ->get();
 
-        $time_from = Carbon::now()->subDays(1);
-        $notification = DB::table('users')
-                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
-                        ->where('following_id','=',auth()->user()->id)
-                        ->where('friendships.created_at','>=',$time_from)
-                        ->get();
+        $auth_id = auth()->user()->id;
+        $notification = DB::select(
+                        "
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'follow' as type,
+                                '' as group_name,
+                                '' as activity_picture,
+                                f.created_at
+                            FROM users u
+                            JOIN friendships f on f.follower_id = u.id
+                            WHERE f.following_id = $auth_id
+                            AND f.created_at >= NOW() - INTERVAL 1 DAY
+
+                            UNION ALL
+
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'post' as type,
+                                mygroup.name as group_name,
+                                activity_picture,
+                                ga.created_at
+                                FROM group_activities ga
+                            JOIN group_members gm on ga.group_member_id = gm.id
+                            JOIN (
+                                SELECT
+                                    g.id,
+                                    g.name
+                                FROM group_members gm
+                                join groups g on g.id = gm.group_id
+                                WHERE gm.user_id = $auth_id
+                            ) as mygroup on mygroup.id = gm.group_id
+                            JOIN users u on u.id = gm.user_id
+                            WHERE ga.created_at >= NOW() - INTERVAL 1 DAY
+
+                            UNION ALL
+
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'like' as type,
+                                '' as group_name,
+                                ga.activity_picture,
+                                l.created_at
+                            FROM likes l
+                            JOIN group_activities ga on ga.id = l.group_activity_id
+                            JOIN users u on u.id = l.user_id
+                            JOIN group_members gm on gm.id = ga.group_member_id
+                            WHERE gm.user_id = $auth_id AND l.user_id <> $auth_id
+                            AND l.created_at >= NOW() - INTERVAL 1 DAY
+
+                            UNION ALL
+
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'comment' as type,
+                                '' as group_name,
+                                ga.activity_picture,
+                                c.created_at
+                            FROM comments c
+                            JOIN group_activities ga on ga.id = c.group_activity_id
+                            JOIN users u on u.id = c.user_id
+                            JOIN group_members gm on gm.id = ga.group_member_id
+                            WHERE gm.user_id = $auth_id AND c.user_id <> 1
+                            AND c.created_at >= NOW() - INTERVAL 1 DAY
+
+                            order by created_at desc
+                        ");
 
         $member = DB::table('group_members')
                 ->join('users','users.id','=','group_members.user_id')
@@ -242,12 +307,77 @@ class GroupActivityController extends Controller
                         ->get();
 
         $alluser = User::all();
-        $time_from = Carbon::now()->subDays(1);
-        $notification = DB::table('users')
-                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
-                        ->where('following_id','=',auth()->user()->id)
-                        ->where('friendships.created_at','>=',$time_from)
-                        ->get();
+        $auth_id = auth()->user()->id;
+        $notification = DB::select(
+                        "
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'follow' as type,
+                                '' as group_name,
+                                '' as activity_picture,
+                                f.created_at
+                            FROM users u
+                            JOIN friendships f on f.follower_id = u.id
+                            WHERE f.following_id = $auth_id
+                            AND f.created_at >= NOW() - INTERVAL 1 DAY
+
+                            UNION ALL
+
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'post' as type,
+                                mygroup.name as group_name,
+                                activity_picture,
+                                ga.created_at
+                                FROM group_activities ga
+                            JOIN group_members gm on ga.group_member_id = gm.id
+                            JOIN (
+                                SELECT
+                                    g.id,
+                                    g.name
+                                FROM group_members gm
+                                join groups g on g.id = gm.group_id
+                                WHERE gm.user_id = $auth_id
+                            ) as mygroup on mygroup.id = gm.group_id
+                            JOIN users u on u.id = gm.user_id
+                            WHERE ga.created_at >= NOW() - INTERVAL 1 DAY
+
+                            UNION ALL
+
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'like' as type,
+                                '' as group_name,
+                                ga.activity_picture,
+                                l.created_at
+                            FROM likes l
+                            JOIN group_activities ga on ga.id = l.group_activity_id
+                            JOIN users u on u.id = l.user_id
+                            JOIN group_members gm on gm.id = ga.group_member_id
+                            WHERE gm.user_id = $auth_id AND l.user_id <> $auth_id
+                            AND l.created_at >= NOW() - INTERVAL 1 DAY
+
+                            UNION ALL
+
+                            SELECT
+                                u.username,
+                                u.profile_picture,
+                                'comment' as type,
+                                '' as group_name,
+                                ga.activity_picture,
+                                c.created_at
+                            FROM comments c
+                            JOIN group_activities ga on ga.id = c.group_activity_id
+                            JOIN users u on u.id = c.user_id
+                            JOIN group_members gm on gm.id = ga.group_member_id
+                            WHERE gm.user_id = $auth_id AND c.user_id <> 1
+                            AND c.created_at >= NOW() - INTERVAL 1 DAY
+
+                            order by created_at desc
+                        ");
 
         return Inertia::render('Leaderboard',[
             'users' => $alluser,

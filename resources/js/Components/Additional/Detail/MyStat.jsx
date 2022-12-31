@@ -52,7 +52,7 @@ const MyStat = ({auth, sum, posts}) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <FontAwesomeIcon icon={faFireFlameCurved} size="lg" className="text-sky-500"/>
-                            <span>{sum.sumcalories} KCal</span>
+                            <span>{sum.sumcalories} Cal</span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <FontAwesomeIcon icon={faStopwatch} size="lg" className="text-sky-500"/>

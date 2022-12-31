@@ -32,8 +32,8 @@ const BtnNotif = ({notifications}) => {
             {
                 open ?
                 <div className="relative inline-block">
-                    <div className="absolute bg-white right-3 rounded shadow-md w-64 flex-col p-2">
-                        <div className="overflow-y-auto max-h-64">
+                    <div className="absolute bg-white right-3 rounded shadow-md w-72 flex-col p-2">
+                        <div className="overflow-y-auto max-h-96">
 
                             <div className="p-3 shadow-sm flex justify-between items-center">
                                 <span>Today notifiactions ({notifications.length})</span>
@@ -41,22 +41,103 @@ const BtnNotif = ({notifications}) => {
 
                             {notifications.length > 0 ?
                                 notifications.map((notif, i) => {
+                                    let date = new Date(Date.parse(notif.created_at));
+                                        date.setHours(date.getHours() + 7);
+
+                                        let createdAt = new Date(date); // replace this with the actual date object
+
+                                        // Get the current timestamp in milliseconds
+                                        let now = Date.now();
+
+                                        // Calculate the difference between the current time and the time represented by the createdAt date object, in milliseconds
+                                        let timeDifference = now - createdAt.getTime();
+
+                                        // Convert the time difference from milliseconds to seconds
+                                        timeDifference = timeDifference / 1000;
+
+                                        // Use the time difference to determine the appropriate relative time string
+                                        let relativeTimeString;
+                                        if (timeDifference < 60) {
+                                        relativeTimeString = "now";
+                                        } else if (timeDifference < 3600) {
+                                        relativeTimeString = Math.floor(timeDifference / 60) + "m";
+                                        } else if (timeDifference < 86400) {
+                                        relativeTimeString = Math.floor(timeDifference / 3600) + "h";
+                                        } else if (timeDifference < 604800) {
+                                        relativeTimeString = Math.floor(timeDifference / 86400) + "d";
+                                        } else {
+                                        relativeTimeString = "week ago";
+                                        }
+
                                     return (
                                         <>
                                             <Link href={`/profile/${notif.username}`}>
-                                                <div className="w-full">
+                                        {
+                                            notif.type === 'follow' ?
+                                                    <div className="w-full">
+                                                        <ul role="list" className="p-2 divide-y divide-slate-200">
+                                                            <li className="flex py-4 first:pt-0 last:pb-0 items-center mt-2 grid grid-cols-6">
+                                                                <img src={notif.profile_picture ? `../storage/${notif.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full col-span-1"/>
+                                                                <div className="mx-3 overflow-hidden flex flex-col text-sm col-span-5">
+                                                                    <span>
+                                                                        <span className="font-bold">{notif.username}</span> started following you. <span className="text-gray-400">{relativeTimeString}</span>
+                                                                    </span>
+                                                                    {/* <span className="flex justify-end text-xs text-gray-400">{notif.created_at}</span> */}
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            :
+                                            notif.type === 'post' ?
+                                            <div className="w-full">
                                                     <ul role="list" className="p-2 divide-y divide-slate-200">
-                                                        <li className="flex py-4 first:pt-0 last:pb-0 items-center mt-2">
-                                                            <img src={notif.profile_picture ? `../storage/${notif.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full"/>
-                                                            <div className="ml-3 overflow-hidden flex flex-col text-sm">
+                                                        <li className="flex py-4 first:pt-0 last:pb-0 items-center mt-2 grid grid-cols-6">
+                                                            <img src={notif.profile_picture ? `../storage/${notif.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full col-span-1"/>
+                                                            <div className="overflow-hidden flex flex-col text-sm gap-2 col-span-4 mx-3">
                                                                 <span>
-                                                                    <span className="font-bold">{notif.username}</span> started following you.
+                                                                    <span className="font-bold">{notif.username}</span> posted new activity in <span className="font-bold">{notif.group_name}</span>. <span className="text-gray-400">{relativeTimeString}</span>
                                                                 </span>
                                                                 {/* <span className="flex justify-end text-xs text-gray-400">{notif.created_at}</span> */}
                                                             </div>
+                                                            <img src={`../storage/${notif.activity_picture}`} alt="" className="h-10 w-10 rounded-md col-span-1"/>
                                                         </li>
                                                     </ul>
                                                 </div>
+                                            :
+                                            notif.type === 'like' ?
+                                                <div className="w-full">
+                                                    <ul role="list" className="p-2 divide-y divide-slate-200">
+                                                        <li className="flex py-4 first:pt-0 last:pb-0 items-center mt-2 grid grid-cols-6">
+                                                            <img src={notif.profile_picture ? `../storage/${notif.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full col-span-1"/>
+                                                            <div className="overflow-hidden flex flex-col text-sm gap-2 col-span-4 mx-3">
+                                                                <span>
+                                                                    <span className="font-bold">{notif.username}</span> liked your post activity. <span className="text-gray-400">{relativeTimeString}</span>
+                                                                </span>
+                                                                {/* <span className="flex justify-end text-xs text-gray-400">{notif.created_at}</span> */}
+                                                            </div>
+                                                            <img src={`../storage/${notif.activity_picture}`} alt="" className="h-10 w-10 rounded-md col-span-1"/>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            :
+                                            notif.type === 'comment' ?
+                                                <div className="w-full">
+                                                    <ul role="list" className="p-2 divide-y divide-slate-200">
+                                                        <li className="flex py-4 first:pt-0 last:pb-0 items-center mt-2 grid grid-cols-6">
+                                                            <img src={notif.profile_picture ? `../storage/${notif.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-10 w-10 rounded-full"/>
+                                                            <div className="overflow-hidden flex flex-col text-sm gap-2 col-span-4 mx-3">
+                                                                <span>
+                                                                    <span className="font-bold">{notif.username}</span> comment your post activity. <span className="text-gray-400">{relativeTimeString}</span>
+                                                                </span>
+                                                                {/* <span className="flex justify-end text-xs text-gray-400">{notif.created_at}</span> */}
+                                                            </div>
+                                                            <img src={`../storage/${notif.activity_picture}`} alt="" className="h-10 w-10 rounded-md col-span-1"/>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            :
+                                            null
+                                        }
                                             </Link>
                                         </>
                                     )
