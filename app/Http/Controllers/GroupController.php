@@ -20,12 +20,13 @@ class GroupController extends Controller
     //Dashboard
     public function index()
     {
+        //dd($request);
         $mygroups = DB::table('groups')
                     ->join('group_members','group_members.group_id','=','groups.id')
                     ->where('group_members.user_id',auth()->user()->id)
                     ->get();
 
-        $alluser = User::all();
+        $alluser = DB::table('users')->paginate(5);
 
         $time_from = Carbon::now()->subDays(1);
         $notification = DB::table('users')
@@ -48,6 +49,42 @@ class GroupController extends Controller
         ]);
     }
 
+    public function index_post(Request $request)
+    {
+        $sortOrder = $request->all();
+        //dd($sortOrder['email']);
+        $mygroups = DB::table('groups')
+                    ->join('group_members','group_members.group_id','=','groups.id')
+                    ->where('group_members.user_id',auth()->user()->id)
+                    ->get();
+
+        $alluser = DB::table('users')
+        ->orderBy('username',$sortOrder['username'])
+        ->orderBy('email',$sortOrder['email'])
+        ->orderBy('is_admin',$sortOrder['role'])
+        ->paginate(5);
+
+        $time_from = Carbon::now()->subDays(1);
+        $notification = DB::table('users')
+                        ->join('friendships', 'users.id', '=', 'friendships.follower_id')
+                        ->where('following_id','=',auth()->user()->id)
+                        ->where('friendships.created_at','>=',$time_from)
+                        ->get();
+
+        //ADMIN
+        $allfeedback = DB::table('feedback')
+        ->join('users','users.id','=','feedback.user_id')
+        ->selectRaw('feedback.subject, feedback.detail, users.username')
+
+        ->get();
+
+        return Inertia::render('Dashboard', [
+            'mygroups' => $mygroups,
+            'users' => $alluser,
+            'notifications' => $notification,
+            'feedback' => $allfeedback
+        ]);
+    }
     //Discover
     public function index_discover(){
 
