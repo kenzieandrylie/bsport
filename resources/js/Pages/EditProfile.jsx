@@ -22,7 +22,7 @@ const EditProfile = (props) => {
         cover_picture: user.cover_picture
     })
 
-    console.log('Edit profile : ', props, data);
+    // console.log('Edit profile : ', props, data);
 
     const [type, setType] = useState('editprofile');
     const [info, setInfo] = useState('');

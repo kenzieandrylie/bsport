@@ -7,7 +7,7 @@ import BtnBack from '@/Components/Additional/BtnBack';
 
 const Discover = (props) => {
 
-    console.log("discover props : ",props)
+    // console.log("discover props : ",props)
 
     return (
         <>

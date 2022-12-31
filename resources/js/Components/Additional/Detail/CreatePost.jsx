@@ -111,10 +111,10 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                                 :
                                     null
                                 }
-                                <div class="flex w-3/4 relative justify-center">
+                                <div className="flex w-3/4 relative justify-center">
                                     <input type="number" min={1} name="calories" className={`w-full basis-1/2 rounded border-0 border-b-2 ${errors.calories ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/3 `} placeholder="Calories (Kcal)" value={data.calories} onChange={handleChange} disabled/>
-                                    <div class="flex -mr-px basis-1/2">
-                                        <span class="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 w-full border-grey-light px-3 whitespace-no-wrap text-grey-dark text-xs bg-slate-200">Calories</span>
+                                    <div className="flex -mr-px basis-1/2">
+                                        <span className="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 w-full border-grey-light px-3 whitespace-no-wrap text-grey-dark text-xs bg-slate-200">Calories</span>
                                     </div>
                                 </div>
                             </div>

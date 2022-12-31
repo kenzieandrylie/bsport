@@ -6,7 +6,7 @@ const BtnNotif = ({notifications}) => {
 
     const [open, setOpen] = useState(false);
 
-    console.log('btnnotif : ', notifications);
+    // console.log('btnnotif : ', notifications);
 
     const handleButton = () => {
         if(open){

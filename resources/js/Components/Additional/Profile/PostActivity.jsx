@@ -8,7 +8,7 @@ import PopupUser from '../Modal/PopupUser';
 
 const PostActivity = ({post,likes,auth, types, comments}) => {
 
-    console.log('postactivity : ', post);
+    // console.log('postactivity : ', post);
 
     const [type, setType] = useState('');
     const [labelpop, setLabelpop] = useState('');

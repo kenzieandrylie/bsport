@@ -9,7 +9,7 @@ import { Head, Link } from "@inertiajs/inertia-react";
 
 const Profile = (props) => {
 
-    console.log('Profile Page',props);
+    // console.log('Profile Page',props);
 
     return (
         <>
