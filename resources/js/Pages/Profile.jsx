@@ -6,10 +6,27 @@ import ProfileHeader from "@/Components/Additional/Profile/ProfileHeader";
 import TotalActivity from "@/Components/Additional/Profile/TotalActivity";
 import UserLayout from "@/Layouts/UserLayout";
 import { Head, Link } from "@inertiajs/inertia-react";
-
+import {useState, useEffect } from "react";
+import { Inertia } from "@inertiajs/inertia";
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Profile = (props) => {
 
-    // console.log('Profile Page',props);
+    //console.log('Profile Page',props);
+    const [offset,setOffset] = useState(props.posts.data.length*2);
+
+    const fetchData = async ()=>{
+        const response = await Inertia.post(`/profile/${props.user.username}`,{"offset":offset},
+       {preserveScroll: true});
+
+        //console.log(response.data);
+
+    }
+    const handleNextPage=()=>{
+        fetchData();
+        setOffset(values=>values+=props.posts.data.length);
+    }
+    useEffect(()=>console.log(offset,props.posts.total));
 
     return (
         <>
@@ -39,8 +56,8 @@ const Profile = (props) => {
                     }
                     <div className="col-span-full lg:col-span-2 row-span-2 lg:order-last lg:col-start-2 order-5 " >
                         {
-                        props.posts.length > 0 ?
-                        props.posts.map((post,i) => {
+                        props.posts.data.length > 0 ?
+                        props.posts.data.map((post,i) => {
                            return (
                             <div key={i}>
                                 <PostActivity
@@ -54,7 +71,13 @@ const Profile = (props) => {
                            )
                         }
                         ) : <div className="ml-4"><span>There's no post yet!</span></div> }
+                        <div className="flex justify-center mb-4">
+                          { offset <= props.posts.total && <button className=" rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" onClick={handleNextPage}>
+                            <FontAwesomeIcon icon={faRotateRight} /></button>}
+                          </div>
                     </div>
+
+
                 </div>
 
             </UserLayout>

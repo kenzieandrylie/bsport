@@ -2,6 +2,7 @@ import { faPersonRunning, faDumbbell, faBicycle } from '@fortawesome/free-solid-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TotalActivity = ({posts}) => {
+
     // console.log('filter : ',posts.filter((post) => post.activity_id === 2))
     return (
         <>
@@ -16,7 +17,7 @@ const TotalActivity = ({posts}) => {
                                 <div className="col-span-1">
                                     <FontAwesomeIcon icon={faPersonRunning} size="2xl"/>
                                 </div>
-                                <span className="col-span-2">{posts.filter((post) => post.activity_id === 1).length} Times</span>
+                                <span className="col-span-2">{posts.data.filter((post) => post.activity_id === 1).length} Times</span>
                             </div>
                         </div>
                         <div className="hover:text-sky-500">
@@ -24,7 +25,7 @@ const TotalActivity = ({posts}) => {
                                 <div className="col-span-1">
                                     <FontAwesomeIcon icon={faDumbbell} size="2xl"/>
                                 </div>
-                                <span className="col-span-2">{posts.filter((post) => post.activity_id === 3).length} Times</span>
+                                <span className="col-span-2">{posts.data.filter((post) => post.activity_id === 3).length} Times</span>
                             </div>
                         </div>
                         <div className="hover:text-sky-500">
@@ -32,7 +33,7 @@ const TotalActivity = ({posts}) => {
                                 <div className="col-span-1">
                                     <FontAwesomeIcon icon={faBicycle} size="2xl"/>
                                 </div>
-                                <span className="col-span-2">{posts.filter((post) => post.activity_id === 2).length} Times</span>
+                                <span className="col-span-2">{posts.data.filter((post) => post.activity_id === 2).length} Times</span>
                             </div>
                         </div>
                     </div>
