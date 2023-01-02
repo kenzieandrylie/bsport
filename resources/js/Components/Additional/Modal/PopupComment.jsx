@@ -10,7 +10,7 @@ const PopupComment = ({open,onClose,idpost,comments}) => {
         body: ''
     });
 
-    console.log("Popupcomment : ", comments,'data : ',data);
+    // console.log("Popupcomment : ", comments,'data : ',data);
 
     const handleChange = (e) => {
         setData(e.target.name, e.target.value);

@@ -1,3 +1,6 @@
+import { Link } from "@inertiajs/inertia-react";
+import ApplicationLogo from "../ApplicationLogo";
+
 const footer = () => {
     return (
         <>
@@ -5,7 +8,9 @@ const footer = () => {
                 <div className="w-full p-16">
                     <div className="flex justify-between">
                         <div className="flex justify-center basis-1/6">
-                            LOGO
+                            <Link href="/">
+                                <ApplicationLogo className="w-28 h-28 fill-current text-gray-500" />
+                            </Link>
                         </div>
                         <div className="flex justify-around items-center basis-1/4">
                             <a href="">Link 1</a>

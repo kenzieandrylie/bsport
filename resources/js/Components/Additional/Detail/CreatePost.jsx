@@ -12,7 +12,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
         distance: '',
         step: '',
         time: '',
-        calories: '',
+        calories: 0,
         activity_date : '',
         activity_picture : '',
         caption: '',
@@ -36,14 +36,19 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
 
         post(route('create.post'), {
             preserveScroll: true,
-            onSuccess: reset(),
-            onSuccess: (() => {setCheck(false)})
+            onSuccess: (() => {reset(), setCheck(false)})
         });
     }
 
     useEffect(() => {
-        reset('distance','step','time','calories','activity_date');
+        reset('calories','distance','step','time','activity_date');
     },[data.activity_id])
+
+    useEffect(() => {
+        if(!data.distance || !data.time){
+            setData('calories', data.activity_id === 3 ? Math.ceil(data.time * 3.71) : data.activity_id === 2 ? (data.distance * 32) : data.activity_id === 1 ? (data.distance * 60) : null)
+        }
+    }, [data.distance, data.time])
 
     // useEffect(()=>{
     //     console.log(data.group_id);
@@ -85,7 +90,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                         </div>
 
                         <div className="col-span-3 row-span-2">
-                            <div className="flex justify-between items-center gap-1">
+                            <div className="flex justify-between items-center gap-4">
                                 {data.activity_id === 1 ?
                                     <div>
                                         <input type="number" min={1} name="step" className={`w-full rounded border-0 border-b-2 ${errors.step ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/3 `} placeholder="Steps" value={data.step} onChange={handleChange}/>
@@ -106,8 +111,11 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                                 :
                                     null
                                 }
-                                <div>
-                                    <input type="number" min={1} name="calories" className={`w-full rounded border-0 border-b-2 ${errors.calories ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/3 `} placeholder="Calories (Kcal)" value={data.calories} onChange={handleChange}/>
+                                <div className="flex w-3/4 relative justify-center">
+                                    <input type="number" min={1} name="calories" className={`w-full basis-1/2 rounded border-0 border-b-2 ${errors.calories ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/2 `} placeholder="Calories (Kcal)" value={data.calories} onChange={handleChange} disabled/>
+                                    <div className="flex -mr-px basis-1/3">
+                                        <span className="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 w-full border-grey-light px-3 whitespace-no-wrap text-grey-dark text-xs bg-slate-200">Calories</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex justify-center items-center h-2/3">

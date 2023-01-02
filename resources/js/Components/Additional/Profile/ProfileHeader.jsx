@@ -8,7 +8,7 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
         id:''
     });
 
-    console.log('Profile Header: ', user, auth);
+    // console.log('Profile Header: ', user, auth);
 
     const [datapop, setDatapop] = useState([]);
     const [isopen, setIsopen] = useState(false);

@@ -8,7 +8,7 @@ import PopupUser from '../Modal/PopupUser';
 
 const PostActivity = ({post,likes,auth, types, comments}) => {
 
-    console.log('postactivity : ', post);
+    // console.log('postactivity : ', post);
 
     const [type, setType] = useState('');
     const [labelpop, setLabelpop] = useState('');
@@ -138,7 +138,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
 
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faFireFlameCurved} size="sm"/>
-                                        <span>{post.calories} KCal</span>
+                                        <span>{post.calories} Cal</span>
                                     </div>
                                     {post.activity_id === 3  &&
                                     <div className="flex flex-col gap-2">

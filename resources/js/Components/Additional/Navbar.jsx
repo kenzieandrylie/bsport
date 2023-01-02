@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/inertia-react";
+import ApplicationLogo from "../ApplicationLogo";
 import BtnNotif from "./BtnNotif";
 import SearchBar from "./SearchBar";
 
@@ -8,7 +9,7 @@ const Navbar = ({user, users, notifications}) => {
         <div className="navbar bg-base-100 p-3">
 
             <div className="flex-1 gap-10">
-                <div className="btn btn-ghost normal-case text-xl"><Link href={route('dashboard')}>BSport</Link></div>
+                <Link href={route('dashboard')}><ApplicationLogo className="w-16 h-16 ml-4 fill-current text-gray-500"/></Link>
                 <div className="form-control">
                     <SearchBar users={users} />
                 </div>

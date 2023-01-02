@@ -31,7 +31,7 @@ const NumberActivity = ({sum}) => {
                                 <div className="col-span-1">
                                     <FontAwesomeIcon icon={faFireFlameCurved} size="2xl"/>
                                 </div>
-                                <span className="col-span-2">{sum.sumcalories} KCal</span>
+                                <span className="col-span-2">{sum.sumcalories} Cal</span>
                             </div>
                         </div>
                         <div className="hover:text-sky-500">

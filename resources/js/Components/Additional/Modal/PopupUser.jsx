@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserList from "../UserList";
 
 const PopupUser = ({open,users,label,onClose}) => {
-    console.log("Popupuser : ", open);
+    // console.log("Popupuser : ", open);
     return (
         <>
             {

@@ -9,7 +9,7 @@ import { Head } from "@inertiajs/inertia-react";
 
 const GroupDetail = (props) => {
 
-    console.log("Group Detail Page: ",props);
+    // console.log("Group Detail Page: ",props);
 
     return (
         <>

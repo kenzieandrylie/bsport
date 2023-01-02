@@ -70,7 +70,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
         });
     }, [post]);
 
-    console.log('popuppost : ',post, 'data : ', data);
+    // console.log('popuppost : ',post, 'data : ', data);
 
     if(!open) return null;
     return (

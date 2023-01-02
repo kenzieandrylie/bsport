@@ -2,7 +2,7 @@ import { faPersonRunning, faDumbbell, faBicycle } from '@fortawesome/free-solid-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TotalActivity = ({posts}) => {
-    console.log('filter : ',posts.filter((post) => post.activity_id === 2))
+    // console.log('filter : ',posts.filter((post) => post.activity_id === 2))
     return (
         <>
             <div className="bg-white divide-y divide-blue-300 border rounded-xl p-3">

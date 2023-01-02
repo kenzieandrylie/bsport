@@ -13,7 +13,7 @@ import ViewFeedback from '@/Components/Additional/Admin/ViewFeedback';
 
 export default function Dashboard(props) {
 
-    console.log("dashboard props : ",props);
+    // console.log("dashboard props : ",props);
 
     return (
         <>

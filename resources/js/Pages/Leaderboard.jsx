@@ -6,7 +6,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const Leaderboard = (props) => {
 
-    console.log("Leaderboard Page : ", props)
+    // console.log("Leaderboard Page : ", props)
 
     const { data, setData, get, processing, errors, reset } = useForm({
         sortby: props.p_sort,
@@ -136,12 +136,14 @@ const Leaderboard = (props) => {
                                                                     </div>
                                                                 </td>
                                                                 <td className="text-md p-6">
-                                                                    <div className="flex items-center gap-4">
-                                                                        <img src={value.profile_picture ? `../storage/${value.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-12 w-12 rounded-full"/>
-                                                                        <div className="flex flex-col">
-                                                                            <span className="font-bold">{value.name + ' ' + value.last_name}</span>
-                                                                            <span className="text-sm text-slate-500">{value.username}</span>
-                                                                        </div>
+                                                                    <div>
+                                                                        <Link href={`/profile/${value.username}`} className="flex items-center gap-4">
+                                                                            <img src={value.profile_picture ? `../storage/${value.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-12 w-12 rounded-full"/>
+                                                                            <div className="flex flex-col">
+                                                                                <span className="font-bold">{value.name + ' ' + value.last_name}</span>
+                                                                                <span className="text-sm text-slate-500">{value.username}</span>
+                                                                            </div>
+                                                                        </Link>
                                                                     </div>
                                                                 </td>
                                                                 <td className="text-md p-6">{value.step}</td>
