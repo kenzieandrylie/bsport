@@ -6,6 +6,7 @@ use App\Models\Group;
 use App\Models\GroupMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class GroupMemberController extends Controller
 {
@@ -33,10 +34,38 @@ class GroupMemberController extends Controller
 
     //Discover
     public function join(Request $request){
-        $newMember = new GroupMember();
-        $newMember->group_id = $request->groupId;
-        $newMember->user_id = auth()->user()->id;
-        $newMember->save();
+
+        if($request->pin) {
+            $groupId = DB::table('groups')
+                    ->where('pin','=',$request->pin)
+                    ->first();
+
+            if ($groupId === null) {
+                return redirect()->back()->withErrors(['pin' => 'Group not found!']);
+            }
+
+            $checkMember = DB::table('group_members')
+                            ->where('group_id','=',$groupId->id)
+                            ->get();
+
+            foreach($checkMember as $c){
+                if($c->user_id == auth()->user()->id){
+                    return redirect()->back()->withErrors(['pin' => 'You have joined the "'.$groupId->name.'" group!']);
+                }
+            }
+
+            $newMember = new GroupMember();
+            $newMember->group_id = $groupId->id;
+            $newMember->user_id = auth()->user()->id;
+            $newMember->save();
+        }
+        else{
+
+            $newMember = new GroupMember();
+            $newMember->group_id = $request->groupId;
+            $newMember->user_id = auth()->user()->id;
+            $newMember->save();
+        }
 
         return redirect()->intended('/homepage')->with('message','Anda berhasil bergabung grup "' . $newMember->group->name . '" !');
     }

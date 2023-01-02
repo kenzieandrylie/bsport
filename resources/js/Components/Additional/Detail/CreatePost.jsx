@@ -90,7 +90,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                         </div>
 
                         <div className="col-span-3 row-span-2">
-                            <div className="flex justify-between items-center gap-1">
+                            <div className="flex justify-between items-center gap-4">
                                 {data.activity_id === 1 ?
                                     <div>
                                         <input type="number" min={1} name="step" className={`w-full rounded border-0 border-b-2 ${errors.step ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/3 `} placeholder="Steps" value={data.step} onChange={handleChange}/>
@@ -112,8 +112,8 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                                     null
                                 }
                                 <div className="flex w-3/4 relative justify-center">
-                                    <input type="number" min={1} name="calories" className={`w-full basis-1/2 rounded border-0 border-b-2 ${errors.calories ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/3 `} placeholder="Calories (Kcal)" value={data.calories} onChange={handleChange} disabled/>
-                                    <div className="flex -mr-px basis-1/2">
+                                    <input type="number" min={1} name="calories" className={`w-full basis-1/2 rounded border-0 border-b-2 ${errors.calories ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-xs basis-1/2 `} placeholder="Calories (Kcal)" value={data.calories} onChange={handleChange} disabled/>
+                                    <div className="flex -mr-px basis-1/3">
                                         <span className="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 w-full border-grey-light px-3 whitespace-no-wrap text-grey-dark text-xs bg-slate-200">Calories</span>
                                     </div>
                                 </div>

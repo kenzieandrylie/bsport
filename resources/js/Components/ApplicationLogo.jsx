@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ApplicationLogo({ className }) {
     return (
-        <svg className={className} version="1.1" id="Layer_1" x="0px" y="0px" width="200px" height="200px" viewBox="0 0 200 200" enable-background="new 0 0 200 200">   <image id="image0" width="200" height="200" x="0" y="0"
+        <svg className={className} version="1.1" id="Layer_1" x="0px" y="0px" width="200px" height="200px" viewBox="0 0 200 200" enableBackground="new 0 0 200 200">   <image id="image0" width="200" height="200" x="0" y="0"
         href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
     AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAc
     TElEQVR42u3de3QT15048O/obY9lPYyFIUb40caBdmwgZAtBFiWG7oJxmrY0bQ3t75e2ycaQPbvd
