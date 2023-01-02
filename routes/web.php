@@ -39,9 +39,8 @@ Route::get('/', function () {
 Route::get('/back', function(){
     return redirect()->back();
 });
-
+Route::group(['middleware'=>'user'],function(){
 //dashboard
-Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::delete('/mygroup/leave', [GroupMemberController::class, 'leave'])->middleware(['auth', 'verified'])->name('leave.group');
 Route::delete('/mygroup/deletegroup',[GroupMemberController::class,'deletegroup'])->middleware(['auth', 'verified'])->name('delete.group');
 //discover
@@ -67,15 +66,23 @@ Route::get('/editprofile',[ProfileController::class, 'index_edit_profile'])->mid
 Route::post('/editpassword', [ProfileController::class, 'edit_password'])->middleware(['auth', 'verified'])->name('edit.password');
 Route::post('/editprofile', [ProfileController::class, 'edit_profile'])->middleware(['auth', 'verified'])->name('edit.profile');
 //leaderboard
+Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/leaderboards/{pin}',[GroupActivityController::class,'index_leaderboard'])->middleware(['auth','verified'])->name('group.leaderboard');
 //like
 Route::post('/like',[LikeController::class,'like'])->middleware(['auth', 'verified'])->name('like');
 Route::delete('/unlike', [LikeController::class,'unlike'])->middleware(['auth', 'verified'])->name('unlike');
 //comment
 Route::post('/comment',[CommentController::class,'create_comment'])->middleware(['auth', 'verified'])->name('add.comment');
+});
+
 //Admin
-Route::post('/ban',[ProfileController::class,'ban_user'])->middleware(['auth', 'verified'])->name('ban.user');
-Route::post('/unban',[ProfileController::class,'unban_user'])->middleware(['auth', 'verified'])->name('unban.user');
-Route::post('/role',[ProfileController::class,'change_role'])->middleware(['auth', 'verified'])->name('change.role');
+Route::group(['middleware'=>'admin'],function(){
+    Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::post('/homepage', [GroupController::class, 'index_post'])->middleware(['auth', 'verified'])->name('dashboard.post');
+    Route::get('/profile/{username}',[ProfileController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
+    Route::post('/ban',[ProfileController::class,'ban_user'])->middleware(['auth', 'verified'])->name('ban.user');
+    Route::post('/unban',[ProfileController::class,'unban_user'])->middleware(['auth', 'verified'])->name('unban.user');
+    Route::post('/role',[ProfileController::class,'change_role'])->middleware(['auth', 'verified'])->name('change.role');
+});
 
 require __DIR__.'/auth.php';

@@ -1,7 +1,8 @@
 import { useForm } from "@inertiajs/inertia-react";
 import { useEffect, useState } from "react";
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownAZ, faArrowUpAZ, faBackward, faForward, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Inertia } from "@inertiajs/inertia";
 
 
 const ManageUser = ({users,auth}) => {
@@ -14,6 +15,16 @@ const ManageUser = ({users,auth}) => {
     const [type, setType] = useState('');
     const [query, setQuery] = useState('');
 
+    const[isSort,setIsSort]= useState({
+        username:false,
+        email:false,
+        role:false
+    })
+    const [sortOrder, setSortOrder] = useState({
+        username:'asc',
+        email:'asc',
+        role:'asc'
+    });
     const handleBan = (id) => {
         setData('id',id);
         setType('ban');
@@ -27,6 +38,38 @@ const ManageUser = ({users,auth}) => {
     const handleRole = (id, role) => {
         setData({'id' : id, 'role' : role});
         setType('role');
+    }
+    const fetchData = async ()=>{
+        const response = await Inertia.post(route('dashboard.post'),sortOrder);
+        console.log(response.data);
+    }
+    useEffect(()=>{
+        fetchData();
+    },[sortOrder]);
+    const handleSort = (type)=>{
+
+        if(isSort[type]){
+            if(sortOrder[type]=='asc'){
+                setSortOrder(values=>({
+                    ...values,
+                    [type] :'desc'
+            }))
+
+            }else{
+                setSortOrder(values=>({
+                    ...values,
+                    [type] :'asc'
+                }))
+            }
+
+        }else{
+            setIsSort(values=>({
+                ...values,
+                [type]:true
+            }));
+
+            fetchData();
+        }
     }
 
     useEffect(() => {
@@ -60,18 +103,36 @@ const ManageUser = ({users,auth}) => {
                                         <th className="text-md font-bold text-gray-900 px-6 py-4 text-left w-1/8">
                                             No
                                         </th>
-                                        <th className="text-md font-bold text-gray-900 px-6 py-4 text-left w-1/4">
-                                            Username
+                                        <th className="text-md font-bold text-gray-900 px-6 py-4 text-left w-1/4 flex items-center gap-2">
+                                        <button className="btn btn-ghost" onClick={()=>handleSort('username')}>
+                                        Username
+                                           {isSort.username && ( sortOrder.username === 'asc'?
+                                            <FontAwesomeIcon icon={faArrowUpAZ} size="sm" />
+                                            : <FontAwesomeIcon icon={faArrowDownAZ} size="sm" />)}
+
+                                            </button>
                                         </th>
                                         <th className="text-md font-bold text-gray-900 px-6 py-4 text-left w-1/4">
-                                            Email
+                                        <button className="btn btn-ghost" onClick={()=>handleSort('email')}>
+                                        Email
+                                           {isSort.email && ( sortOrder.email === 'asc'?
+                                            <FontAwesomeIcon icon={faArrowUpAZ} size="sm" />
+                                            : <FontAwesomeIcon icon={faArrowDownAZ} size="sm" />)}
+
+                                            </button>
                                         </th>
                                         <th className="text-md font-bold text-gray-900 px-6 py-4 text-left w-1/4">
                                             <div className="flex items-center gap-2">
-                                                <span>Role</span>
-                                                <div className="tooltip tooltip-top cursor-pointer" data-tip="click badge to change user's role">
-                                                    <FontAwesomeIcon icon={faQuestionCircle} size="sm"/>
-                                                </div>
+                                                <button className="btn btn-ghost" onClick={()=>handleSort('role')}>
+                                                    <span>Role</span>
+                                                    <div className="tooltip tooltip-top cursor-pointer" data-tip="click badge to change user's role">
+                                                        <FontAwesomeIcon icon={faQuestionCircle} size="sm"/>
+                                                    </div>
+                                                    {isSort.role && ( sortOrder.role === 'asc'?
+                                                <FontAwesomeIcon icon={faArrowUpAZ} size="sm" />
+                                                : <FontAwesomeIcon icon={faArrowDownAZ} size="sm" />)}
+
+                                                </button>
                                             </div>
                                         </th>
                                         <th className="text-md font-bold text-gray-900 px-6 py-4 text-left w-1/8">
@@ -81,7 +142,7 @@ const ManageUser = ({users,auth}) => {
                                 </thead>
 
                                 <tbody className="text-left divide-y divide-slate-200">
-                                    {users
+                                    {users.data
                                     .filter((user) => user.username.toLowerCase().includes(query.toLowerCase()))
                                     .map((user,i) => {
                                         return(
@@ -121,6 +182,19 @@ const ManageUser = ({users,auth}) => {
 
                                 </tbody>
                             </table>
+                            <div className="flex justify-end">
+                                <div className=" btn-group p-5 ">
+                                    {users.links.map((data,i)=>{
+                                       //if(users.page>=5)
+                                        return (
+                                            <a key={i+1} href={data.url} className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white">{i!=0 && i!=users.links.length-1 && data.label}
+                                            {i==0 && <FontAwesomeIcon icon={faBackward} size=""/>}
+                                            {i==users.links.length-1 && <FontAwesomeIcon icon={faForward} size=""/>}
+                                            </a>
+                                        )
+                                    })}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
