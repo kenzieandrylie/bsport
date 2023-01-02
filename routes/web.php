@@ -59,14 +59,12 @@ Route::delete('/deletepost',[GroupActivityController::class, 'delete_post'])->mi
 //feedback
 Route::post('/feedback', [FeedbackController::class, 'create_feedback'])->middleware(['auth', 'verified'])->name('create.feedback');
 //profile
-Route::get('/profile/{username}',[ProfileController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
 Route::post('/follow', [FriendshipController::class, 'follow'])->middleware(['auth', 'verified'])->name('follow.user');
 Route::delete('/unfollow', [FriendshipController::class, 'unfollow'])->middleware(['auth', 'verified'])->name('unfollow.user');
 Route::get('/editprofile',[ProfileController::class, 'index_edit_profile'])->middleware(['auth', 'verified'])->name('index.edit.profile');
 Route::post('/editpassword', [ProfileController::class, 'edit_password'])->middleware(['auth', 'verified'])->name('edit.password');
 Route::post('/editprofile', [ProfileController::class, 'edit_profile'])->middleware(['auth', 'verified'])->name('edit.profile');
 //leaderboard
-Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/leaderboards/{pin}',[GroupActivityController::class,'index_leaderboard'])->middleware(['auth','verified'])->name('group.leaderboard');
 //like
 Route::post('/like',[LikeController::class,'like'])->middleware(['auth', 'verified'])->name('like');
@@ -74,12 +72,14 @@ Route::delete('/unlike', [LikeController::class,'unlike'])->middleware(['auth', 
 //comment
 Route::post('/comment',[CommentController::class,'create_comment'])->middleware(['auth', 'verified'])->name('add.comment');
 });
-
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/profile/{username}',[ProfileController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
+    Route::post('/profile/{username}',[ProfileController::class, 'index_profile_post'])->middleware(['auth', 'verified'])->name('view.profile.post');
+});
 //Admin
 Route::group(['middleware'=>'admin'],function(){
-    Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::post('/homepage', [GroupController::class, 'index_post'])->middleware(['auth', 'verified'])->name('dashboard.post');
-    Route::get('/profile/{username}',[ProfileController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
     Route::post('/ban',[ProfileController::class,'ban_user'])->middleware(['auth', 'verified'])->name('ban.user');
     Route::post('/unban',[ProfileController::class,'unban_user'])->middleware(['auth', 'verified'])->name('unban.user');
     Route::post('/role',[ProfileController::class,'change_role'])->middleware(['auth', 'verified'])->name('change.role');
