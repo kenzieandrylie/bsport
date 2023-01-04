@@ -6,7 +6,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 
 const ManageUser = ({users,auth}) => {
-
+    //console.log(users);
     const {data,setData,post, processing, errors, reset,delete:destroy} = useForm({
         id:'',
         role:''
@@ -39,38 +39,49 @@ const ManageUser = ({users,auth}) => {
         setData({'id' : id, 'role' : role});
         setType('role');
     }
-    // const fetchData = async ()=>{
-    //     const response = await Inertia.post(route('dashboard.post'),sortOrder);
-    //     console.log(response.data);
-    // }
-    // useEffect(()=>{
-    //     fetchData();
-    // },[sortOrder]);
-    // const handleSort = (type)=>{
+    const fetchData = async ()=>{
+        const response = await Inertia.post(route('dashboard.post'),
+        {"sortOrder":sortOrder,
+        "isSort":isSort}
+        );
+        //console.log(response);
+    }
+    useEffect(()=>{
+        fetchData();
+    },[sortOrder,isSort]);
 
-    //     if(isSort[type]){
-    //         if(sortOrder[type]=='asc'){
-    //             setSortOrder(values=>({
-    //                 ...values,
-    //                 [type] :'desc'
-    //         }))
+    const handleSort = (type)=>{
 
-    //         }else{
-    //             setSortOrder(values=>({
-    //                 ...values,
-    //                 [type] :'asc'
-    //             }))
-    //         }
+        if(isSort[type]){
+            if(sortOrder[type]=='asc'){
+                setSortOrder(values=>({
+                    ...values,
+                    [type] :'desc'
+            }))
 
-    //     }else{
-    //         setIsSort(values=>({
-    //             ...values,
-    //             [type]:true
-    //         }));
+            }else{
+                setSortOrder(values=>({
+                    ...values,
+                    [type] :'asc'
+                }))
+                isSort[type] = false;
+            }
 
-    //         fetchData();
-    //     }
-    // }
+        }else{
+            setIsSort({
+                username:false,
+                email:false,
+                role:false
+            });
+
+            setIsSort(values=>({
+                ...values,
+                [type]:true
+            }));
+
+
+        }
+    }
 
     useEffect(() => {
         if(type === 'ban'){
