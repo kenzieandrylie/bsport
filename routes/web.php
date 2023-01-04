@@ -75,7 +75,7 @@ Route::post('/comment',[CommentController::class,'create_comment'])->middleware(
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/homepage', [GroupController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/profile/{username}',[ProfileController::class, 'index_profile'])->middleware(['auth', 'verified'])->name('view.profile');
-    Route::post('/profile/{username}',[ProfileController::class, 'index_profile_post'])->middleware(['auth', 'verified'])->name('view.profile.post');
+    //Route::post('/profile/{username}',[ProfileController::class, 'index_profile_post'])->middleware(['auth', 'verified'])->name('view.profile.post');
 });
 //Admin
 Route::group(['middleware'=>'admin'],function(){

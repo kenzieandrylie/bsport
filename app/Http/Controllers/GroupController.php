@@ -26,14 +26,7 @@ class GroupController extends Controller
                     ->where('group_members.user_id',auth()->user()->id)
                     ->get();
 
-        $alluser = DB::table('users')->paginate(5);
-
-        // $time_from = Carbon::now()->subDays(1);
-        // $notification = DB::table('users')
-        //                 ->join('friendships', 'users.id', '=', 'friendships.follower_id')
-        //                 ->where('following_id','=',auth()->user()->id)
-        //                 ->where('friendships.created_at','>=',$time_from)
-        //                 ->get();
+        $alluser = User::all();
 
         $auth_id = auth()->user()->id;
         $notification = DB::select(

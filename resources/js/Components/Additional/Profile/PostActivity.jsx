@@ -1,14 +1,13 @@
 import { faBicycle,faPersonRunning, faDumbbell,faShoePrints, faRoad, faFireFlameCurved, faStopwatch, faHeart  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Inertia,useForm} from '@inertiajs/inertia-react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PopupComment from '../Modal/PopupComment';
 import PopupPost from '../Modal/PopupPost';
 import PopupUser from '../Modal/PopupUser';
 
-const PostActivity = ({post,likes,auth, types, comments}) => {
 
-    // console.log('postactivity : ', post);
+const PostActivity = ({post,likes,auth, types, comments}) => {
 
     const [type, setType] = useState('');
     const [labelpop, setLabelpop] = useState('');
