@@ -56,7 +56,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4">
                     <div className='flex justify-between'>
                         <InputLabel forInput="password" value="Password" />
-                        <div>
+                        {/* <div>
                             {canResetPassword && (
                                 <Link
                                     href={route('password.request')}
@@ -65,7 +65,7 @@ export default function Login({ status, canResetPassword }) {
                                     Forgot your password?
                                 </Link>
                             )}
-                        </div>
+                        </div> */}
                     </div>
 
                     <TextInput

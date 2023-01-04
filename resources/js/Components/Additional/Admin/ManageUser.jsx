@@ -39,38 +39,38 @@ const ManageUser = ({users,auth}) => {
         setData({'id' : id, 'role' : role});
         setType('role');
     }
-    const fetchData = async ()=>{
-        const response = await Inertia.post(route('dashboard.post'),sortOrder);
-        console.log(response.data);
-    }
-    useEffect(()=>{
-        fetchData();
-    },[sortOrder]);
-    const handleSort = (type)=>{
+    // const fetchData = async ()=>{
+    //     const response = await Inertia.post(route('dashboard.post'),sortOrder);
+    //     console.log(response.data);
+    // }
+    // useEffect(()=>{
+    //     fetchData();
+    // },[sortOrder]);
+    // const handleSort = (type)=>{
 
-        if(isSort[type]){
-            if(sortOrder[type]=='asc'){
-                setSortOrder(values=>({
-                    ...values,
-                    [type] :'desc'
-            }))
+    //     if(isSort[type]){
+    //         if(sortOrder[type]=='asc'){
+    //             setSortOrder(values=>({
+    //                 ...values,
+    //                 [type] :'desc'
+    //         }))
 
-            }else{
-                setSortOrder(values=>({
-                    ...values,
-                    [type] :'asc'
-                }))
-            }
+    //         }else{
+    //             setSortOrder(values=>({
+    //                 ...values,
+    //                 [type] :'asc'
+    //             }))
+    //         }
 
-        }else{
-            setIsSort(values=>({
-                ...values,
-                [type]:true
-            }));
+    //     }else{
+    //         setIsSort(values=>({
+    //             ...values,
+    //             [type]:true
+    //         }));
 
-            fetchData();
-        }
-    }
+    //         fetchData();
+    //     }
+    // }
 
     useEffect(() => {
         if(type === 'ban'){
@@ -142,7 +142,7 @@ const ManageUser = ({users,auth}) => {
                                 </thead>
 
                                 <tbody className="text-left divide-y divide-slate-200">
-                                    {users.data
+                                    {users
                                     .filter((user) => user.username.toLowerCase().includes(query.toLowerCase()))
                                     .map((user,i) => {
                                         return(
@@ -182,7 +182,7 @@ const ManageUser = ({users,auth}) => {
 
                                 </tbody>
                             </table>
-                            <div className="flex justify-end">
+                            {/* <div className="flex justify-end">
                                 <div className=" btn-group p-5 ">
                                     {users.links.map((data,i)=>{
                                        //if(users.page>=5)
@@ -194,7 +194,7 @@ const ManageUser = ({users,auth}) => {
                                         )
                                     })}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

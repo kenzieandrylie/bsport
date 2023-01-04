@@ -6,10 +6,36 @@ import Standing from "@/Components/Additional/Detail/Standing";
 import PostActivity from "@/Components/Additional/Profile/PostActivity";
 import UserLayout from "@/Layouts/UserLayout";
 import { Head } from "@inertiajs/inertia-react";
+import { useEffect, useState } from "react";
+import { faRotateRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const GroupDetail = (props) => {
 
     // console.log("Group Detail Page: ",props);
+
+    const [num, setNum] = useState(3);
+    const [loading, setLoading] = useState(false);
+    const loadMore = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setNum((prev) => prev + num);
+            setLoading(false);
+        }, 1000);
+    }
+    const slicedPost = props.posts.slice(0,num);
+
+    useEffect(() => { //infinite scroll
+        window.onscroll = () => {
+            //console.log("window",window.innerHeight + document.documentElement.scrollTop , document.documentElement.offsetHeight);
+          if (
+            window.innerHeight + document.documentElement.scrollTop >=
+            document.documentElement.offsetHeight
+          ) {
+            loadMore();
+          }
+        };
+      }, []);
 
     return (
         <>
@@ -39,8 +65,8 @@ const GroupDetail = (props) => {
                     </div>
                     <div className="col-span-full lg:col-span-2 lg:col-start-2 lg:row-span-2">
                     {
-                        props.posts.length > 0 ?
-                        props.posts.map((post,i) => {
+                        slicedPost.length > 0 ?
+                        slicedPost.map((post,i) => {
                            return (
                             <div key={i}>
                                 <PostActivity
@@ -54,7 +80,17 @@ const GroupDetail = (props) => {
                            )
                         }
                         ) : <div className="ml-4"><span>There's no post yet!</span></div> }
+
+                        <div className="flex justify-center mb-4">
+                                {num <= props.posts.length &&
+                                    <div onClick={loadMore} className="cursor-pointer">
+                                        <FontAwesomeIcon icon={loading ? faSpinner : faRotateRight} className={`${loading && 'animate-spin'}`} size="lg"/>
+                                    </div>
+                                }
+                        </div>
                     </div>
+
+
                 </div>
 
             </UserLayout>

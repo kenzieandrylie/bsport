@@ -8,25 +8,33 @@ import UserLayout from "@/Layouts/UserLayout";
 import { Head, Link } from "@inertiajs/inertia-react";
 import {useState, useEffect } from "react";
 import { Inertia } from "@inertiajs/inertia";
-import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faRotateRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const Profile = (props) => {
 
-    //console.log('Profile Page',props);
-    const [offset,setOffset] = useState(props.posts.data.length*2);
-
-    const fetchData = async ()=>{
-        const response = await Inertia.post(`/profile/${props.user.username}`,{"offset":offset},
-       {preserveScroll: true});
-
-        //console.log(response.data);
-
+    const [num, setNum] = useState(3);
+    const [loading, setLoading] = useState(false);
+    const loadMore = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setNum((prev) => prev + num);
+            setLoading(false);
+        }, 1000);
     }
-    const handleNextPage=()=>{
-        fetchData();
-        setOffset(values=>values+=props.posts.data.length);
-    }
-    useEffect(()=>console.log(offset,props.posts.total));
+    const slicedPost = props.posts.slice(0,num);
+
+    useEffect(() => {
+        window.onscroll = () => { //infinite scroll
+            //console.log("window",window.innerHeight + document.documentElement.scrollTop , document.documentElement.offsetHeight);
+          if (
+            window.innerHeight + document.documentElement.scrollTop >=
+            document.documentElement.offsetHeight
+          ) {
+            loadMore();
+          }
+        };
+      }, []);
 
     return (
         <>
@@ -56,8 +64,8 @@ const Profile = (props) => {
                     }
                     <div className="col-span-full lg:col-span-2 row-span-2 lg:order-last lg:col-start-2 order-5 " >
                         {
-                        props.posts.data.length > 0 ?
-                        props.posts.data.map((post,i) => {
+                        slicedPost.length > 0 ?
+                        slicedPost.map((post,i) => {
                            return (
                             <div key={i}>
                                 <PostActivity
@@ -66,15 +74,21 @@ const Profile = (props) => {
                                     auth={props.auth}
                                     types={props.activities}
                                     comments={props.comments.filter((comment) => comment.group_activity_id === post.id)}
+                                    // offset={offset}
                                 />
                             </div>
                            )
                         }
                         ) : <div className="ml-4"><span>There's no post yet!</span></div> }
+
                         <div className="flex justify-center mb-4">
-                          { offset <= props.posts.total && <button className=" rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" onClick={handleNextPage}>
-                            <FontAwesomeIcon icon={faRotateRight} /></button>}
-                          </div>
+                            {num <= props.posts.length &&
+                                <div onClick={loadMore} className="cursor-pointer">
+                                    <FontAwesomeIcon icon={loading ? faSpinner : faRotateRight} className={`${loading && 'animate-spin'}`} size="lg"/>
+                                </div>
+                            }
+                        </div>
+
                     </div>
 
 
