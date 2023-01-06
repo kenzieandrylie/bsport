@@ -82,7 +82,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
         }
     }, [data.distance, data.time])
 
-    console.log('popuppost : ',post, 'data : ', data.time);
+    // console.log('popuppost : ',post, 'data : ', data.time);
 
     if(!open) return null;
     return (

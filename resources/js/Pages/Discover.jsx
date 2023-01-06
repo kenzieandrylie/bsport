@@ -28,7 +28,7 @@ const Discover = (props) => {
         });
     }
 
-    console.log("pin : ", props);
+    //console.log("pin : ", props);
 
     return (
         <>
