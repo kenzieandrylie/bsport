@@ -8,7 +8,7 @@ const PopupUser = ({open,users,label,onClose}) => {
         <>
             {
             open ?
-            <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-screen z-50">
+            <div className="fixed top-0 left-0 flex items-center justify-center h-full lg:h-screen w-screen z-50">
                 <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
 
                     <div className="bg-white border rounded-xl p-3" >

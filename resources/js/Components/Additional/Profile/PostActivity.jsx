@@ -159,7 +159,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
                             <img className="w-full bg-cover rounded-md" src={`../storage/${post.activity_picture}`} />
                         <div className="px-3 pb-2">
 
-                        <div className="flex justify-between items-center w-full">
+                        <div className="flex flex-col lg:flex-row justify-between lg:items-center w-full">
                             <div className="pt-2 flex items-center">
                                 {
                                     likes.find(e => e.user_id === auth.user.id) ?
