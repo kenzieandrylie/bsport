@@ -82,7 +82,7 @@ const Profile = (props) => {
                         ) : <div className="ml-4"><span>There's no post yet!</span></div> }
 
                         <div className="flex justify-center mb-4">
-                            {num <= props.posts.length &&
+                            {num < props.posts.length &&
                                 <div onClick={loadMore} className="cursor-pointer">
                                     <FontAwesomeIcon icon={loading ? faSpinner : faRotateRight} className={`${loading && 'animate-spin'}`} size="lg"/>
                                 </div>

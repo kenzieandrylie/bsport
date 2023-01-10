@@ -6,12 +6,27 @@ import { Inertia } from "@inertiajs/inertia";
 
 
 const ManageUser = ({users,auth}) => {
-
+    //console.log(users);
     const {data,setData,post, processing, errors, reset,delete:destroy} = useForm({
         id:'',
         role:''
     });
+    const limit = 5;
+    const [highOffsetUser,setHighOffsetUser] = useState(limit);
+    const [lowOffsetUser,setLowOffsetUser] = useState(0);
+    const countPages = Math.ceil(users.length/limit);
+    let paginationButtons= [];
+    let currentPage =highOffsetUser/limit;
 
+    //console.log(lowOffset,highOffset);
+
+    for (let index = 0; index < countPages; index++) {
+        paginationButtons.push(<button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white" onClick={()=>handlePaginationUser(3,index+1)}>
+            {index+1}
+        </button>);
+    }
+
+    const slicedUsers = users.slice(lowOffsetUser,highOffsetUser);
     const [type, setType] = useState('');
     const [query, setQuery] = useState('');
 
@@ -39,39 +54,68 @@ const ManageUser = ({users,auth}) => {
         setData({'id' : id, 'role' : role});
         setType('role');
     }
-    // const fetchData = async ()=>{
-    //     const response = await Inertia.post(route('dashboard.post'),sortOrder);
-    //     console.log(response.data);
-    // }
-    // useEffect(()=>{
-    //     fetchData();
-    // },[sortOrder]);
-    // const handleSort = (type)=>{
+    const fetchData = async ()=>{
+        const response = await Inertia.post(route('dashboard.post'),
+        {"sortOrder":sortOrder,
+        "isSort":isSort}
+        );
+        //console.log(response);
+    }
+    useEffect(()=>{
+        fetchData();
+    },[sortOrder,isSort]);
 
-    //     if(isSort[type]){
-    //         if(sortOrder[type]=='asc'){
-    //             setSortOrder(values=>({
-    //                 ...values,
-    //                 [type] :'desc'
-    //         }))
+    const handleSort = (type)=>{
 
-    //         }else{
-    //             setSortOrder(values=>({
-    //                 ...values,
-    //                 [type] :'asc'
-    //             }))
-    //         }
+        if(isSort[type]){
+            if(sortOrder[type]=='asc'){
+                setSortOrder(values=>({
+                    ...values,
+                    [type] :'desc'
+            }))
 
-    //     }else{
-    //         setIsSort(values=>({
-    //             ...values,
-    //             [type]:true
-    //         }));
+            }else{
+                setSortOrder(values=>({
+                    ...values,
+                    [type] :'asc'
+                }))
+                isSort[type] = false;
+            }
 
-    //         fetchData();
-    //     }
-    // }
+        }else{
+            setIsSort({
+                username:false,
+                email:false,
+                role:false
+            });
 
+            setIsSort(values=>({
+                ...values,
+                [type]:true
+            }));
+
+
+        }
+    }
+    const handlePaginationUser = (type,page)=>{
+        //type:
+        //1. next
+        //2. prev
+        //3. to page
+        if(type === 1){
+            setHighOffsetUser(value=>value+limit);
+            setLowOffsetUser(value=>value+limit);
+        }else if(type===2){
+            setHighOffsetUser(value=>value-limit);
+            setLowOffsetUser(value=>value-limit);
+        }else if(type===3){
+            // console.log("page:"+page);
+            // console.log("highOffset: "+highOffsetUser);
+            // console.log("lowOffset: "+lowOffsetUser);
+            setHighOffsetUser(page*limit);
+            setLowOffsetUser((page-1)*limit);
+        }
+    }
     useEffect(() => {
         if(type === 'ban'){
             post(route('ban.user'), {preserveScroll: true});
@@ -142,7 +186,7 @@ const ManageUser = ({users,auth}) => {
                                 </thead>
 
                                 <tbody className="text-left divide-y divide-slate-200">
-                                    {users
+                                    {slicedUsers
                                     .filter((user) => user.username.toLowerCase().includes(query.toLowerCase()))
                                     .map((user,i) => {
                                         return(
@@ -182,19 +226,24 @@ const ManageUser = ({users,auth}) => {
 
                                 </tbody>
                             </table>
-                            {/* <div className="flex justify-end">
+                            <div className="flex justify-end">
                                 <div className=" btn-group p-5 ">
-                                    {users.links.map((data,i)=>{
-                                       //if(users.page>=5)
-                                        return (
-                                            <a key={i+1} href={data.url} className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white">{i!=0 && i!=users.links.length-1 && data.label}
-                                            {i==0 && <FontAwesomeIcon icon={faBackward} size=""/>}
-                                            {i==users.links.length-1 && <FontAwesomeIcon icon={faForward} size=""/>}
-                                            </a>
-                                        )
-                                    })}
+                                    {lowOffsetUser>0 &&
+                                    <button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white">
+                                    <FontAwesomeIcon icon={faBackward} size="lg" onClick={()=>handlePaginationUser(2)}/>
+                                    </button>}
+
+                                    {paginationButtons.map(d=>d)}
+
+                                    {highOffsetUser<users.length &&
+                                    <button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white">
+                                    <FontAwesomeIcon icon={faForward} size="lg" onClick={()=>handlePaginationUser(1)}/>
+                                    </button>}
+
+
+
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>

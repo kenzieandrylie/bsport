@@ -1,4 +1,42 @@
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackward, faForward} from '@fortawesome/free-solid-svg-icons';
 const ViewFeedback = ({feedbacks, auth}) => {
+    const limit = 3;
+    const [highOffset,setHighOffset] = useState(limit);
+    const [lowOffset,setLowOffset] = useState(0);
+    const countPages = Math.ceil(feedbacks.length/limit);
+    let paginationButtons= [];
+    let currentPage =highOffset/limit;
+
+    //console.log(lowOffset,highOffset);
+
+    for (let index = 0; index < countPages; index++) {
+        paginationButtons.push(<button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white" onClick={()=>handlePaginationUser(3,index+1)}>
+            {index+1}
+        </button>);
+    }
+    const handlePagination = (type,page)=>{
+        //type:
+        //1. next
+        //2. prev
+        //3. to page
+        if(type === 1){
+            setHighOffset(value=>value+limit);
+            setLowOffset(value=>value+limit);
+        }else if(type===2){
+            setHighOffset(value=>value-limit);
+            setLowOffset(value=>value-limit);
+        }else if(type===3){
+            // console.log("page:"+page);
+            // console.log("highOffset: "+highOffsetUser);
+            // console.log("lowOffset: "+lowOffsetUser);
+            setHighOffset(page*limit);
+            setLowOffset((page-1)*limit);
+        }
+    }
+    const slicedFeedback = feedbacks.slice(lowOffset,highOffset);
+
     return (
         <>
             <div className="flex flex-col bg-white border rounded-lg">
@@ -40,6 +78,24 @@ const ViewFeedback = ({feedbacks, auth}) => {
 
                                 </tbody>
                             </table>
+                            <div className="flex justify-end">
+                                <div className=" btn-group p-5 ">
+                                    {lowOffset>0 &&
+                                    <button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white">
+                                    <FontAwesomeIcon icon={faBackward} size="lg" onClick={()=>handlePagination(2)}/>
+                                    </button>}
+
+                                    {paginationButtons.map(d=>d)}
+
+                                    {highOffset<feedbacks.length &&
+                                    <button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white">
+                                    <FontAwesomeIcon icon={faForward} size="lg" onClick={()=>handlePagination(1)}/>
+                                    </button>}
+
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
