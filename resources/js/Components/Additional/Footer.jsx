@@ -6,7 +6,7 @@ const footer = () => {
         <>
             <div className="bg-white">
                 <div className="w-full p-16">
-                    <div className="flex justify-between">
+                    <div className="flex flex-col lg:flex-row gap-4 lg:gap-none justify-between">
                         <div className="flex justify-center basis-1/6">
                             <Link href="/">
                                 <ApplicationLogo className="w-28 h-28 fill-current text-gray-500" />

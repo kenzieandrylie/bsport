@@ -63,7 +63,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
 
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-6 grid-rows-4 gap-2">
-                        <div className="col-span-3 row-span-2">
+                        <div className="col-span-full lg:col-span-3 row-span-2">
                             <div>
                                 <label htmlFor="type" className="col-span-4 pt-3 pb-2 text-sm text-gray-500">Choose Activity</label>
                             </div>
@@ -89,7 +89,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                             </div>
                         </div>
 
-                        <div className="col-span-3 row-span-2">
+                        <div className="col-span-full lg:col-span-3 row-span-2">
                             <div className="flex justify-between items-center gap-4">
                                 {data.activity_id === 1 ?
                                     <div>
@@ -124,12 +124,12 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-1 row-span-4 flex justify-center items-center">
-                            <img src={auth.profile_picture ? `../storage/${auth.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="rounded-full h-20 w-20"/>
+                        <div className="col-span-1 lg:row-span-4 flex justify-center items-center">
+                            <img src={auth.profile_picture ? `../storage/${auth.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="rounded-full h-10 w-10 lg:h-20 lg:w-20"/>
                         </div>
-                        <div className="col-span-5 row-span-4 flex flex-col gap-3">
+                        <div className="col-span-5 lg:row-span-4 flex flex-col gap-3">
                             {mymemberid===null &&
-                                <div className="w-full flex gap-4 items-center">
+                                <div className="w-1/2 lg:w-full flex gap-4 items-center">
                                     <label className="col-span-5 text-sm text-gray-500" htmlFor="selectGroup">Choose Group</label>
                                     <select className = {`select select-ghost select-sm w-full max-w-xs text-xs ${errors.group_member_id ? "border-red-500" : "border-slate-300"}` } name="group_id" id="" onChange={handleChange}>
 
@@ -146,12 +146,12 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName}) => {
                             <div className="w-full">
                                 <input type="text" name="caption" className={`w-full rounded border-0 border-b-2 ${errors.caption ? "border-red-500" : "border-slate-300"} focus:border-indigo-500 focus:ring-indigo-500 text-sm`} placeholder="What do you want to say about your activity?" value={data.caption} onChange={handleChange}/>
                             </div>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between flex-col lg:flex-row">
                                 <div className="relative">
                                     <label htmlFor="ap-input" className={`border bg-white ${errors.activity_picture ? "border-red-500 border-b-2" : "border-slate-300"} p-1 rounded-md cursor-pointer hover:bg-slate-200`}><FontAwesomeIcon icon={faImage} size="lg"/></label>
                                     <input type="file" id="ap-input" accept="image/*" className="invisible" onChange={handlePicture}/>
                                     {check ?
-                                        <div className="absolute left-6 bottom-0 text-green-500"><FontAwesomeIcon icon={faCircleCheck} /></div>
+                                        <div className="absolute left-6 bottom-3 lg:bottom-0 text-green-500"><FontAwesomeIcon icon={faCircleCheck} /></div>
                                         :
                                         null
                                     }

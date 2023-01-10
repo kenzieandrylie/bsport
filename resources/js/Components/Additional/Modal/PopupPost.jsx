@@ -17,7 +17,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
         distance: '',
         step: '',
         time: '',
-        calories: '',
+        calories: 0,
         activity_date: '',
         activity_picture: '',
         caption: ''
@@ -70,7 +70,19 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
         });
     }, [post]);
 
-    // console.log('popuppost : ',post, 'data : ', data);
+    useEffect(() => {
+        if(data.activity_id !== post.activity_id){
+            reset('calories','distance','step','time','activity_date');
+        }
+    },[data.activity_id])
+
+    useEffect(() => {
+        if(!data.distance || !data.time){
+            setData('calories', data.activity_id === 3 ? Math.ceil(data.time * 3.71) : data.activity_id === 2 ? (data.distance * 32) : data.activity_id === 1 ? (data.distance * 60) : null)
+        }
+    }, [data.distance, data.time])
+
+    // console.log('popuppost : ',post, 'data : ', data.time);
 
     if(!open) return null;
     return (
@@ -78,7 +90,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
             {
             type === 'delete' &&
             <>
-                <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-screen">
+                <div className="fixed top-0 left-0 flex items-center justify-center h-full lg:h-screen w-screen z-50">
                     <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
                         <div className="bg-white px-16 py-14 rounded-md text-center">
                                 <>
@@ -101,9 +113,9 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                 type === 'edit'
                 &&
                 <>
-                    <div className="fixed top-0 left-0 h-screen w-screen">
+                    <div className="fixed top-0 left-0 flex items-center justify-center h-full lg:h-screen w-screen z-50">
                         <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
-                            <div className="bg-white p-3 w-min-content rounded-md w-1/2 lg:w-1/4">
+                            <div className="bg-white p-3 w-min-content rounded-md w-3/4 lg:w-1/4">
                                 <div className="p-3 shadow-sm flex justify-between items-center">
                                     <span className="text-lg font-medium font-bold">Edit Post</span>
                                 </div>

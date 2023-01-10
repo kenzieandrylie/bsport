@@ -112,7 +112,7 @@ const EditProfile = (props) => {
                         <>
                             <form onSubmit={updateProf}>
                                 <div className={`hero rounded-lg ${errors.cover_picture && "border-red-400 border-4"}`} style={{ backgroundImage: `url("${cover}")`, height: `20vh` }}>
-                                    <div className="flex w-full h-full items-end justify-end text-gray-500">
+                                    <div className="flex w-full h-full items-start mt-3 lg:mt-0 lg:items-end justify-end text-gray-500">
                                         <label htmlFor="c-input" className="p-1 rounded-md cursor-pointer hover:bg-slate-200 mr-2 bg-white mb-2 flex items-center border "><FontAwesomeIcon icon={faCamera} size="sm"/> <span className="text-sm ml-2">edit cover</span> </label>
                                     </div>
                                     <input type="file" id="c-input" accept="image/*" className="invisible" onChange={handleCover}/>
