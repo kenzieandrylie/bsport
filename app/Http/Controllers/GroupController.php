@@ -116,19 +116,32 @@ class GroupController extends Controller
 
     public function index_post(Request $request)
     {
-        $sortOrder = $request->all();
-        //dd($sortOrder['email']);
+        //dd($request->all()["isSort"]);
+        $sortOrder = $request->all()["sortOrder"];
+        $isSort = $request->all()["isSort"];
+        //dd($isSort['username']);
         $mygroups = DB::table('groups')
                     ->join('group_members','group_members.group_id','=','groups.id')
                     ->where('group_members.user_id',auth()->user()->id)
                     ->get();
+        $alluser = User::all();
+        if($isSort["username"] == true){
+            $alluser = DB::table('users')
+            ->orderBy('username',$sortOrder['username'])
+            ->get();
+        }
+        if($isSort["email"] == true){
+            $alluser = DB::table('users')
+            ->orderBy('email',$sortOrder['email'])
+            ->get();
+        }
 
-        $alluser = DB::table('users')
-        ->orderBy('username',$sortOrder['username'])
-        ->orderBy('email',$sortOrder['email'])
-        ->orderBy('is_admin',$sortOrder['role'])
-        ->paginate(5);
-
+        if($isSort["role"] == true){
+            $alluser = DB::table('users')
+            ->orderBy('is_admin',$sortOrder['role'])
+            ->get();
+        }
+        //dd($alluser);
         $time_from = Carbon::now()->subDays(1);
         $notification = DB::table('users')
                         ->join('friendships', 'users.id', '=', 'friendships.follower_id')
