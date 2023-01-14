@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Profile = (props) => {
 
+    console.log(props);
+
     const [num, setNum] = useState(3);
     const [loading, setLoading] = useState(false);
     const loadMore = () => {
