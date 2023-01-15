@@ -50,7 +50,7 @@ const GroupDetail = (props) => {
                         <MyStat auth={props.auth.user} sum={props.sum} posts={props.posts}/>
                     </div>
                     <div className="col-span-full lg:col-span-2">
-                        <CreatePost auth={props.auth.user} types={props.activities} flash={props.flash.message} mymemberid={props.mymemberid}/>
+                        <CreatePost auth={props.auth.user} types={props.activities} flash={props.flash.message} mymemberid={props.mymemberid} pin={props.group.pin}/>
                     </div>
                     <div className="col-span-full lg:col-span-1 lg:row-span-2">
                         <div className="mb-4">
