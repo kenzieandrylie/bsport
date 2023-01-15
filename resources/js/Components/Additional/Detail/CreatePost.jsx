@@ -21,7 +21,7 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName,pin}) => {
         group_id:''
     })
 
-    //STRAVA
+    //STRAVA ---------------
     const clientId = '98973';
     const redirectUri = `http://127.0.0.1:8000/groups/${pin}`;
     const clientSecret = '1e57f326b212e6a83c8422d7104388058ed94211';
@@ -30,13 +30,21 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName,pin}) => {
     const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=activity:read_all`;
 
     const handleStrava = () => {
-        window.location.replace(stravaAuthUrl);
+        console.log("handle Strava");
+        window.location.href=stravaAuthUrl;
     }
 
     //retrieve code -> after authorization
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
+    const [code , setCode] = useState('')
 
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams){
+            setCode(urlParams.get('code'));
+        }
+    },[])
+
+    //retrieve accesstoken -> after get code
     const [accesstoken, setAccessToken] = useState('');
 
     const handleToken = async () => {
@@ -46,17 +54,41 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName,pin}) => {
             code: code,
             grant_type: 'authorization_code',
             redirect_uri: redirectUri,
-        }).then((data) => {
-            console.log(data);
-        }).catch((e) => {console.log(e)});
-        // setAccessToken(accessTokenResponse.data.access_token);
+        })
+        .then((data) => {
+            console.log(data.data.access_token);
+            setAccessToken(data.data.access_token);
+        })
+        .catch((e) => {
+            console.log(e)
+        });
     }
 
     useEffect( () => {
-        handleToken();
+        if(code){
+            handleToken();
+        }
     }, [code])
 
-    console.log(accesstoken);
+    //retrieve activitystrava -> after get access token
+    const handleActivityStrava = async () => {
+        const accessActivityResponse = await axios.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${accesstoken}`)
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((e) => {console.log(e)});
+    }
+
+    useEffect( () => {
+        console.log('accesstoken : ',accesstoken);
+        if(accesstoken){
+            handleActivityStrava();
+        }
+    }, [accesstoken])
+
+    // console.log(accesstoken);
+
+    //STRAVA --------------
 
 
     const handleChange = (e) => {
@@ -197,7 +229,10 @@ const CreatePost = ({auth, types, flash, mymemberid,groupName,pin}) => {
                                     }
                                 </div>
                                 <div className="flex gap-2">
-                                    <div className="inline-flex cursor-pointer justify-center rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2" onClick={handleStrava}>Strava</div>
+                                    {
+                                        mymemberid &&
+                                        <div className="inline-flex cursor-pointer justify-center rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2" onClick={handleStrava}>Strava</div>
+                                    }
                                     <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Post</button>
                                 </div>
                             </div>
