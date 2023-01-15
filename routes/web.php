@@ -36,6 +36,12 @@ Route::get('/', function () {
     return Inertia::render('Landing');
 })->middleware('guest');
 
+Route::get('/storage-link', function () {
+    $targetFolder = storage_path('app/public');
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder, $linkFolder);
+});
+
 Route::get('/back', function(){
     return redirect()->back();
 });
