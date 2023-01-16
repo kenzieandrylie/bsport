@@ -16,6 +16,7 @@ import { faRotateRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isErrorStrava , setIsErrorStrava] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         group_member_id: mymemberid,
@@ -28,6 +29,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
         activity_picture: "",
         caption: "",
         group_id: "",
+        post_type:1
     });
 
     //STRAVA ---------------
@@ -90,26 +92,19 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
             )
             .then((response) => {
                 console.log(data.activity_id);
-                const activityId = response.data.filter((temp) => {
-                    if (data.activity_id === 1) {
-                        return temp.type == "Run";
-                    } else if (data.activity_id === 2) {
-                        return temp.type == "Ride";
-                    } else if (data.activity_id === 3) {
-                        return (temp.type = "Workout");
-                    }
-                })[0].id;
-                console.log(
-                    response.data.filter((temp) => {
-                        if (data.activity_id === 1) {
-                            return temp.type == "Run";
-                        } else if (data.activity_id === 2) {
-                            return temp.type == "Ride";
-                        } else if (data.activity_id === 3) {
-                            return (temp.type = "Workout");
-                        }
-                    })
-                );
+                const activityId = response.data[0].id;
+                // console.log(
+                //     response.data.filter((temp) => {
+                //         if (data.activity_id === 1) {
+                //             return temp.type == "Run";
+                //         } else if (data.activity_id === 2) {
+                //             return temp.type == "Ride";
+                //         } else if (data.activity_id === 3) {
+                //             return (temp.type = "Workout");
+                //         }
+                //     })
+                // );
+
                 getLatestActivityDetail(activityId);
             })
             .catch((e) => {
@@ -123,38 +118,48 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
             )
             .then((response) => {
                 const currentData = response.data;
-                //console.log(currentData.distance);
+                //console.log(currentData);
 
                 const newActivity = data;
 
-                currentData.activity_id !== 3
-                    ? (newActivity.distance = currentData.distance)
-                    : (newActivity.distance = currentData.elapsed_time);
-                if (data.activity_id === 1) {
-                    //setData('steps');
-                    newActivity.step = Math.ceil(
-                        currentData.average_speed * 200
-                    );
-                }
-                newActivity.calories =
-                    data.activity_id === 3
-                        ? Math.ceil(currentData.time * 3.71)
-                        : data.activity_id === 2
-                        ? currentData.distance * 32
-                        : data.activity_id === 1
-                        ? currentData.distance * 60
-                        : null;
-                newActivity.caption = currentData.description;
-                newActivity.activity_date = new Date(currentData.start_date)
-                    .toISOString()
-                    .substring(0, 10);
+                newActivity.activity_id = currentData.type=="Run"?1:currentData.type=="Ride"?2:currentData.type=="Workout"?3:null;
+                if(newActivity.activity_id){
 
-                newActivity.activity_picture =
-                    currentData.photos?.primary?.urls["100"] !== null
-                        ? currentData.photos?.primary?.urls["100"]
-                        : null;
-                setData(newActivity);
-                setCheck(true);
+
+                    newActivity.activity_id !== 3
+                        ? (newActivity.distance = Math.ceil(currentData.distance/1000))
+                        : (newActivity.distance = currentData.elapsed_time);
+                    if (newActivity.activity_id === 1) {
+                        //setData('steps');
+                        newActivity.step = Math.ceil(
+                            currentData.average_speed * 200
+                        );
+                    }
+                    newActivity.calories =
+                    newActivity.activity_id === 3
+                            ? Math.ceil(currentData.time * 3.71)
+                            : newActivity.activity_id === 2
+                            ? currentData.distance * 32
+                            : newActivity.activity_id === 1
+                            ? currentData.distance * 60
+                            : null;
+                    newActivity.caption = currentData.name;
+                    //newActivity.caption = currentData.description;
+                    newActivity.activity_date = new Date(currentData.start_date)
+                        .toISOString()
+                        .substring(0, 10);
+
+                    newActivity.activity_picture =
+                        currentData.photos?.primary?.urls["100"] !== null
+                            ? currentData.photos?.primary?.urls["100"]
+                            : null;
+                    newActivity.post_type = 2;
+                    setData(newActivity);
+                    setCheck(true);
+
+                }else{
+                    setIsErrorStrava(true);
+                }
             })
             .catch((e) => {
                 console.log(e);
@@ -191,7 +196,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
         post(route("create.post"), {
             preserveScroll: true,
             onSuccess: () => {
-                reset(), setCheck(false), clearErrors();
+                reset(), setCheck(false);
             },
         });
     };
@@ -514,6 +519,11 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
             {flash && (
                 <div className="bg-white rounded-md p-2 border border-green-500 mt-2">
                     <span className="text-md text-green-500"> {flash}</span>
+                </div>
+            )}
+            {isErrorStrava && (
+                <div className="bg-white rounded-md p-2 border border-red-500 mt-2">
+                    <span className="text-md text-red-500">{"Latest post type is unavailable"}</span>
                 </div>
             )}
         </>
