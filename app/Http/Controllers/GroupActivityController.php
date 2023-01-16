@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -199,51 +200,105 @@ class GroupActivityController extends Controller
 
         $groupactivity = new GroupActivity();
 
-        if($request->activity_id == 1){
-            $request->validate([
-                'step' => 'required|integer',
-                'distance' => 'required|integer',
-                'calories' => 'required|integer',
-                'caption' => 'string|nullable',
-                'activity_date' => 'required|date|before:tomorrow',
-                'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
-            ]);
+        if(gettype($request->activity_picture)=="string"){
 
-            $groupactivity->distance = $request->distance;
-            $groupactivity->step = $request->step;
-        }
-        else if($request->activity_id == 2){
-            $request->validate([
-                'distance' => 'required|integer',
-                'calories' => 'required|integer',
-                'caption' => 'string|nullable',
-                'activity_date' => 'required|date|before:tomorrow',
-                'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
-            ]);
+            if($request->activity_id == 1){
+                $request->validate([
+                    'step' => 'required|integer',
+                    'distance' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required'
+                ]);
 
-            $groupactivity->distance = $request->distance;
-        }
-        else if($request->activity_id == 3){
-            $request->validate([
-                'time' => 'required|integer',
-                'calories' => 'required|integer',
-                'caption' => 'string|nullable',
-                'activity_date' => 'required|date|before:tomorrow',
-                'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
-            ]);
+                $groupactivity->distance = $request->distance;
+                $groupactivity->step = $request->step;
+            }
+            else if($request->activity_id == 2){
+                $request->validate([
+                    'distance' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required'
+                ]);
 
-            $groupactivity->time = $request->time;
-        }
+                $groupactivity->distance = $request->distance;
+            }
+            else if($request->activity_id == 3){
+                $request->validate([
+                    'time' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required'
+                ]);
 
-        if($request->file('activity_picture')){
-            $imageName = time().'.'.$request->file('activity_picture')->getClientOriginalExtension();
+                $groupactivity->time = $request->time;
+            }
 
-            Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
+            $url = $request->activity_picture;
+            $file = file_get_contents($url);
+            $extension = File::extension($url);
+
+            $path = 'public/image-postactivity/'.time().'.'.$extension;
+            $imageName = 'image-postactivity/'.time().'.'.$extension;
+            if (!Storage::exists('public/image-postactivity')) {
+                Storage::makeDirectory('public/image-postactivity');
+            }
+            Storage::put($path, $file);
+            $groupactivity->activity_picture = $imageName;
+            //Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
+        }else{
+            
+            if($request->activity_id == 1){
+                $request->validate([
+                    'step' => 'required|integer',
+                    'distance' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                ]);
+
+                $groupactivity->distance = $request->distance;
+                $groupactivity->step = $request->step;
+            }
+            else if($request->activity_id == 2){
+                $request->validate([
+                    'distance' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                ]);
+
+                $groupactivity->distance = $request->distance;
+            }
+            else if($request->activity_id == 3){
+                $request->validate([
+                    'time' => 'required|integer',
+                    'calories' => 'required|integer',
+                    'caption' => 'string|nullable',
+                    'activity_date' => 'required|date|before:tomorrow',
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                ]);
+
+                $groupactivity->time = $request->time;
+            }
+
+            if($request->file('activity_picture')){
+                $imageName = time().'.'.$request->file('activity_picture')->getClientOriginalExtension();
+
+                Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
+                $groupactivity->activity_picture = 'image-postactivity/'.$imageName;
+            }
         }
 
         $groupactivity->group_member_id = $request->group_member_id;
         $groupactivity->activity_id = $request->activity_id;
-        $groupactivity->activity_picture = 'image-postactivity/'.$imageName;
+
         $groupactivity->activity_date = $request->activity_date;
         $groupactivity->calories = $request->calories;
         $groupactivity->caption = $request->caption;

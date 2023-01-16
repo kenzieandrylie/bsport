@@ -76,6 +76,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
     date.setHours(date.getHours() + 7);
     const formatted_post_created_at = date.toLocaleString();
 
+
     return (
         <>
         <PopupComment open={isopencomment} onClose={() => setIsopencomment(false)} idpost={idpostcomment} comments={datacomment}/>
