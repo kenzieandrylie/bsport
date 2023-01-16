@@ -36,7 +36,7 @@ const BtnNotif = ({notifications}) => {
                         <div className="overflow-y-auto max-h-96">
 
                             <div className="p-3 shadow-sm flex justify-between items-center">
-                                <span>Today notifiactions ({notifications.length})</span>
+                                <span>Today notifications ({notifications.length})</span>
                             </div>
 
                             {notifications.length > 0 ?
