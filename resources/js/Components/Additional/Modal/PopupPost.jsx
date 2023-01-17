@@ -78,11 +78,11 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
 
     useEffect(() => {
         if(!data.distance || !data.time){
-            setData('calories', data.activity_id === 3 ? Math.ceil(data.time * 3.71) : data.activity_id === 2 ? (data.distance * 32) : data.activity_id === 1 ? (data.distance * 60) : null)
+            setData('calories', data.activity_id == 3 ? Math.ceil(data.time * 3.71) : data.activity_id == 2 ? (data.distance * 32) : data.activity_id == 1 ? (data.distance * 60) : null)
         }
     }, [data.distance, data.time])
 
-    // console.log('popuppost : ',post, 'data : ', data.time);
+    //console.log('popuppost : ',post, 'data : ', data.time);
 
     if(!open) return null;
     return (
@@ -125,13 +125,13 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                         <div className="flex justify-between items-center gap-2 mt-2">
                                             {activitytypes.map((type, i) => {
                                                 return (
-                                                    <div key={i} className={`basis-1/3 rounded-md border-2 p-1 ${data.activity_id === type.id ? "bg-sky-500 text-white" : "border-sky-500 text-sky-500"} hover:bg-sky-500 hover:text-white transition duration-150 ease-out cursor-pointer`} onClick={() => {setData('activity_id', type.id);}}>
+                                                    <div key={i} className={`basis-1/3 rounded-md border-2 p-1 ${data.activity_id == type.id ? "bg-sky-500 text-white" : "border-sky-500 text-sky-500"} hover:bg-sky-500 hover:text-white transition duration-150 ease-out cursor-pointer`} onClick={() => {setData('activity_id', type.id);}}>
                                                         <div className="flex flex-col item-center text-center justify-center">
-                                                            {type.id === 1 ? <FontAwesomeIcon icon={faPersonRunning} size="xl"/>
+                                                            {parseInt(type.id) === 1 ? <FontAwesomeIcon icon={faPersonRunning} size="xl"/>
                                                             :
-                                                            type.id === 2 ? <FontAwesomeIcon icon={faBicycle} size="xl"/>
+                                                            parseInt(type.id) === 2 ? <FontAwesomeIcon icon={faBicycle} size="xl"/>
                                                             :
-                                                            type.id === 3 ? <FontAwesomeIcon icon={faDumbbell} size="xl"/>
+                                                            parseInt(type.id) === 3 ? <FontAwesomeIcon icon={faDumbbell} size="xl"/>
                                                             :
                                                             null
                                                             }
@@ -142,7 +142,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                             })}
                                         </div>
                                         {
-                                        data.activity_id === 1
+                                        parseInt(data.activity_id) === 1
                                         &&
                                         <div>
                                             <label htmlFor="step" className="text-xs text-gray-500">Steps</label>
@@ -151,7 +151,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                         </div>
                                         }
                                         {
-                                        data.activity_id !== 3
+                                        parseInt(data.activity_id) !== 3
                                         &&
                                         <div>
                                             <label htmlFor="distance" className="text-xs text-gray-500">Distance (Km)</label>
@@ -160,7 +160,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                         </div>
                                         }
                                         {
-                                        data.activity_id === 3
+                                        parseInt(data.activity_id) === 3
                                         &&
                                         <div>
                                             <label htmlFor="Time" className="text-xs text-gray-500">Time (min)</label>

@@ -68,14 +68,14 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
                             </div>
                         </div>
                         <div className="flex items-center basis-1/4 justify-center">
-                            {user.id === auth.id ?
+                            {parseInt(user.id) === parseInt(auth.id) ?
                                 <div className="basis-3/4">
                                     <Link href={route('index.edit.profile')}>
                                         <div type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 w-28 lg:w-full">Edit Profile</div>
                                     </Link>
                                 </div>
                             :
-                                follower.find(e => e.follower_id === auth.id) ?
+                                follower.find(e => parseInt(e.follower_id) === parseInt(auth.id)) ?
                                     <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4" onClick={handleUnfollow}>Following</button>
                                 :
                                     <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 lg:w-3/4" onClick={handleFollow}>Follow</button>

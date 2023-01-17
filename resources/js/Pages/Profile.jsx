@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Profile = (props) => {
 
-    console.log(props);
+    //console.log(props);
 
     const [num, setNum] = useState(3);
     const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const Profile = (props) => {
                         <NumberActivity sum={props.sum}/>
                     </div>
                     {
-                        props.user.id === props.auth.user.id &&
+                        parseInt(props.user.id) === parseInt(props.auth.user.id) &&
                         <div className="col-span-full lg:col-span-2 order-first lg:order-none lg:mb-4">
                             <CreatePost auth={props.auth.user} types={props.activities} flash={props.flash.message} mymemberid={null} groupName={props.groups}/>
                         </div>

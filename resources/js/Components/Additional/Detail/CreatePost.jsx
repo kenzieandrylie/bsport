@@ -34,14 +34,15 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
 
     //STRAVA ---------------
     const clientId = "98973";
-    const redirectUri = `http://127.0.0.1:8000/groups/${pin}`;
+    //const redirectUri = `http://127.0.0.1:8000/groups/${pin}`;
+    const redirectUri = `http://bsport.web.id/groups/${pin}`;
     const clientSecret = "1e57f326b212e6a83c8422d7104388058ed94211";
 
     //authorization
     const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=activity:read_all`;
 
     const handleStrava = (e) => {
-        console.log("handle Strava");
+        //console.log("handle Strava");
 
         window.location.href = stravaAuthUrl;
     };
@@ -69,7 +70,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                 redirect_uri: redirectUri,
             })
             .then((data) => {
-                console.log(data.data.access_token);
+                //console.log(data.data.access_token);
                 setAccessToken(data.data.access_token);
             })
             .catch((e) => {
@@ -91,15 +92,15 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                 `https://www.strava.com/api/v3/athlete/activities?access_token=${accesstoken}`
             )
             .then((response) => {
-                console.log(data.activity_id);
+                //console.log(data.activity_id);
                 const activityId = response.data[0].id;
                 // console.log(
                 //     response.data.filter((temp) => {
-                //         if (data.activity_id === 1) {
+                //         if (data.activity_id == 1) {
                 //             return temp.type == "Run";
-                //         } else if (data.activity_id === 2) {
+                //         } else if (data.activity_id == 2) {
                 //             return temp.type == "Ride";
-                //         } else if (data.activity_id === 3) {
+                //         } else if (data.activity_id == 3) {
                 //             return (temp.type = "Workout");
                 //         }
                 //     })
@@ -125,22 +126,21 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                 newActivity.activity_id = currentData.type=="Run"?1:currentData.type=="Ride"?2:currentData.type=="Workout"?3:null;
                 if(newActivity.activity_id){
 
-
-                    newActivity.activity_id !== 3
+                    newActivity.activity_id != 3
                         ? (newActivity.distance = Math.ceil(currentData.distance/1000))
                         : (newActivity.distance = currentData.elapsed_time);
-                    if (newActivity.activity_id === 1) {
+                    if (newActivity.activity_id == 1) {
                         //setData('steps');
                         newActivity.step = Math.ceil(
                             currentData.average_speed * 200
                         );
                     }
                     newActivity.calories =
-                    newActivity.activity_id === 3
+                    newActivity.activity_id == 3
                             ? Math.ceil(currentData.time * 3.71)
-                            : newActivity.activity_id === 2
+                            : newActivity.activity_id == 2
                             ? currentData.distance * 32
-                            : newActivity.activity_id === 1
+                            : newActivity.activity_id == 1
                             ? currentData.distance * 60
                             : null;
                     newActivity.caption = currentData.name;
@@ -150,7 +150,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                         .substring(0, 10);
 
                     newActivity.activity_picture =
-                        currentData.photos?.primary?.urls["100"] !== null
+                        currentData.photos?.primary?.urls["100"] != null
                             ? currentData.photos?.primary?.urls["100"]
                             : null;
                     newActivity.post_type = 2;
@@ -168,7 +168,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
     };
 
     useEffect(() => {
-        console.log("accesstoken : ", accesstoken);
+        //console.log("accesstoken : ", accesstoken);
         if (accesstoken) {
             handleActivityStrava();
         }
@@ -210,11 +210,11 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
         if (!data.distance || !data.time) {
             setData(
                 "calories",
-                data.activity_id === 3
+                data.activity_id == 3
                     ? Math.ceil(data.time * 3.71)
-                    : data.activity_id === 2
+                    : data.activity_id == 2
                     ? data.distance * 32
-                    : data.activity_id === 1
+                    : data.activity_id == 1
                     ? data.distance * 60
                     : null
             );
@@ -234,7 +234,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                 {isLoading ? (
                     <FontAwesomeIcon
                         icon={faSpinner}
-                        className={`'animate-spin'`}
+                        className={`animate-spin`}
                         size="lg"
                     />
                 ) : (
@@ -255,7 +255,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                                             <div
                                                 key={i}
                                                 className={`basis-1/3 rounded-md border-2 p-1 ${
-                                                    data.activity_id === type.id
+                                                    data.activity_id == type.id
                                                         ? "bg-sky-500 text-white"
                                                         : "border-sky-500 text-sky-500"
                                                 } hover:bg-sky-500 hover:text-white transition duration-150 ease-out cursor-pointer`}
@@ -267,19 +267,19 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                                                 }}
                                             >
                                                 <div className="flex flex-col item-center text-center justify-center">
-                                                    {type.id === 1 ? (
+                                                    {type.id == 1 ? (
                                                         <FontAwesomeIcon
                                                             icon={
                                                                 faPersonRunning
                                                             }
                                                             size="xl"
                                                         />
-                                                    ) : type.id === 2 ? (
+                                                    ) : type.id == 2 ? (
                                                         <FontAwesomeIcon
                                                             icon={faBicycle}
                                                             size="xl"
                                                         />
-                                                    ) : type.id === 3 ? (
+                                                    ) : type.id == 3 ? (
                                                         <FontAwesomeIcon
                                                             icon={faDumbbell}
                                                             size="xl"
@@ -295,7 +295,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
 
                             <div className="col-span-full lg:col-span-3 row-span-2">
                                 <div className="flex justify-between items-center gap-4">
-                                    {data.activity_id === 1 ? (
+                                    {data.activity_id == 1 ? (
                                         <div>
                                             <input
                                                 type="number"
@@ -329,7 +329,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                                             />
                                         </div>
                                     ) : null}
-                                    {data.activity_id === 3 ? (
+                                    {data.activity_id == 3 ? (
                                         <div>
                                             <input
                                                 type="number"
@@ -396,7 +396,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                                 />
                             </div>
                             <div className="col-span-5 lg:row-span-4 flex flex-col gap-3">
-                                {mymemberid === null && (
+                                {mymemberid == null && (
                                     <div className="w-1/2 lg:w-full flex gap-4 items-center">
                                         <label
                                             className="col-span-5 text-sm text-gray-500"

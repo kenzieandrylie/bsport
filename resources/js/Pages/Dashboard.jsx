@@ -13,7 +13,7 @@ import ViewFeedback from '@/Components/Additional/Admin/ViewFeedback';
 
 export default function Dashboard(props) {
 
-    console.log("dashboard props : ",props);
+    //console.log("dashboard props : ",props);
 
     return (
         <>
@@ -23,7 +23,7 @@ export default function Dashboard(props) {
             notifications={props.notifications}
             >
                 <Head title="BSport" />
-                {!props.auth.user.is_admin ?
+                {!parseInt(props.auth.user.is_admin) ?
                 <>
                     <Hero
                     user={props.auth.user}
@@ -44,7 +44,7 @@ export default function Dashboard(props) {
 
 
                 <div className='p-8'>
-                    {!props.auth.user.is_admin ?
+                    {!parseInt(props.auth.user.is_admin) ?
                     <>
                         <div className='w-full font-bold text-2xl flex justify-between'>
                             <span>My Group</span>

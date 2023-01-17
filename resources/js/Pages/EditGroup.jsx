@@ -5,7 +5,7 @@ import { React,useState,useEffect } from "react";
 
 const EditGroup = (props) => {
 
-    // console.log('Edit Group Page : ',props);
+    //console.log('Edit Group Page : ',props);
 
     const group = props.group
 

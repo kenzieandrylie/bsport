@@ -87,7 +87,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
                 <div className="rounded-xl">
 
                     {
-                    post.user_id === auth.user.id &&
+                    parseInt(post.user_id) === parseInt(auth.user.id) &&
                         <div className="flex justify-end">
                             <div className="dropdown dropdown-end dropdown-hover">
                                 <svg tabIndex={0} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -114,22 +114,22 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
                                 <div className="ml-3 flex flex-col">
                                     <div className="text-lg font-bold text-sky-500">
                                         <span className="mr-2">{post.username} </span>
-                                        { post.activity_id === 1 && <FontAwesomeIcon icon={faPersonRunning}/> }
-                                        { post.activity_id === 2 && <FontAwesomeIcon icon={faBicycle}/> }
-                                        { post.activity_id === 3 && <FontAwesomeIcon icon={faDumbbell}/> }
+                                        { parseInt(post.activity_id) === 1 && <FontAwesomeIcon icon={faPersonRunning}/> }
+                                        { parseInt(post.activity_id) === 2 && <FontAwesomeIcon icon={faBicycle}/> }
+                                        { parseInt(post.activity_id) === 3 && <FontAwesomeIcon icon={faDumbbell}/> }
 
                                     </div>
                                     <span className="text-xs text-gray-400">Published in:
                                         <span className="font-bold mr-2"> {post.group_name}</span>  at: <span className="font-bold">{formatted_post_created_at}</span></span>
                                 </div>
                                 <div className="flex justify-around items-center p-3 w-full">
-                                    {post.activity_id === 1 &&
+                                    {parseInt(post.activity_id) === 1 &&
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faShoePrints} size="sm"/>
                                         <span>{post.step} Steps</span>
                                     </div>
                                     }
-                                    {post.activity_id !== 3 &&
+                                    {parseInt(post.activity_id) !== 3 &&
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faRoad} size="sm"/>
                                         <span>{post.distance} Km</span>
@@ -140,7 +140,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
                                         <FontAwesomeIcon icon={faFireFlameCurved} size="sm"/>
                                         <span>{post.calories} Cal</span>
                                     </div>
-                                    {post.activity_id === 3  &&
+                                    {parseInt(post.activity_id) === 3  &&
                                     <div className="flex flex-col gap-2">
                                         <FontAwesomeIcon icon={faStopwatch} size="sm"/>
                                         <span>{post.time} Mins</span>
@@ -163,7 +163,7 @@ const PostActivity = ({post,likes,auth, types, comments}) => {
                         <div className="flex flex-col lg:flex-row justify-between lg:items-center w-full">
                             <div className="pt-2 flex items-center">
                                 {
-                                    likes.find(e => e.user_id === auth.user.id) ?
+                                    likes.find(e => parseInt(e.user_id) === parseInt(auth.user.id)) ?
                                     <>
                                     <span className="cursor-pointer text-red-500"><FontAwesomeIcon icon={faHeart} size="sm" onClick={handleUnlike}/></span>
                                     </>

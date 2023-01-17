@@ -42,7 +42,7 @@ const GroupCard = ({group,Author}) => {
 
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                             <li><p method="get" as="button" onClick={handleView}>View</p></li>
-                           {Author==group.creator_id ?
+                           {parseInt(Author)===parseInt(group.creator_id) ?
                            <>
                            <li className='text-sky-500'><p method="get" as="button" onClick={handleEdit}>Edit Group</p></li>
                            <li className='text-red-500'><p method="delete" as="button" onClick={handleDeleteGroup}>Delete Group</p></li>

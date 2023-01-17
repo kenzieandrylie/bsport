@@ -28,15 +28,15 @@ const MyStat = ({auth, sum, posts}) => {
                         <div className="flex flex-col justify-center items-center">
                             <div className="grid grid-cols-2">
                                 <FontAwesomeIcon icon={faPersonRunning} size="lg" className="text-sky-500"/>
-                                <span>{posts.filter((post) => post.activity_id === 1 && post.user_id === auth.id).length} Times</span>
+                                <span>{posts.filter((post) => parseInt(post.activity_id) === 1 && parseInt(post.user_id) === parseInt(auth.id)).length} Times</span>
                             </div>
                             <div className="grid grid-cols-2">
                                 <FontAwesomeIcon icon={faDumbbell} size="lg" className="text-sky-500"/>
-                                <span>{posts.filter((post) => post.activity_id === 3 && post.user_id === auth.id).length} Times</span>
+                                <span>{posts.filter((post) => parseInt(post.activity_id) === 3 && parseInt(post.user_id) === parseInt(auth.id)).length} Times</span>
                             </div>
                             <div className="grid grid-cols-2">
                                 <FontAwesomeIcon icon={faBicycle} size="lg" className="text-sky-500"/>
-                                <span>{posts.filter((post) => post.activity_id === 2 && post.user_id === auth.id).length} Times</span>
+                                <span>{posts.filter((post) => parseInt(post.activity_id) === 2 && parseInt(post.user_id) === parseInt(auth.id)).length} Times</span>
                             </div>
                         </div>
                     </div>

@@ -251,7 +251,7 @@ class GroupActivityController extends Controller
             $groupactivity->activity_picture = $imageName;
             //Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);
         }else{
-            
+
             if($request->activity_id == 1){
                 $request->validate([
                     'step' => 'required|integer',

@@ -198,14 +198,14 @@ const ManageUser = ({users,auth}) => {
                                                             <img src={user.profile_picture ? `../storage/${user.profile_picture}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="" className="h-12 w-12 rounded-full"/>
                                                             <div className="flex items-center gap-1">
                                                                 <span>{user.username}</span>
-                                                                {user.is_banned ? <span className="text-sm text-red-500">#banned</span> : null}
+                                                                {parseInt(user.is_banned) ? <span className="text-sm text-red-500">#banned</span> : null}
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td className="text-md p-6">{user.email}</td>
                                                     <td className="text-md p-6">
                                                         {
-                                                        user.is_admin ?
+                                                        parseInt(user.is_admin) ?
                                                         <span className="bg-green-200 text-green-900 text-sm px-2 py-1 rounded-full font-bold hover:bg-green-300 cursor-pointer" onClick={() => handleRole(user.id,'user')}>admin</span>
                                                         :
                                                         <span  className="bg-sky-200 text-sky-900 text-sm px-2 py-1 rounded-full font-bold hover:bg-sky-300 cursor-pointer" onClick={() => handleRole(user.id,'admin')}>user</span>
@@ -213,7 +213,7 @@ const ManageUser = ({users,auth}) => {
                                                     </td>
                                                     <td className="text-md p-6">
                                                         {
-                                                        user.is_banned ?
+                                                        parseInt(user.is_banned) ?
                                                         <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4 bg-white" onClick={() => {handleUnban(user.id)}}>Unban</button>
                                                         :
                                                         <button type="submit" className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-3/4 bg-white" onClick={() => {handleBan(user.id)}}>Ban</button>
