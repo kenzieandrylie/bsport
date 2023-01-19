@@ -14,21 +14,26 @@ const ManageUser = ({users,auth}) => {
     const limit = 5;
     const [highOffsetUser,setHighOffsetUser] = useState(limit);
     const [lowOffsetUser,setLowOffsetUser] = useState(0);
-    const countPages = Math.ceil(users.length/limit);
+
     let paginationButtons= [];
     let currentPage =highOffsetUser/limit;
 
     //console.log(lowOffset,highOffset);
+
+
+
+    const [type, setType] = useState('');
+    const [query, setQuery] = useState('');
+    const slicedUsers = users.filter((user) => user.username.toLowerCase().includes(query.toLowerCase())).slice(lowOffsetUser,highOffsetUser);
+
+    const countPages = Math.ceil(users.filter((user) => user.username.toLowerCase().includes(query.toLowerCase())).length/limit);
+
 
     for (let index = 0; index < countPages; index++) {
         paginationButtons.push(<button className="inline-flex justify-center rounded-md border border-transparent border-slate-400 py-2 px-4 text-sm font-medium shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 lg:w-1/4 bg-white" onClick={()=>handlePaginationUser(3,index+1)}>
             {index+1}
         </button>);
     }
-
-    const slicedUsers = users.slice(lowOffsetUser,highOffsetUser);
-    const [type, setType] = useState('');
-    const [query, setQuery] = useState('');
 
     const[isSort,setIsSort]= useState({
         username:false,
@@ -116,6 +121,13 @@ const ManageUser = ({users,auth}) => {
             setLowOffsetUser((page-1)*limit);
         }
     }
+    const handleSearch= (e)=>{
+        setQuery(e.target.value);
+
+        // console.log(users.filter((user) => user.username.toLowerCase().includes(e.target.value.toLowerCase())).length);
+        setHighOffsetUser(limit);
+        setLowOffsetUser(0);
+    }
     useEffect(() => {
         if(type === 'ban'){
             post(route('ban.user'), {preserveScroll: true});
@@ -136,7 +148,7 @@ const ManageUser = ({users,auth}) => {
 
                         <div className="flex justify-end items-center p-4">
                             <div className="w-1/4">
-                                <input type="text" placeholder="Search user" onChange={(e) => setQuery(e.target.value)} name="search user" className={`col-span-8 w-full rounded focus:border-indigo-500 focus:ring-indigo-500 text-sm border-gray-300`}/>
+                                <input type="text" placeholder="Search user" onChange={handleSearch} name="search user" className={`col-span-8 w-full rounded focus:border-indigo-500 focus:ring-indigo-500 text-sm border-gray-300`}/>
                             </div>
                         </div>
 
@@ -187,7 +199,7 @@ const ManageUser = ({users,auth}) => {
 
                                 <tbody className="text-left divide-y divide-slate-200">
                                     {slicedUsers
-                                    .filter((user) => user.username.toLowerCase().includes(query.toLowerCase()))
+
                                     .map((user,i) => {
                                         return(
                                             <>
