@@ -313,7 +313,7 @@ class GroupActivityController extends Controller
 
         Storage::delete('public/'.$data->activity_picture);
 
-        GroupActivity::where('id','=',$request->id)->delete();
+        $data->delete();
 
         return redirect()->back()->with("message","Post Deleted.");
     }
