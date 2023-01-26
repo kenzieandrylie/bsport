@@ -44,6 +44,10 @@ class GroupMemberController extends Controller
                 return redirect()->back()->withErrors(['pin' => 'Group not found!']);
             }
 
+            if ($groupId->status == 0){
+                return redirect()->back()->withErrors(['pin' => 'Group has been deleted!']);
+            }
+
             $checkMember = DB::table('group_members')
                             ->where('group_id','=',$groupId->id)
                             ->get();

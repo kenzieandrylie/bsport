@@ -259,7 +259,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:10240'
                 ]);
 
                 $groupactivity->distance = $request->distance;
@@ -271,7 +271,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:10240'
                 ]);
 
                 $groupactivity->distance = $request->distance;
@@ -282,7 +282,7 @@ class GroupActivityController extends Controller
                     'calories' => 'required|integer',
                     'caption' => 'string|nullable',
                     'activity_date' => 'required|date|before:tomorrow',
-                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:1024'
+                    'activity_picture' => 'required|mimes:jpg,bmp,png|max:10240'
                 ]);
 
                 $groupactivity->time = $request->time;
@@ -309,6 +309,10 @@ class GroupActivityController extends Controller
     }
 
     public function delete_post(Request $request){
+        $data = GroupActivity::where('id','=',$request->id)->first();
+
+        Storage::delete('public/'.$data->activity_picture);
+
         GroupActivity::where('id','=',$request->id)->delete();
 
         return redirect()->back()->with("message","Post Deleted.");
@@ -490,7 +494,7 @@ class GroupActivityController extends Controller
             }
             if($request->file('activity_picture')){
                 $request->validate([
-                    'activity_picture'=>'mimes:jpg,bmp,png|max:1024'
+                    'activity_picture'=>'mimes:jpg,bmp,png|max:10240'
                 ]);
                 $imageName = time().'.'.$request->file('activity_picture')->getClientOriginalExtension();
                 Storage::putFileAs('public/image-postactivity',$request->file('activity_picture'),$imageName);

@@ -17,6 +17,7 @@ import { faRotateRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isErrorStrava , setIsErrorStrava] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         group_member_id: mymemberid,
@@ -193,11 +194,16 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setDisable(true);
+
         post(route("create.post"), {
             preserveScroll: true,
             onSuccess: () => {
-                reset(), setCheck(false);
+                reset(), setCheck(false),setDisable(false);
             },
+            onError: () => {
+                setDisable(false);
+            }
         });
     };
 
@@ -492,6 +498,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                                         <button
                                             type="submit"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                            disabled={disable}
                                         >
                                             Post
                                         </button>

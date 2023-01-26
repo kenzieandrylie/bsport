@@ -19,6 +19,7 @@ const CreateGroup = ({errors,auth,users,notifications}) => {
     const [isPreviewImage,setIsPreviewImage] = useState('hidden');
     const [isPlaceholderImage,setIsPlaceholderImage] = useState('');
     const groupPhotoprevRef =useRef();
+    const [disable, setDisable] = useState(false);
 
     const handleChangeGroupPhoto = ()=>{
         groupPhotoRef.current.click();
