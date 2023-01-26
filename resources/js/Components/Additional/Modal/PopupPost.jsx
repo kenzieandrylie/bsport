@@ -9,7 +9,6 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
     // const [info, setInfo] = useState(false);
 
     const [check, setCheck] = useState(false);
-    const [disable, setDisable] = useState(false);
 
     const {data,setData,post:store, processing, errors, reset,delete:destroy} = useForm({
         id: '',
@@ -102,7 +101,7 @@ const PopupPost = ({open,onClose,post,type,activitytypes}) => {
                                         <a className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 cursor-pointer" onClick={onClose}>
                                             Cancel
                                         </a>
-                                        <button className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer" onClick={handleDelete} disabled={disable}>
+                                        <button className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer" onClick={handleDelete}>
                                             Delete
                                         </button>
                                     </div>
