@@ -38,13 +38,14 @@ const PopupLeave = ({open,onClose,group,type}) => {
                     {type == 'leave' ? <h1 className="text-xl mb-4 font-bold">Do you want to leave group {group.name} ?</h1>:
                     <h1 className="text-xl mb-4 font-bold">Do you want to delete group {group.name} ?</h1>}
 
-
-                        <a className="bg-red-500 px-4 py-2 rounded-md text-md text-white hover:bg-red-800" onClick={onClose}>
+                    <div className="flex justify-center gap-4">
+                        <a className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 cursor-pointer" onClick={onClose}>
                             Cancel
                         </a>
-                        <a  className="bg-sky-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold hover:bg-sky-800" onClick={handleDelete}>
+                        <a  className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer" onClick={handleDelete}>
                         {type == 'leave'?'Leave':'Delete Group'}
                         </a>
+                    </div>
 
                 </div>
             </div>
