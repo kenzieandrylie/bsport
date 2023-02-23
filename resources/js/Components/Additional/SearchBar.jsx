@@ -17,7 +17,7 @@ const SearchBar = ({users}) => {
                 />
 
                 <div className="relative inline-block">
-                    <div className="absolute bg-white w-96 lg:w-full rounded shadow-md">
+                    <div className="absolute bg-white w-56 lg:w-full rounded shadow-md">
                         {query.length > 0 ?
                         users
                         .filter((user) => user.username.toLowerCase().includes(query.toLowerCase()))

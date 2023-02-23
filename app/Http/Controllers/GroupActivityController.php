@@ -343,7 +343,7 @@ class GroupActivityController extends Controller
 
             $subq = DB::table('group_activities')
                 ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan')
-                ->whereMonth('activity_date','like',$p_filter);
+                ->whereRaw('MONTH(activity_date) = ?', [$p_filter]);
         }
 
         $table_value = DB::table('group_members')
