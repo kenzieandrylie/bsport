@@ -2,7 +2,7 @@ import { Inertia,useForm,Link } from '@inertiajs/inertia-react';
 import React, { useEffect, useState, useRef } from 'react';
 import PopupUser from '../Modal/PopupUser';
 
-const ProfileHeader = ({user, auth, follower, following, friend}) => {
+const ProfileHeader = ({user, auth, follower, following, friend, posts}) => {
 
     const {data,setData,post, processing, errors, reset,delete:destroy} = useForm({
         id:''
@@ -90,7 +90,7 @@ const ProfileHeader = ({user, auth, follower, following, friend}) => {
                 <div className="flex flex-row justify-center">
                     <div className="flex basis-full p-3 mb-3 justify-around">
                         <div className="flex flex-col items-center">
-                            <span className="font-bold text-lg">0</span>
+                            <span className="font-bold text-lg">{posts.length}</span>
                             <span>Activity</span>
                         </div>
                         <div className="flex flex-col items-center cursor-pointer" onClick={() => {setLabelpop("follower")}}>
