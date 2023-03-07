@@ -52,7 +52,7 @@ const GroupCard = ({group,Author}) => {
                         </ul>
                     </div>
                 </div>
-                <div className="block">
+                <div className="block cursor-pointer" onClick={handleView}>
                     <div className="flex justify-center">
                         <img src={group.display_picture ? `../storage/${group.display_picture}` : "https://i.pinimg.com/originals/50/46/0c/50460cdffd8bb7e3e387f3d456b6d633.jpg"} alt="" className="rounded" style={{width:`80px`,height:`80px`,objectFit:`cover`}}/>
                     </div>

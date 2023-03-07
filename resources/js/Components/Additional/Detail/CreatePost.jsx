@@ -14,7 +14,7 @@ import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
 import { faRotateRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
+const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin, username }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isErrorStrava , setIsErrorStrava] = useState(false);
     const [disable, setDisable] = useState(false);
@@ -35,12 +35,14 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
 
     //STRAVA ---------------
     const clientId = "98973";
-    //const redirectUri = `http://127.0.0.1:8000/groups/${pin}`;
-    const redirectUri = `http://bsport.web.id/groups/${pin}`;
+    const redirectUri = `http://127.0.0.1:8000/groups/${pin}`;
+    const redirectUriProfile = `http://127.0.0.1:8000/profile/${username}`;
+    //const redirectUri = `http://bsport.web.id/groups/${pin}`;
+    //const redirectUriProfile = `http://bsport.web.id/profile/${username}`;
     const clientSecret = "1e57f326b212e6a83c8422d7104388058ed94211";
 
     //authorization
-    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=activity:read_all`;
+    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${mymemberid ? redirectUri : redirectUriProfile}&response_type=code&scope=activity:read_all`;
 
     const handleStrava = (e) => {
         //console.log("handle Strava");
@@ -487,14 +489,14 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin }) => {
                                         ) : null}
                                     </div>
                                     <div className="flex gap-2">
-                                        {mymemberid && (
+                                        {/* {mymemberid && ( */}
                                             <div
                                                 className="inline-flex cursor-pointer justify-center rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                                                 onClick={handleStrava}
                                             >
                                                 Strava
                                             </div>
-                                        )}
+                                        {/* )} */}
                                         <button
                                             type="submit"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
