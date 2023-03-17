@@ -6,7 +6,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const Leaderboard = (props) => {
 
-    console.log("Leaderboard Page : ", props)
+    //console.log("Leaderboard Page : ", props)
 
     const { data, setData, get, processing, errors, reset } = useForm({
         sortby: props.p_sort,

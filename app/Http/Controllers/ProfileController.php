@@ -91,8 +91,15 @@ class ProfileController extends Controller
         ->orderBy('comments.created_at')
         ->get();
 
+        $subq = DB::table('group_activities')
+                ->selectRaw('group_member_id,step,calories,time,distance,activity_date, activity_id,caption')
+                ->groupByRaw('step,calories,time,distance,activity_date, activity_id,caption');
+
         $sum = DB::table('group_members')
-                ->join('group_activities','group_members.id','=','group_activities.group_member_id')
+                ->leftJoinSub($subq,'group_activities_filtered', function ($join) {
+                    $join->on('group_members.id','=','group_activities_filtered.group_member_id');
+                })
+                //->join('group_activities','group_members.id','=','group_activities.group_member_id')
                 ->where('group_members.user_id','=',$user->id)
                 ->selectRaw('sum(step) as sumstep, sum(calories) as sumcalories, sum(time) as sumtime, sum(distance) as sumdistance')
                 ->first();
