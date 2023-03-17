@@ -6,11 +6,12 @@ import { Inertia } from "@inertiajs/inertia";
 
 const Leaderboard = (props) => {
 
-    // console.log("Leaderboard Page : ", props)
+    console.log("Leaderboard Page : ", props)
 
     const { data, setData, get, processing, errors, reset } = useForm({
         sortby: props.p_sort,
-        filterby: props.p_filter
+        filterby: props.p_filter,
+        filteractivity: props.p_filter_act
     })
 
     const handleChange = (e) => {
@@ -43,6 +44,19 @@ const Leaderboard = (props) => {
                             <div className="basis-1/3">
                                 <form onSubmit={handleSubmit}>
                                     <div className="flex justify-around items-center">
+                                        <div>
+                                            <label className="label">
+                                                <span className="label-text-alt">Filter by</span>
+                                            </label>
+                                            <select className="select select-ghost w-full max-w-xs" defaultValue={data.filteractivity} name="filteractivity" onChange={handleChange}>
+                                                <option value={0}>All Activity</option>
+                                                {props.activities.map((data, i) => {
+                                                    return(
+                                                        <option value={data.id} key={i}>{data.name}</option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </div>
                                         <div>
                                             <label className="label">
                                                 <span className="label-text-alt">Filter by</span>

@@ -332,18 +332,35 @@ class GroupActivityController extends Controller
             $p_sort = $request->sortby;
         }
 
-        if(!$request->filterby || $request->filterby == 0){
+        if($request->filteractivity == 0 && $request->filterby == 0){
             $p_filter = 0;
+            $p_activity = 0;
 
             $subq = DB::table('group_activities')
-                ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan');
+                ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan,activity_id');
         }
         else{
-            $p_filter = $request->filterby;
+            if(!$request->filterby){
+                $p_filter = '%';
+            }
+            else{
+                $p_filter = $request->filterby;
+            }
+            if(!$request->filteractivity){
+                $p_activity = '%';
+            }
+            else{
+                $p_activity = $request->filteractivity;
+            }
 
             $subq = DB::table('group_activities')
-                ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan')
-                ->whereRaw('MONTH(activity_date) = ?', [$p_filter]);
+                ->selectRaw('id,group_member_id,step,calories,time,distance,month(activity_date) as bulan, activity_id')
+                ->whereRaw('MONTH(activity_date) LIKE ?', [$p_filter])
+                ->whereRaw('activity_id LIKE ?', [$p_activity]);
+
+            //value nya samain dengan request, sebelum dikirim balik ke FE
+            $p_filter = $request->filterby;
+            $p_activity = $request->filteractivity;
         }
 
         $table_value = DB::table('group_members')
@@ -364,7 +381,8 @@ class GroupActivityController extends Controller
                         ->groupBy('users.id','users.name','users.last_name','users.username','users.profile_picture')
                         ->orderByDesc($p_sort)
                         ->get();
-
+                       // dd($table_value);
+        $activities = Activity::all();
         $alluser = User::all();
         $auth_id = auth()->user()->id;
         $notification = DB::select(
@@ -444,7 +462,9 @@ class GroupActivityController extends Controller
             'group' => $group,
             'values' => $table_value,
             'p_sort' => $p_sort,
-            'p_filter' => $p_filter
+            'p_filter' => $p_filter,
+            'p_filter_act' => $p_activity,
+            'activities' => $activities
         ]);
     }
 
