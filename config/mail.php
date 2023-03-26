@@ -36,12 +36,16 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'driver' => env('MAIL_DRIVER', 'smtp'),
+            'host' => env('MAIL_HOST', 'smtp.sparkpostmail.com'),
             'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
+            'username' => env('MAIL_USERNAME', 'SMTP_Injection'),
             'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+                'name' => env('MAIL_FROM_NAME', 'Example'),
+            ],
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
@@ -66,7 +70,10 @@ return [
             'transport' => 'log',
             'channel' => env('MAIL_LOG_CHANNEL'),
         ],
-
+        'sparkpost' => [
+            'transport' => 'sparkpost',
+            'api_key' => env('SPARKPOST_API_KEY'),
+        ],
         'array' => [
             'transport' => 'array',
         ],

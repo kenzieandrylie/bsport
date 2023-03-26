@@ -122,7 +122,7 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin, username }
             )
             .then((response) => {
                 const currentData = response.data;
-                //console.log(currentData);
+                // console.log(currentData);
 
                 const newActivity = data;
 
@@ -138,14 +138,14 @@ const CreatePost = ({ auth, types, flash, mymemberid, groupName, pin, username }
                             currentData.average_speed * 200
                         );
                     }
-                    newActivity.calories =
-                    newActivity.activity_id == 3
-                            ? Math.ceil(currentData.time * 3.71)
-                            : newActivity.activity_id == 2
-                            ? currentData.distance * 32
-                            : newActivity.activity_id == 1
-                            ? currentData.distance * 60
-                            : null;
+                    newActivity.calories = currentData.calories;
+                    // newActivity.activity_id == 3
+                    //         ? Math.ceil(currentData.time * 3.71)
+                    //         : newActivity.activity_id == 2
+                    //         ? currentData.distance * 32
+                    //         : newActivity.activity_id == 1
+                    //         ? currentData.distance * 60
+                    //         : null;
                     newActivity.caption = currentData.name;
                     //newActivity.caption = currentData.description;
                     newActivity.activity_date = new Date(currentData.start_date)
