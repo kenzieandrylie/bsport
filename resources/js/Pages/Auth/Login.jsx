@@ -56,16 +56,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4">
                     <div className='flex justify-between'>
                         <InputLabel forInput="password" value="Password" />
-                        {/* <div>
-                            {canResetPassword && (
-                                <Link
-                                    href={route('password.request')}
-                                    className="underline text-sm text-gray-600 hover:text-gray-900"
-                                >
-                                    Forgot your password?
-                                </Link>
-                            )}
-                        </div> */}
+
                     </div>
 
                     <TextInput
@@ -78,6 +69,17 @@ export default function Login({ status, canResetPassword }) {
                     />
 
                     <InputError message={errors.password} className="mt-2" />
+
+                    <div className='flex justify-end '>
+                            {canResetPassword && (
+                                <Link
+                                    href={route('password.request')}
+                                    className="underline text-sm text-gray-600 hover:text-gray-900"
+                                >
+                                    Forgot your password?
+                                </Link>
+                            )}
+                        </div>
                 </div>
 
                 <div className="flex justify-between mt-4">
